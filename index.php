@@ -42,7 +42,7 @@
             </div>
             <div class= "backgroundHeader">
                 <div class="backgroundVideoContainer">
-                    <video class="backgroundVideo" autoplay="" preload="auto" loop="" playsinline="">
+                    <video class="backgroundVideo" autoplay="" preload="auto" loop="" playsinline muted>
                         <source type="video/mp4" src="../TH/img/video.mp4">
                     </video>
                 </div>
