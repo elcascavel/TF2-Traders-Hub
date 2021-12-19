@@ -262,3 +262,9 @@ a:hover {
 .loginLogo {
   height: 200px;
 }
+
+.Team:hover{
+  
+  width:12%;
+  cursor:pointer;
+}
