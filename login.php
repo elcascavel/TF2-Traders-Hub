@@ -15,6 +15,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 
     <link href="http://fonts.cdnfonts.com/css/tf2-build" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   </head>
 
   <body style="width: 100%; margin: 0; background-color: black">
@@ -30,7 +32,7 @@
                 <input class="loginInput" type="password" id="password" name="password" placeholder="Password"><br><br>
                 <input class="loginButton" type="submit" value="LOGIN">
               </form>
-              <img src="../TH/img/demomanLogin.webp"/>
+              <img src="../TH/img/demomanLogin.webp" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1500"/>
         </div>
       <div class="footerArea">
         <div class="footerLogos">
@@ -50,5 +52,9 @@
         </div>
       </div>
     </div>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
   </body>
 </html>

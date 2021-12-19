@@ -204,6 +204,7 @@ a:hover {
   display: flex;
   justify-content: center;
   font-family: "TF2 Build", sans-serif;
+  color: #e6d9bc;
 }
 
 .loginBreak {
@@ -227,10 +228,6 @@ a:hover {
   text-align: center;
   transition: 2s;
 }
-
-.loginFormContainer:hover {
-    background-color: #322d27;
-  }
 
 .loginForm {
   text-align: center;

@@ -10,6 +10,8 @@
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     </head>
 
     <body style="width:100%;margin:0;background-color:black">
@@ -44,7 +46,7 @@
                         <source type="video/mp4" src="../TH/img/video.mp4">
                     </video>
                 </div>
-                <div class="quoteContainer">
+                <div class="quoteContainer" data-aos="fade-right" data-aos-delay="500" data-aos-duration="2500">
                     <div>
                         <div class="quote">
                             Trade, buy or sell TF2 skins
@@ -67,5 +69,9 @@ Team Fortress is a trademark of Valve Corporation, TF2 Trader's Hub is a fan cre
                 </div>
             </div> 
     </div>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
     </body>
 </html>
