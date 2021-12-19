@@ -10,8 +10,9 @@
     />
     <link rel="stylesheet" href="../TH/css/main.css" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 
     <link href="http://fonts.cdnfonts.com/css/tf2-build" rel="stylesheet">
@@ -19,7 +20,7 @@
 
   <body style="width: 100%; margin: 0; background-color: black">
     <div class="homepage">
-        <h1 class="loginHeader">LOGIN</h1>
+        <h1 class="loginHeader">REGISTER</h1>
         <div class="loginBreak">
             
         </div>
@@ -27,10 +28,12 @@
             <img class="loginLogo" src="../TH/img/logo.png"/>
             <form class="loginForm" action="/action_page.php">
                 <input class="loginInput" type="text" id="username" name="username" placeholder="Username"><br>
-                <input class="loginInput" type="password" id="password" name="password" placeholder="Password"><br><br>
-                <input class="loginButton" type="submit" value="LOGIN">
+                <input class="loginInput" type="email" id="email" name="email" placeholder="E-mail"><br>
+                <input class="loginInput" type="password" id="password" name="password" placeholder="Password"><br>
+                <input class="loginInput" type="password" id="rpassword" name="rpassword" placeholder="Repeat Password"><br><br>
+                <input class="loginButton" type="submit" value="REGISTER">
               </form>
-              <img src="../TH/img/demomanLogin.webp"/>
+              <img src="../TH/img/soldierRegister.png"/>
         </div>
       <div class="footerArea">
         <div class="footerLogos">

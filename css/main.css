@@ -1,6 +1,6 @@
 * {
   box-sizing: border-box;
-  font-family: "Noto Sans", sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
 a {
@@ -60,7 +60,7 @@ a:hover {
 
 .navLink {
   font-size: 18px;
-  font-family: "Noto sans", serif;
+  font-family: "Inter", serif;
   font-weight: 600;
   letter-spacing: 3px;
   opacity: 0.8;
@@ -258,7 +258,8 @@ a:hover {
 .loginInput {
   padding: 10px;
   margin: 10px;
-  font-family: "TF2 Build", sans-serif;
+  border-radius: 5px;
+  font-family: "Inter", sans-serif;
 }
 
 .loginLogo {

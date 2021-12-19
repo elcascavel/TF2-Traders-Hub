@@ -5,11 +5,11 @@
         <meta http-equiv="X-UA-Compatible" content="IE=9">
         <title>TF2 Trader's Hub</title>
         <link rel="shortcut icon" href="https://steamcdn-a.akamaihd.net/apps/tf2/blog/images/favicon.ico">
-        <link rel="stylesheet" href="../TH/css/tf2.css">
+        <link rel="stylesheet" href="../TH/css/main.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
     </head>
 
     <body style="width:100%;margin:0;background-color:black">
