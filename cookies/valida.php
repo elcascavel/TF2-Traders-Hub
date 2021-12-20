@@ -41,7 +41,47 @@
         }
     }
 
-    // function validaFormLogin ($data)
+     function validaFormLogin ($data){//include the web application configuration file to have boundaries to be able to validate fields
+     require_once('config.php');
+     
+     $errors = array('username' => array(false, "Invalid username: it must have between $minUsername and $maxUsername chars."),
+                         'password' => array(false, "Invalid password: it must have between $minPassword and $maxPassword chars and special chars."),
+                         );	
+     
+     $flag = false;		
+             
+     /* Check if the imputed data is according what is expected for this function
+      * In short, $data must have at least the necessary fields to enable their validation.
+      */
+     if ( !is_array($data) || count (array_intersect(array_keys($errors), array_keys($data) ) ) < sizeof($errors) ){
+         return("This function needs a parameter with the following format: array(\"username\"=> \"value\", \"password\"=> \"value\")");
+         die();
+     }			
+ 
+     $data['username'] = trim($data['username']);
+     $data['password'] = trim($data['password']);
+         
+     //validate username
+     if( !validateUsername($data['username'], $minUsername, $maxUsername) ){
+         $errors['username'][0] = true;
+         $flag = true;				
+     }
+     //validate password
+     if( !validatePassword($data['password'], $minPassword, $maxPassword) ){
+         $errors['password'][0] = true;
+         $flag = true;				
+     }
+     
+     //deal with the validation results
+     if ( $flag == true ){
+         //there are fields with invalid contents: return the errors array
+         return($errors);
+     }
+     else{
+         //all fields have valid contents
+         return(true);				
+     }
+ }
 
     function validaFormRegisto ($data) {
         require_once('config.php');
