@@ -263,8 +263,20 @@ a:hover {
   height: 200px;
 }
 
+input[type="radio"]{
+
+  opacity: 0;
+}
+
+ input[type="radio"]:checked + .Team {
+  filter: grayscale(0);
+}
+
+.Team{
+  filter: grayscale(100%);
+}
+
 .Team:hover{
-  
-  width:12%;
-  cursor:pointer;
+  cursor: pointer;
+  filter: grayscale(0);
 }

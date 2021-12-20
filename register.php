@@ -210,18 +210,26 @@ if ( !empty($existingRecords) ){
                 <input class="loginInput" type="password" id="password" name="password" placeholder="Password"><br>
                 <input class="loginInput" type="password" id="rpassword" name="rpassword" placeholder="Repeat Password"><br><br>
                 <div class="teamPick">
-                    <img class="Team" src="../TH/img/redteam" width="10%" type="radio" id="redTeam" name="team" value="RED" 
+                  
+                <label>
+                  <input type="radio" id="redTeam" name="team" value="RED" 
                     <?php	
   			if ( !empty($errors) && !$errors['team'][0] && $_POST['team'] == "redTeam"){ 
   				echo "checked";
   			}
-        ?>>
-                    <img class="Team" src="../TH/img/bluteam" width="10%" type="radio" id="bluTeam" name="team" value="BLU"
+        ?>> 
+        
+        <img class="Team" src="../TH/img/redteam" width="10%">
+        </label>
+        <label>
+                   <input type="radio" id="bluTeam" name="team" value="BLU"
                     <?php	
   			if ( !empty($errors) && !$errors['team'][0] && $_POST['team'] == "BLU"){ 
   				echo "checked";
   			}  
-  		?>>
+  		?>>  
+            <img class="Team" src="../TH/img/bluteam" width="10%">
+           </label>
                    
 
                     <?php
