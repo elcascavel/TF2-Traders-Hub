@@ -123,17 +123,41 @@ a:hover {
 .navSideContent {
   min-height: 0;
   display: flex;
-  flex-direction: column;
   align-items: flex-end;
 }
 
 .accountActions {
   font-size: 14px;
-  margin-bottom: 4px;
+  margin: 4px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 2px;
   opacity: 0.8;
+}
+
+.accountActionsLogin {
+	font-size: 18px;
+	color: #fff;
+	display: flex;
+	margin-bottom: 23px;
+}
+
+.accountActionsButtonContainer {
+	border: 3px solid #ffffff50;
+	padding: 10px;
+	margin: 0px 10px;
+	border-radius: 5px;
+	width: fit-content;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	transition-duration: .2s;
+}
+
+.accountActionsButtonContainer:hover {
+	border: 3px solid #ff6046;
+	color: #ff6046;
 }
 
 .quoteContainer {
@@ -307,4 +331,13 @@ input[type="radio"]{
 }
 .signUpLink:hover{
   color: #87443b;
+}
+
+.profileActionButton {
+	width: 30px;
+height: 30px;
+margin: 5px;
+background-size: contain;
+background-repeat: no-repeat;
+background-image: url("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react//icons/steam_icon.svg");
 }

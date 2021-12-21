@@ -46,7 +46,7 @@
                         ?>
                          </a>
 
-                         <a class="accountActions" href="profile.php" >
+                         <a class="accountActionsLogin">
                        <?php 
                         if( !empty ($_SESSION) && array_key_exists("username", $_SESSION))
                         {   
@@ -54,6 +54,19 @@
                         }
                             ?>
                         </a>
+                        
+                        
+                           
+                        <?php
+                            if( !empty ($_SESSION) && array_key_exists("username", $_SESSION))
+                            {   echo '<div class="accountActionsButtonContainer">
+                                <a class="profileActionButton" href="profile.php"> </a>
+                                <a class="profileActionButton" href="wallet.php"> </a>
+                                <a class="profileActionButton" href="logout.php"> </a>
+                                </div>';
+                            }
+                        ?>
+                        
 
                         <a class="accountActions" href="register.php">
                         <?php
@@ -63,15 +76,6 @@
                                 
                          ?>
                          </a>
-
-                         <a class="accountActions" href="logout.php">
-                        <?php 
-                         if( !empty ($_SESSION) && array_key_exists("username", $_SESSION))
-                         {  
-                            echo "Logout";         
-                         }
-                            ?>
-                        </a>
 
                     </div>
                 </div>
