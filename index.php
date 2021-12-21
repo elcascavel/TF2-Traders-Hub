@@ -1,5 +1,9 @@
 <!DOCTYPE html>
 <html>
+    <?php
+    
+    session_start();
+    ?>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=9">
@@ -17,26 +21,60 @@
     <body style="width:100%;margin:0;background-color:black">
         <div class="homepage">
             <div class="headerParent">
-                <a class ="headerLogo" href="index.html"></a>
+                <a class ="headerLogo" href="index.php"></a>
                 <div class="headerNavItems">
-                    <a class="navLink" href="index.html">
+                    <a class="navLink" href="index.php">
                         Trade
                     </a>
-                    <a class="navLink" href="index.html">
+                    <a class="navLink" href="index.php">
                         Buy
                     </a>
-                    <a class="navLink" href="index.html">
+                    <a class="navLink" href="index.php">
                         Sell
                     </a>
                 </div>
                 <div class="navSide">
                     <div class="navSideContent">
-                        <a class="accountActions" href="login.php">
-                            Login
+                        <a class="accountActions" href="login.php" >
+                        
+                        <?php 
+                                if( !empty ($_SESSION) && array_key_exists("username", $_SESSION))
+                                {      
+                                        echo "Login";
+                                }
+                                                    
+                        ?>
+                         </a>
+
+                         <a class="accountActions" href="userdata.php" >
+                       <?php 
+                        if( !empty ($_SESSION) && array_key_exists("username", $_SESSION))
+                        {   
+                                echo $_SESSION['username'];
+                                $log = true;
+                        }
+                            ?>
                         </a>
+
                         <a class="accountActions" href="register.php">
-                            Sign Up
+                        <?php 
+                            if( !empty ($_SESSION) && array_key_exists("username", $_SESSION))
+                            {  
+                                echo "Logout";               
+                            }
+                             
+                         ?>
+                         </a>
+
+                         <a class="accountActions" href="logout.php">
+                        <?php 
+                         if( !empty ($_SESSION) && array_key_exists("username", $_SESSION))
+                         {  
+                            echo "Logout";         
+                         }
+                            ?>
                         </a>
+
                     </div>
                 </div>
             </div>
