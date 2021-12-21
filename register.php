@@ -139,7 +139,7 @@ if ( !empty($existingRecords) ){
  
  if ( $existingRecords['username'] && $existingRecords['email'] ){
    //both the username and the email already exist in the database
-   echo "Both username and email already exist in our records.";				
+   echo "Both username and email already exist in our records.";	
  }
  elseif( $existingRecords['username'] ) {
    //only the username exists (you can erase the written username so that it does not show up in the filled form, but it seams better to keep it so that the user knows what was the input)
@@ -183,36 +183,46 @@ if ( !empty($existingRecords) ){
             <form class="loginForm" action="" method="POST">
                 <input class="loginInput" type="text" id="username" name="username" placeholder="Username" value="<?php
   		
-      if ( !empty($errors) && !$errors['username'][0] ){ #this is done to keep the value inputted by the user if this field is valid but others are not
+      if ( !empty($errors) && isset($errors['username'][0])){ #this is done to keep the value inputted by the user if this field is valid but others are not
         echo $_POST['username'];
-      }  
+      }
     
     ?>"><br>
     <?php
-  			if ( !empty($errors) && $errors['username'][0] ){ # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
+  			if ( !empty($errors) && isset($errors['username'][0])){ # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
   				echo $errors['username'][1] . "<br>";
   			}  		
   		?>
                 <input class="loginInput" type="email" id="email" name="email" placeholder="E-mail" value="<?php
   		
-      if ( !empty($errors) && !$errors['email'][0] ){ 
+      if ( !empty($errors) && isset($errors['email'][0])){ 
         echo $_POST['email'];
       }  
     
     ?>"><br>
     <?php
-  			if ( !empty($errors) && $errors['email'][0] ){
+  			if ( !empty($errors) && isset($errors['email'][0])){
   				echo $errors['email'][1] . "<br>";
   			}  		
   		?>
                 <input class="loginInput" type="password" id="password" name="password" placeholder="Password"><br>
-                <input class="loginInput" type="password" id="rpassword" name="rpassword" placeholder="Repeat Password"><br><br>
+								<?php
+  			if ( !empty($errors) && isset($errors['password'][0]) ){
+  				echo $errors['password'][1] . "<br>";
+  			}  		
+  		?>
+                <input class="loginInput" type="password" id="rpassword" name="rpassword" placeholder="Repeat Password"><br>
+								<?php
+  			if ( !empty($errors) && isset($errors['rpassword'][0])){
+  				echo $errors['rpassword'][1] . "<br>";
+  			}  		
+  		?><br>
                 <div class="teamPickContainer">
                   
                 <label>
                   <input type="radio" id="redTeam" name="team" value="RED" 
                     <?php	
-  			if ( !empty($errors) && !$errors['team'][0] && $_POST['team'] == "RED"){ 
+  			if ( !empty($errors) && isset($errors['team'][0]) && $_POST['team'] == "RED"){ 
   				echo "checked";
   			}
         ?>> 
@@ -222,7 +232,7 @@ if ( !empty($existingRecords) ){
         <label>
                    <input type="radio" id="bluTeam" name="team" value="BLU"
                     <?php	
-  			if ( !empty($errors) && !$errors['team'][0] && $_POST['team'] == "BLU"){ 
+  			if ( !empty($errors) && isset($errors['team'][0]) && $_POST['team'] == "BLU"){ 
   				echo "checked";
   			}  
   		?>>  
@@ -231,7 +241,7 @@ if ( !empty($existingRecords) ){
                    
 
                     <?php
-  			if ( !empty($errors) && $errors['team'][0] ){
+  			if ( !empty($errors) && isset($errors['team'][0]) ){
   				echo $errors['team'][1] . "<br>";
   			}  		
   		?>
