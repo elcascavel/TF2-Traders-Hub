@@ -102,8 +102,8 @@
        //user registered - close db connection
        $result = closeDb($db);
            
-       echo "User registered.";
-       die();
+       header("Location: index.php");
+       exit();
      }
    }
    else{
@@ -177,9 +177,7 @@ if ( !empty($existingRecords) ){
   <body style="width: 100%; margin: 0; background-color: black">
     <div class="homepage">
         <h1 class="loginHeader">SIGN UP</h1>
-        <div class="loginBreak">
-            
-        </div>
+        <div class="loginBreak"></div>
         <div class="loginFormContainer">
             <img class="loginLogo" src="../TH/img/logo.png"/>
             <form class="loginForm" action="" method="POST">
@@ -209,17 +207,17 @@ if ( !empty($existingRecords) ){
   		?>
                 <input class="loginInput" type="password" id="password" name="password" placeholder="Password"><br>
                 <input class="loginInput" type="password" id="rpassword" name="rpassword" placeholder="Repeat Password"><br><br>
-                <div class="teamPick">
+                <div class="teamPickContainer">
                   
                 <label>
                   <input type="radio" id="redTeam" name="team" value="RED" 
                     <?php	
-  			if ( !empty($errors) && !$errors['team'][0] && $_POST['team'] == "redTeam"){ 
+  			if ( !empty($errors) && !$errors['team'][0] && $_POST['team'] == "RED"){ 
   				echo "checked";
   			}
         ?>> 
         
-        <img class="Team" src="../TH/img/redteam" width="10%">
+        <img class="teamPick" src="../TH/img/redteam" width="10%">
         </label>
         <label>
                    <input type="radio" id="bluTeam" name="team" value="BLU"
@@ -228,7 +226,7 @@ if ( !empty($existingRecords) ){
   				echo "checked";
   			}  
   		?>>  
-            <img class="Team" src="../TH/img/bluteam" width="10%">
+            <img class="teamPick" src="../TH/img/bluteam" width="10%">
            </label>
                    
 
