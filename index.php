@@ -46,7 +46,7 @@
                         ?>
                          </a>
 
-                         <a class="accountActions" href="userdata.php" >
+                         <a class="accountActions" href="profile.php" >
                        <?php 
                         if( !empty ($_SESSION) && array_key_exists("username", $_SESSION))
                         {   
