@@ -251,7 +251,7 @@ if ( !empty($existingRecords) ){
                       Do you have an account? <a class="loginLink" href="login.php">Login</a>
                 </div>
               </form>
-              <img src="../TH/img/soldierRegister.png" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1500"/>
+              <img style="width:300px" src="../TH/img/soldierRegister.png" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1500"/>
         </div>
         
       <div class="footerArea">
