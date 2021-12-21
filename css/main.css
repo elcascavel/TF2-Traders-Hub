@@ -273,7 +273,7 @@ input[type="radio"]{
 }
 
 .teamPickContainer {
-  
+
 }
 
 .teamPick{
@@ -283,4 +283,28 @@ input[type="radio"]{
 .teamPick:hover{
   cursor: pointer;
   filter: grayscale(0);
+}
+.logSignUp{
+  font-size: 12px;
+  margin: 20px;
+}
+.signUpLog{
+  font-size: 12px;
+  margin: 20px;
+}
+.loginLink{
+  font-size: 14px;
+  font-weight: bold;
+  color: #a89d81;
+}
+.loginLink:hover{
+  color: #87443b;
+}
+.signUpLink{
+  font-size: 14px;
+  font-weight: bold;
+  color: #a89d81;
+}
+.signUpLink:hover{
+  color: #87443b;
 }

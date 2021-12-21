@@ -150,6 +150,9 @@
   		?>
       <br>
                 <input class="loginButton" type="submit" value="LOGIN">
+                <div class="logSignUp">
+                      Don't have an account yet? <a class="signUpLink" href="register.php">Sign Up</a>
+                </div>
               </form>
               <img src="../TH/img/demomanLogin.webp" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1500"/>
         </div>
@@ -164,7 +167,6 @@
             ><img class="footerLogoImg" src="../TH/img/cmLogo.png"
           /></a>
         </div>
-
         <div class="footerLegal">
           Team Fortress is a trademark of Valve Corporation, TF2 Trader's Hub is
           a fan creation and is not affiliated with Valve or Steam.

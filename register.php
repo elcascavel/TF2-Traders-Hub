@@ -247,9 +247,13 @@ if ( !empty($existingRecords) ){
   		?>
                   </div>
                 <input class="loginButton" type="submit" value="REGISTER">
+                <div class="signUpLog">
+                      Don't have an account yet? <a class="loginLink" href="register.php">Login</a>
+                </div>
               </form>
               <img src="../TH/img/soldierRegister.png" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1500"/>
         </div>
+        
       <div class="footerArea">
         <div class="footerLogos">
           <a href="https://www.valvesoftware.com/en/about"
