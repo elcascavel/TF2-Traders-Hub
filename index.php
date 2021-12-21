@@ -38,7 +38,7 @@
                         <a class="accountActions" href="login.php" >
                         
                         <?php 
-                                if( !empty ($_SESSION) && array_key_exists("username", $_SESSION))
+                                if(!isset($_SESSION['username']))
                                 {      
                                         echo "Login";
                                 }
@@ -51,18 +51,16 @@
                         if( !empty ($_SESSION) && array_key_exists("username", $_SESSION))
                         {   
                                 echo $_SESSION['username'];
-                                $log = true;
                         }
                             ?>
                         </a>
 
                         <a class="accountActions" href="register.php">
-                        <?php 
-                            if( !empty ($_SESSION) && array_key_exists("username", $_SESSION))
-                            {  
-                                echo "Logout";               
-                            }
-                             
+                        <?php
+                        if (!isset($_SESSION['username'])) {
+                            echo "Sign Up";
+                        } 
+                                
                          ?>
                          </a>
 
