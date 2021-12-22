@@ -200,7 +200,7 @@ function validaPayment ($data) {
 				$data['cvv'] = trim($data['cvv']);
 				
 
-                //validate owner
+                
 				if( !validateOwner($data['owner'], $minUsername, $maxUsername) ){
 					$errors['owner'][0] = true;
 					$flag = true;	
@@ -210,7 +210,7 @@ function validaPayment ($data) {
                     }			
 				}
 			
-				//check if amount and cardname is selected
+			
 				if ( !array_key_exists('amount', $data)){
 					$errors['amount'][0] = true;
 					$flag = true;
@@ -229,7 +229,7 @@ function validaPayment ($data) {
                     }	
 				}	
 				
-				//check password
+				
 				if( !validateCardnum($data['cardnum'],$minNum, $maxNum) ){
 					$errors['cardnum'][0] = true;
 					$flag = true;	
