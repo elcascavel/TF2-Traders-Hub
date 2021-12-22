@@ -5,12 +5,12 @@ session_start();
 $currentScript = basename($_SERVER['PHP_SELF'], '.php');
 
 //is this the login script?
-if ( $currentScript == "login" || $currentScript == "registerUsers"){
+if ( $currentScript == "login" || $currentScript == "register"){
 
 	//present the navbar with different options for either login or register
 	if( $currentScript == 'login'){
 		echo '<div class="topnav">
-				<a class="active" href="registerUsers.php">Register</a>
+				<a class="active" href="register.php">Register</a>
 			</div>';
 	}
 	else{
