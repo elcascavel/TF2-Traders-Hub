@@ -296,10 +296,6 @@ input[type="radio"]{
   filter: grayscale(0);
 }
 
-.teamPickContainer {
-
-}
-
 .teamPick{
   filter: grayscale(100%);
 }
@@ -356,4 +352,16 @@ input[type="radio"]{
 .tooltip {
 	position: relative;
 	display: flex;
+  }
+
+  .profileActionAccountImg:hover{
+    opacity:60%;
+  }
+
+  .profileActionWalletImg:hover{
+    opacity:60%;
+  }
+
+  .profileActionLogoutImg:hover{
+    opacity:60%;
   }
