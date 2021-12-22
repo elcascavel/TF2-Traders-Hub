@@ -106,6 +106,7 @@
         //save username and id in session					
         $_SESSION['username'] = $user['username'];
         $_SESSION['id'] = $user['id_users'];
+        $_SESSION['team'] = $user['team'];
    
         //user registered - close db connection
         $result = closeDb($db);
