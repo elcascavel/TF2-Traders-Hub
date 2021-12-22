@@ -425,3 +425,8 @@
 	.navButtonSelected {
 		color: orange;
 	}
+
+	.errorMessage {
+		color: #E9967A;
+		padding-bottom: 5px;
+	}

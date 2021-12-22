@@ -26,108 +26,6 @@
   </head>
 
   <body style="width: 100%; margin: 0; background-color: black">
-  
-  <?php
-
-  if(!empty ($_POST)){
-    
-    require_once('cookies/valida.php');
-
-    $errors = validaFormLogin($_POST);
-
-    if(!is_array($errors) && !is_string($errors)){
-
-      require_once('cookies/configDb.php');
-
-
-      $db = connectDB();
-
-
-      if(is_string($db)){
-          
-        echo("Fatal error! Please return later.");
-        die();
-      }
-      
-
-      //building query string
-      $username = trim($_POST['username']);
-      $password = md5(trim($_POST['password']));
-
-
-      //construct the intend query
-			$query = "SELECT * FROM users WHERE username=? AND password=?";
-  
-  
-      //prepare the statement				
-      $statement = mysqli_prepare($db,$query);
-				
-      if (!$statement ){
-      //error preparing the statement. This should be regarded as a fatal error.
-        echo "Something went wrong. Please try again later.";
-        die();				
-      }				
-           
-      //now bind the parameters by order of appearance
-      $result = mysqli_stmt_bind_param($statement,'ss',$username,$password); # 'ss' means that both parameters are expected to be strings.
-           
-      if ( !$result ){
-        //error binding the parameters to the prepared statement. This is also a fatal error.
-        echo "Something went wrong. Please try again later.";
-        die();
-      }
-   
-      //execute the prepared statement
-      $result = mysqli_stmt_execute($statement);
-         
-      if( !$result ) {
-      //again a fatal error when executing the prepared statement
-        echo "Something went very wrong. Please try again later.";
-      die();
-      }
-   
-      //get the result set to further deal with it
-      $result = mysqli_stmt_get_result($statement);
-   
-       if (!$result){
-      //again a fatal error: if the result cannot be stored there is no going forward
-        echo "Something went wrong. Please try again later.";	
-      die();
-      }	
-      elseif( mysqli_num_rows($result) == 1){
-        //there is one user only with these credentials
-               
-        //open session
-        session_start();
-     
-        //get user data
-        $user = mysqli_fetch_assoc($result);
-     
-        //save username and id in session					
-        $_SESSION['username'] = $user['username'];
-        $_SESSION['id'] = $user['id_users'];
-        $_SESSION['team'] = $user['team'];
-   
-        //user registered - close db connection
-        $result = closeDb($db);
-     
-        //send the user to another page
-        header('Location:index.php');
-      }
-      else{
-        echo "Invalid Username/Password";
-        $result = closeDb($db);
-      }
-      }
-      elseif( is_string($errors) ){
-          //the function has received an invalid argument - this is a programmer error and must be corrected
-          echo $errors;
-
-          //so that there is no problem when displaying the form
-          unset($errors);
-      }
-    }
-  ?>
     <div class="homepage">
         <h1 class="loginHeader">LOGIN</h1>
         <div class="loginBreak">
@@ -156,6 +54,107 @@
   			}  		
   		?>
       <br>
+      <?php
+
+if(!empty ($_POST)){
+  
+  require_once('cookies/valida.php');
+
+  $errors = validaFormLogin($_POST);
+
+  if(!is_array($errors) && !is_string($errors)){
+
+    require_once('cookies/configDb.php');
+
+
+    $db = connectDB();
+
+
+    if(is_string($db)){
+        
+      echo '<a class="errorMessage">Fatal error. Please try again later.</a><br><br>';
+      die();
+    }
+    
+
+    //building query string
+    $username = trim($_POST['username']);
+    $password = md5(trim($_POST['password']));
+
+
+    //construct the intend query
+    $query = "SELECT * FROM users WHERE username=? AND password=?";
+
+
+    //prepare the statement				
+    $statement = mysqli_prepare($db,$query);
+      
+    if (!$statement ){
+    //error preparing the statement. This should be regarded as a fatal error.
+      echo '<a class="errorMessage">Something went wrong. Please try again later.</a><br><br>';
+      die();				
+    }				
+         
+    //now bind the parameters by order of appearance
+    $result = mysqli_stmt_bind_param($statement,'ss',$username,$password); # 'ss' means that both parameters are expected to be strings.
+         
+    if ( !$result ){
+      //error binding the parameters to the prepared statement. This is also a fatal error.
+      echo '<a class="errorMessage">Something went wrong. Please try again later.</a><br><br>';
+      die();
+    }
+ 
+    //execute the prepared statement
+    $result = mysqli_stmt_execute($statement);
+       
+    if( !$result ) {
+    //again a fatal error when executing the prepared statement
+      echo '<a class="errorMessage">Something went wrong. Please try again later.</a><br><br>';
+    die();
+    }
+ 
+    //get the result set to further deal with it
+    $result = mysqli_stmt_get_result($statement);
+ 
+     if (!$result){
+    //again a fatal error: if the result cannot be stored there is no going forward
+      echo '<a class="errorMessage">Something went wrong. Please try again later.</a><br><br>';
+    die();
+    }	
+    elseif( mysqli_num_rows($result) == 1){
+      //there is one user only with these credentials
+             
+      //open session
+      session_start();
+   
+      //get user data
+      $user = mysqli_fetch_assoc($result);
+   
+      //save username and id in session					
+      $_SESSION['username'] = $user['username'];
+      $_SESSION['id'] = $user['id_users'];
+      $_SESSION['team'] = $user['team'];
+ 
+      //user registered - close db connection
+      $result = closeDb($db);
+   
+      //send the user to another page
+      header('Location:index.php');
+    }
+    else{
+      echo '<a class="errorMessage">Invalid Username/Password</a><br><br>';
+      $result = closeDb($db);
+    }
+    }
+    elseif( is_string($errors) ){
+        //the function has received an invalid argument - this is a programmer error and must be corrected
+        echo $errors;
+
+        //so that there is no problem when displaying the form
+        unset($errors);
+    }
+  }
+?>
                 <input class="loginButton" type="submit" value="LOGIN">
                 <div class="logSignUp">
                       Don't have an account yet? <a class="signUpLink" href="register.php">Sign Up</a>
