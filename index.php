@@ -60,9 +60,9 @@
                         <?php
                             if( !empty ($_SESSION) && array_key_exists("username", $_SESSION))
                             {   echo '<div class="accountActionsButtonContainer">
-                                <a class="profileActionButton" href="profile.php"> </a>
-                                <a class="profileActionButton" href="wallet.php"> </a>
-                                <a class="profileActionButton" href="logout.php"> </a>
+                                <a class="profileActionButton profileActionAccountImg" href="profile.php"> </a>
+                                <a class="profileActionButton profileActionWalletImg" href="wallet.php"> </a>
+                                <a class="profileActionButton profileActionLogoutImg" href="logout.php"> </a>
                                 </div>';
                             }
                         ?>

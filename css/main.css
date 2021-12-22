@@ -335,9 +335,25 @@ input[type="radio"]{
 
 .profileActionButton {
 	width: 30px;
-height: 30px;
-margin: 5px;
-background-size: contain;
-background-repeat: no-repeat;
-background-image: url("https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react//icons/steam_icon.svg");
+	height: 30px;
+	margin: 5px;
+	background-size: contain;
+	background-repeat: no-repeat;
 }
+
+.profileActionAccountImg {
+	background-image: url("../img/accountIcon.png");
+}
+
+.profileActionWalletImg {
+	background-image: url("../img/walletIcon.png");
+}
+
+.profileActionLogoutImg {
+	background-image: url("../img/logoutIcon.png");
+}
+
+.tooltip {
+	position: relative;
+	display: flex;
+  }
