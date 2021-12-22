@@ -30,7 +30,7 @@ if (!empty($_POST)) {
 
         //building query string
         $owner = trim($_POST['owner']);
-        $carnum = trim($_POST['cardnum']);
+        $cardnum = trim($_POST['cardnum']);
         $cvv = trim($_POST['cvv']);
         $cardname = $_POST['cardname'];
         $amount = $_POST['amount'];
