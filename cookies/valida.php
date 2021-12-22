@@ -205,7 +205,7 @@ function validaPayment ($data) {
 					$errors['owner'][0] = true;
 					$flag = true;	
                     if ( $flag == true ){
-                        //there are fields with invalid contents: return the errors array
+                      
                         return("pila5");
                     }			
 				}
@@ -215,7 +215,7 @@ function validaPayment ($data) {
 					$errors['amount'][0] = true;
 					$flag = true;
                     if ( $flag == true ){
-                        //there are fields with invalid contents: return the errors array
+                       
                         return("pila");
                     }	
 				}
@@ -224,7 +224,7 @@ function validaPayment ($data) {
 					$errors['cardname'][0] = true;
 					$flag = true;
                     if ( $flag == true ){
-                        //there are fields with invalid contents: return the errors array
+                       
                         return("pila3");
                     }	
 				}	
@@ -234,7 +234,7 @@ function validaPayment ($data) {
 					$errors['cardnum'][0] = true;
 					$flag = true;	
                     if ( $flag == true ){
-                        //there are fields with invalid contents: return the errors array
+                        
                         return("pila1");
                     }				
 				}
@@ -243,15 +243,15 @@ function validaPayment ($data) {
 					$errors['cvv'][0] = true;
 					$flag = true;	
                     if ( $flag == true ){
-                        //there are fields with invalid contents: return the errors array
+                        
                         return("pila2");
                     }	
                     			
 				}
 				
-				//deal with the validation results
+				
 				if ( $flag == false ){
-					//there are fields with invalid contents: return the errors array
+					
 					return(true);
 				}
 				

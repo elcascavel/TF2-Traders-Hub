@@ -7,89 +7,85 @@ if (!isset($_SESSION['username'])) {
 
 if (!empty($_POST)) {
 
-    //include validation tools
+    
     require_once('cookies/valida.php');
 
-    //call general form validation function
+   
     $errors = validaPayment($_POST);
 
-    //check validation result and act upon it
+    
     if (!is_array($errors) && !is_string($errors)) {
 
         require_once('cookies/configDb.php');
 
-        //connected to the database
+        
         $db = connectDB();
 
-        //success?				
+        			
         if (is_string($db)) {
-            //error connecting to the database
+         
             echo ("Fatal error! Please return later.");
             die();
         }
 
-        //building query string
+        
         $owner = trim($_POST['owner']);
         $cardnum = trim($_POST['cardnum']);
         $cvv = trim($_POST['cvv']);
         $cardname = $_POST['cardname'];
         $amount = $_POST['amount'];
 
-        //check if owner or cardnum already exist - Prepared statement
-        $query = "SELECT owner,cardnum FROM wallet WHERE owner=? OR cardnum=?";
+        $query = "SELECT cardnum FROM wallet WHERE cardnum=?";
 
-        //prepare the statement				
+        		
         $statement = mysqli_prepare($db, $query);
 
         if (!$statement) {
-            //error preparing the statement. This should be regarded as a fatal error.
+            
             echo "Something went wrong. Please try again later.1";
             die();
         }
 
-        //now bind the parameters by order of appearance
-        $result = mysqli_stmt_bind_param($statement, 'ss', $owner, $cardnum); # 'ss' means that both parameters are expected to be strings.
-
+       
+        $result = mysqli_stmt_bind_param($statement, 's', $cardnum);
         if (!$result) {
-            //error binding the parameters to the prepared statement. This is also a fatal error.
+           
             echo "Something went wrong. Please try again later.2";
             die();
         }
 
-        //execute the prepared statement
+        
         $result = mysqli_stmt_execute($statement);
 
         if (!$result) {
-            //again a fatal error when executing the prepared statement
+           
             echo "Something went very wrong. Please try again later.3";
             die();
         }
 
-        //get the result set to further deal with it
+        
         $result = mysqli_stmt_get_result($statement);
 
         if (!$result) {
-            //again a fatal error: if the result cannot be stored there is no going forward
+            
             echo "Something went wrong. Please try again later.4";
             die();
         } elseif (mysqli_num_rows($result) == 0) {
 
             $query = "INSERT INTO wallet (owner, cardnum, cvv, cardname, amount) VALUES (?,?,?,?,?)";
-
-            //prepare the statement				
+			
             $statement = mysqli_prepare($db, $query);
 
             if (!$statement) {
-                //error preparing the statement. This should be regarded as a fatal error.
+                
                 echo "Something went wrong. Please try again later.5";
                 die();
             }
 
-            //now bind the parameters by order of appearance
-            $result = mysqli_stmt_bind_param($statement, 'sssss', $owner, $cardnum, $cvv, $cardname, $amount); # 'ssss' means that all parameters are expected to be strings.
-
+            
+            $result = mysqli_stmt_bind_param($statement, 'sssss', $owner, $cardnum, $cvv, $cardname, $amount); 
             if (!$result) {
-                //error binding the parameters to the prepared statement. This is also a fatal error.
+                
                 echo "Something went wrong. Please try again later.6";
                 die();
             }
@@ -98,7 +94,7 @@ if (!empty($_POST)) {
             $result = mysqli_stmt_execute($statement);
 
             if (!$result) {
-                //again a fatal error when executing the prepared statement
+                
                 echo "Something went very wrong. Please try again later.7";
                 die();
             } else {
@@ -110,46 +106,32 @@ if (!empty($_POST)) {
                 exit();
             }
         } else {
-            //there already an owner or an cardnum in the database matching the imputed data. Which one is it? Or they both exist?
+            $existingRecords = array('cardnum' => false);
 
-            //get all rows returned in the result: one can have a row if there is only the cardnum or owner or two rows if both exist in different records
-            $existingRecords = array('cardnum' => false, 'owner' => false);
-
-            //now do it as you normally did it					
+          				
             while ($row = mysqli_fetch_assoc($result)) {
 
-                if ($row['owner'] == $owner) {
-                    $existingRecords['owner'] = true;
-                }
                 if ($row['cardnum'] == $cardnum) {
                     $existingRecords['cardnum'] = true;
                 }
-            } //end while																
-        } //end else	
+            } 															
+        } 
     } elseif (is_string($errors)) {
-        //the function has received an invalid argument - this is a programmer error and must be corrected
+     
         echo $errors;
 
-        //so that there is no problem when displaying the form
         unset($errors);
     }
 }
 ?>
 <?php
-//show if there is already either the same owner or cardnum in the user table on the database. This code can be placed anywhere the student desires. 
-if (!empty($existingRecords)) {
+    if (!empty($existingRecords)) {
 
-    if ($existingRecords['owner'] && $existingRecords['cardnum']) {
-        //both the owner and the cardnum already exist in the database
-        echo "Both owner and cardnum already exist in our records.";
-    } elseif ($existingRecords['owner']) {
-        //only the owner exists (you can erase the written owner so that it does not show up in the filled form, but it seams better to keep it so that the user knows what was the input)
-        echo "This owner is already taken. Please choose another one.";
-    } else {
-        //only the cardnum exists (you can erase the written cardnum so that it does not show up in the filled form, but it seams better to keep it so that the user knows what was the input)
-        echo "This cardnum is already taken. Please choose another one.";
+    if ($existingRecords['cardnum']) {
+        
+        echo "This Card Number already exist in our records.";
     }
-} //end main if
+} 
 ?>
 
 <!DOCTYPE html>
@@ -179,37 +161,37 @@ if (!empty($existingRecords)) {
      <div class="loginFormContainer">
          <img class="loginLogo" src="../TH/img/logo.png" />
          <form class="loginForm" action="" method="POST">
-             <input class="loginInput" type="text" id="owner" name="owner" placeholder="owner" value="<?php
+             <input class="loginInput" type="text" id="owner" name="owner" placeholder="owner" value=""<?php
 
                                                                                                                                                                                                                     if (!empty($errors) && isset($errors['owner'][0])) { #this is done to keep the value inputted by the user if this field is valid but others are not
                                                                                                                                                                                                                         echo $_POST['owner'];
                                                                                                                                                                                                                     }
 
-                                                                                                                                                                                                                    ?>"><br>
+                                                                                                                                                                                                                    ?>><br>
              <?php
-                if (!empty($errors) && isset($errors['owner'][0])) { # Equal to "if ( !empty($errors) && $errors['owner'][0] == true ){" #presents an error message if this field has invalid content
+                if (!empty($errors) && isset($errors['owner'][0])) { 
                     echo $errors['owner'][1] . "<br>";
                 }
                 ?>
-             <input class="loginInput" type="text" id="cardnum" name="cardnum" placeholder="cardnum" value="<?php
+             <input class="loginInput" type="text" id="cardnum" name="cardnum" placeholder="cardnum" value=""<?php
 
                                                                                                                                                                                                     if (!empty($errors) && isset($errors['cardnum'][0])) {
                                                                                                                                                                                                         echo $_POST['cardnum'];
                                                                                                                                                                                                     }
 
-                                                                                                                                                                                                    ?>"><br>
+                                                                                                                                                                                                    ?>><br>
              <?php
                 if (!empty($errors) && isset($errors['cardnum'][0])) {
                     echo $errors['cardnum'][1] . "<br>";
                 }
                 ?>
-              <input class="loginInput" type="text" id="cvv" name="cvv" placeholder="cvv" value="<?php
+              <input class="loginInput" type="text" id="cvv" name="cvv" placeholder="cvv" value=""<?php
 
                     if (!empty($errors) && isset($errors['cvv'][0])) {
                          echo $_POST['cvv'];
                     }
 
-                ?>"><br>
+                ?>><br>
             <?php
                 if (!empty($errors) && isset($errors['cvv'][0])) {
                     echo $errors['cvv'][1] . "<br>";
