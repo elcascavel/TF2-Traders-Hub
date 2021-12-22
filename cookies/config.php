@@ -3,6 +3,10 @@
     $maxUsername = 12;
     $minPassword = 8;
     $maxPassword = 48;
+    $mincvv = 3;
+    $maxcvv = 3;
+    $minNum = 16;
+    $maxNum = 16;
 
     // db config values
     $host = "localhost";

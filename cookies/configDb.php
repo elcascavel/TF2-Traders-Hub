@@ -21,4 +21,5 @@ function closeDb($db){
 	
 	return(mysqli_close($db));
 }
+
 ?>

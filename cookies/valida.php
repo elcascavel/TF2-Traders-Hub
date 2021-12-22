@@ -177,4 +177,116 @@
             return(true);
         }
     }
+
+function validaPayment ($data) {
+        require_once('config.php');
+
+        $errors = array('owner' => array(false, "Invalid Name: it must have between 4 and 20 chars ando no special chars."),
+								    'cardnum' => array(false, "Invalid Card Number: it must have 16 numbers and no special chars."),
+								    'cvv' => array(false, "Invalid CVV."),
+								    'cardname' => array(false,'Please select a Card.'),
+								    'amount' => array(false,'Please select an Amount.')
+								   );
+
+				$flag = false;
+
+                if ( !is_array($data) || count (array_intersect(array_keys($errors), array_keys($data) ) ) < sizeof($errors) ){
+					return("This function needs a parameter with the following format: array(\"owner\"=> \"value\", \"cardnum\"=> \"value\", \"cvv\"=> \"value\", \"cardname\"=> \"value\", \"amount\"=> \"value\")");
+					die();
+				}
+
+                $data['owner'] = trim($data['owner']);
+				$data['cardnum'] = trim($data['cardnum']);
+				$data['cvv'] = trim($data['cvv']);
+				
+
+                //validate owner
+				if( !validateOwner($data['owner'], $minUsername, $maxUsername) ){
+					$errors['owner'][0] = true;
+					$flag = true;	
+                    if ( $flag == true ){
+                        //there are fields with invalid contents: return the errors array
+                        return("pila5");
+                    }			
+				}
+			
+				//check if amount and cardname is selected
+				if ( !array_key_exists('amount', $data)){
+					$errors['amount'][0] = true;
+					$flag = true;
+                    if ( $flag == true ){
+                        //there are fields with invalid contents: return the errors array
+                        return("pila");
+                    }	
+				}
+                
+                if ( !array_key_exists('cardname', $data)){
+					$errors['cardname'][0] = true;
+					$flag = true;
+                    if ( $flag == true ){
+                        //there are fields with invalid contents: return the errors array
+                        return("pila3");
+                    }	
+				}	
+				
+				//check password
+				if( !validateCardnum($data['cardnum'],$minNum, $maxNum) ){
+					$errors['cardnum'][0] = true;
+					$flag = true;	
+                    if ( $flag == true ){
+                        //there are fields with invalid contents: return the errors array
+                        return("pila1");
+                    }				
+				}
+				
+                if( !validateCVV($data['cvv'],$mincvv, $maxcvv) ){
+					$errors['cvv'][0] = true;
+					$flag = true;	
+                    if ( $flag == true ){
+                        //there are fields with invalid contents: return the errors array
+                        return("pila2");
+                    }	
+                    			
+				}
+				
+				//deal with the validation results
+				if ( $flag == false ){
+					//there are fields with invalid contents: return the errors array
+					return(true);
+				}
+				
+    }
+
+    function validateOwner($owner, $minUsername, $maxUsername){
+				
+        $exp = "/^[A-z]{" . $minUsername . "," . $maxUsername .'}$/';			
+                                
+        if( !preg_match($exp, $owner )){
+            return (false);				
+        }else {
+            return(true);
+        }
+    }
+
+    function validateCardnum($cardnum, $minNum, $maxNum){
+        
+        $exp = "/^[0-9]{" . $minNum . "," . $maxNum .'}$/';			
+            
+        if( !preg_match($exp, $cardnum)){
+            return (false);				
+        }else {
+            return(true);
+        }
+    }
+
+    function validateCVV($cvv, $mincvv, $maxcvv){
+        
+        $exp = "/^[0-9]{" . $mincvv . "," . $maxcvv .'}$/';			
+            
+        if( !preg_match($exp, $cvv)){
+            return (false);				
+        }else {
+            return(true);
+        }
+    }
 ?>
