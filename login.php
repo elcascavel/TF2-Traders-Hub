@@ -103,9 +103,10 @@
         //get user data
         $user = mysqli_fetch_assoc($result);
      
-        //save username and id in session					
+        //save username, id and team in session					
         $_SESSION['username'] = $user['username'];
         $_SESSION['id'] = $user['id_users'];
+        $_SESSION['team'] = $user['team'];
    
         //user registered - close db connection
         $result = closeDb($db);
