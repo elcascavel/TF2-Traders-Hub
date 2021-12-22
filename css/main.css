@@ -339,14 +339,17 @@ input[type="radio"]{
 
 .profileActionAccountImg {
 	background-image: url("../img/accountIcon.png");
+  opacity:60%;
 }
 
 .profileActionWalletImg {
 	background-image: url("../img/walletIcon.png");
+  opacity:60%;
 }
 
 .profileActionLogoutImg {
 	background-image: url("../img/logoutIcon.png");
+  opacity:60%;
 }
 
 .tooltip {
@@ -355,13 +358,13 @@ input[type="radio"]{
   }
 
   .profileActionAccountImg:hover{
-    opacity:60%;
+    opacity:100%;
   }
 
   .profileActionWalletImg:hover{
-    opacity:60%;
+    opacity:100%;
   }
 
   .profileActionLogoutImg:hover{
-    opacity:60%;
+    opacity:100%;
   }
