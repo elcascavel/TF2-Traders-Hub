@@ -1,431 +1,425 @@
 * {
-	box-sizing: border-box;
-	font-family: "Inter", sans-serif;
-  }
-  
-  a {
-	text-decoration: none;
-	color: inherit;
-  }
-  
-  a:hover {
-	opacity: 1;
-  }
-  
-  .homepage {
-	width: 100%;
-	color: #fff;
-  }
-  
-  .headerParent {
-	width: 100%;
-	top: 0;
-	position: absolute;
-	z-index: 9999;
-	background-color: transparent;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: center;
-	height: 80px;
-	padding: 0px 30px;
-  }
-  
-  .headerLogo {
-	width: 200px;
-	min-width: 200px;
-	height: 80px;
-	min-height: 50px;
-	background-image: url("../img/logo.png");
-	background-size: contain;
-	background-repeat: no-repeat;
-	background-position: center center;
-	opacity: 0.8;
-	margin-right: 40px;
-  }
-  
-  .headerLogo:hover {
-	opacity: 1;
-	cursor: pointer;
-  }
-  
-  .headerNavItems {
-	flex-grow: 1;
-	height: 100%;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	position: relative;
-  }
-  
-  .navLink {
-	font-size: 18px;
-	font-family: "Inter", serif;
-	font-weight: 600;
-	letter-spacing: 3px;
-	opacity: 0.8;
-	color: #fff;
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	padding: 3px 0px;
-	margin: 0px 20px;
-	text-transform: uppercase;
-	border-top: 3px solid transparent;
-	border-bottom: 3px solid transparent;
-  }
-  
-  .backgroundHeader {
-	width: 100%;
-	height: 75vh;
-	overflow: hidden;
-	display: block;
-	position: relative;
-  }
-  
-  .backgroundVideoContainer {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	z-index: -2;
-  }
-  
-  .backgroundVideo {
-	height: 100%;
-	object-fit: cover;
-	width: 100vw;
-	top: 0;
-	left: 0;
-	opacity: 0.5;
-  }
-  
-  .headerFade {
-	width: 100%;
-	height: 200px;
-	position: absolute;
-	bottom: 0px;
-	background: -webkit-gradient(
-	  linear,
-	  left top,
-	  left bottom,
-	  color-stop(60%, rgba(0, 0, 0, 0)),
-	  color-stop(80%, rgba(0, 0, 0, 0.7)),
-	  color-stop(100%, black)
-	);
-  }
-  
-  .navSide {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-  }
-  
-  .navSideContent {
-	min-height: 0;
-	display: flex;
-	align-items: flex-end;
-  }
-  
-  .accountActions {
-	font-size: 14px;
-	margin: 4px;
-	font-weight: 600;
-	text-transform: uppercase;
-	letter-spacing: 2px;
-	opacity: 0.8;
-  }
-  
-  .accountActionsLogin {
-	font-size: 18px;
-	color: #fff;
-	display: flex;
-	margin-bottom: 23px;
-  }
-  
-  .accountActionsButtonContainer {
-	border: 3px solid #ffffff50;
-	padding: 10px;
-	margin: 0px 10px;
-	border-radius: 5px;
-	width: fit-content;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	transition-duration: 0.2s;
-  }
-  
-  .accountActionsButtonContainer:hover {
-	border: 3px solid #ff6046;
-	color: #ff6046;
-  }
-  
-  .quoteContainer {
-	height: 100%;
-	width: fit-content;
-	max-width: 60%;
-	padding-left: 10%;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-content: flex-end;
-	pointer-events: auto;
-  }
-  
-  .quote {
-	font-size: 60px;
-	line-height: 113%;
-	letter-spacing: 5px;
-	font-weight: 600;
-	color: #ffffffee;
-	text-transform: uppercase;
-	text-shadow: 0px 0px 20px #000;
-  }
-  
-  .quoteCredits {
-	font-size: 20px;
-	letter-spacing: 2px;
-	color: #ffffff90;
-	font-weight: 600;
-	margin-top: 5px;
-	margin-bottom: 20px;
-	text-transform: uppercase;
-  }
-  
-  .footerArea {
-	text-align: center;
-	width: 100%;
-	z-index: 5;
-	padding: 30px 100px;
-	background-color: #000;
-  }
-  
-  .footerLogos {
-	width: 500px;
-	margin: 0 auto;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-  }
-  
-  .footerLogoImg {
-	margin: 0px 15px 20px 15px;
-	max-height: 60px;
-  }
-  
-  .footerLegal {
-	text-align: center;
-	font-size: 14px;
-	color: #777;
-	padding: 0 20px;
-	width: 500px;
-	margin: 0 auto;
-  }
-  
-  .loginHeader {
-	padding: 15px 25px;
-	margin: 20px auto;
-	display: flex;
-	justify-content: center;
-	font-family: "TF2 Build", sans-serif;
-	color: #e6d9bc;
-  }
-  
-  .loginBreak {
-	width: 80px;
-	height: 3px;
-	min-height: 3px;
-	background-color: #ff6046;
-	border-radius: 1px;
-	margin: 20px auto;
-  }
-  
-  .loginFormContainer {
-	padding: 15px 25px;
-	margin: 20px auto;
-	border-radius: 5px;
-	width: fit-content;
-	display: flex;
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	transition: 2s;
-  }
-  
-  .loginForm {
-	text-align: center;
-  }
-  
-  .loginButton {
-	background-color: #a89d81;
-	border: none;
-	color: #2c2628;
-	padding: 15px 32px;
-	text-align: center;
-	text-decoration: none;
-	display: inline-block;
-	font-size: 16px;
-	cursor: pointer;
-	border-radius: 3px;
-	font-family: "TF2 Build", sans-serif;
-  }
-  
-  .loginButton:hover {
-	color: #eae6cd;
-	background-color: #87443b;
-  }
-  
-  .loginInput {
-	padding: 10px;
-	margin: 10px;
-	border-radius: 5px;
-	font-family: "Inter", sans-serif;
-  }
-  
-  .loginLogo {
-	height: 200px;
-  }
-  
-  input[type="radio"] {
-	opacity: 0;
-  }
-  
-  input[type="radio"]:checked + .teamPick {
-	filter: grayscale(0);
-  }
-  
-  .teamPick{
-	filter: grayscale(100%);
-  }
-  
-  .teamPick:hover {
-	cursor: pointer;
-	filter: grayscale(0);
-  }
-  .logSignUp {
-	font-size: 12px;
-	margin: 20px;
-  }
-  .signUpLog {
-	font-size: 12px;
-	margin: 20px;
-  }
-  .loginLink {
-	font-size: 14px;
-	font-weight: bold;
-	color: #a89d81;
-  }
-  .loginLink:hover {
-	color: #87443b;
-  }
-  .signUpLink {
-	font-size: 14px;
-	font-weight: bold;
-	color: #a89d81;
-  }
-  .signUpLink:hover {
-	color: #87443b;
-  }
-  
-  .profileActionButton {
-	width: 30px;
-	height: 30px;
-	margin: 5px;
-	background-size: contain;
-	background-repeat: no-repeat;
-  }
-  
-  .profileActionAccountImg {
-	background-image: url("../img/accountIcon.png");
-  opacity:60%;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:hover {
+  opacity: 1;
+}
+
+.homepage {
+  width: 100%;
+  color: #fff;
+}
+
+.headerParent {
+  width: 100%;
+  top: 0;
+  position: absolute;
+  z-index: 9999;
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  padding: 0px 30px;
+}
+
+.headerLogo {
+  width: 200px;
+  min-width: 200px;
+  height: 80px;
+  min-height: 50px;
+  background-image: url("../img/logo.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center center;
+  opacity: 0.8;
+  margin-right: 40px;
+}
+
+.headerLogo:hover {
+  opacity: 1;
+  cursor: pointer;
+}
+
+.headerNavItems {
+  flex-grow: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+}
+
+.navLink {
+  font-size: 18px;
+  font-family: "Inter", serif;
+  font-weight: 600;
+  letter-spacing: 3px;
+  opacity: 0.8;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 3px 0px;
+  margin: 0px 20px;
+  text-transform: uppercase;
+  border-top: 3px solid transparent;
+  border-bottom: 3px solid transparent;
+}
+
+.backgroundHeader {
+  width: 100%;
+  height: 75vh;
+  overflow: hidden;
+  display: block;
+  position: relative;
+}
+
+.backgroundVideoContainer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+
+.backgroundVideo {
+  height: 100%;
+  object-fit: cover;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  opacity: 0.5;
+}
+
+.headerFade {
+  width: 100%;
+  height: 200px;
+  position: absolute;
+  bottom: 0px;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(60%, rgba(0, 0, 0, 0)),
+    color-stop(80%, rgba(0, 0, 0, 0.7)),
+    color-stop(100%, black)
+  );
+}
+
+.navSide {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.navSideContent {
+  min-height: 0;
+  display: flex;
+  align-items: flex-end;
+}
+
+.accountActions {
+  font-size: 14px;
+  margin: 4px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  opacity: 0.8;
+}
+
+.accountActionsLogin {
+  font-size: 18px;
+  color: #fff;
+  display: flex;
+  margin-bottom: 23px;
+}
+
+.accountActionsButtonContainer {
+  border: 3px solid #ffffff50;
+  padding: 10px;
+  margin: 0px 10px;
+  border-radius: 5px;
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  transition-duration: 0.2s;
+}
+
+.accountActionsButtonContainer:hover {
+  border: 3px solid #ff6046;
+  color: #ff6046;
+}
+
+.quoteContainer {
+  height: 100%;
+  width: fit-content;
+  max-width: 60%;
+  padding-left: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: flex-end;
+  pointer-events: auto;
+}
+
+.quote {
+  font-size: 60px;
+  line-height: 113%;
+  letter-spacing: 5px;
+  font-weight: 600;
+  color: #ffffffee;
+  text-transform: uppercase;
+  text-shadow: 0px 0px 20px #000;
+}
+
+.quoteCredits {
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: #ffffff90;
+  font-weight: 600;
+  margin-top: 5px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.footerArea {
+  text-align: center;
+  width: 100%;
+  z-index: 5;
+  padding: 30px 100px;
+  background-color: #000;
+}
+
+.footerLogos {
+  width: 500px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.footerLogoImg {
+  margin: 0px 15px 20px 15px;
+  max-height: 60px;
+}
+
+.footerLegal {
+  text-align: center;
+  font-size: 14px;
+  color: #777;
+  padding: 0 20px;
+  width: 500px;
+  margin: 0 auto;
+}
+
+.loginHeader {
+  padding: 15px 25px;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+  font-family: "TF2 Build", sans-serif;
+  color: #e6d9bc;
+}
+
+.loginBreak {
+  width: 80px;
+  height: 3px;
+  min-height: 3px;
+  background-color: #ff6046;
+  border-radius: 1px;
+  margin: 20px auto;
+}
+
+.loginFormContainer {
+  padding: 15px 25px;
+  margin: 20px auto;
+  border-radius: 5px;
+  width: fit-content;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: 2s;
+}
+
+.loginForm {
+  text-align: center;
+}
+
+.loginButton {
+  background-color: #a89d81;
+  border: none;
+  color: #2c2628;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-family: "TF2 Build", sans-serif;
+}
+
+.loginButton:hover {
+  color: #eae6cd;
+  background-color: #87443b;
+}
+
+.loginInput {
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  font-family: "Inter", sans-serif;
+}
+
+.loginLogo {
+  height: 200px;
+}
+
+.logSignUp {
+  font-size: 12px;
+  margin: 20px;
+}
+.signUpLog {
+  font-size: 12px;
+  margin: 20px;
+}
+.loginLink {
+  font-size: 14px;
+  font-weight: bold;
+  color: #a89d81;
+}
+.loginLink:hover {
+  color: #87443b;
+}
+.signUpLink {
+  font-size: 14px;
+  font-weight: bold;
+  color: #a89d81;
+}
+.signUpLink:hover {
+  color: #87443b;
+}
+
+.profileActionButton {
+  width: 30px;
+  height: 30px;
+  margin: 5px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.profileActionAccountImg {
+  background-image: url("../img/accountIcon.png");
+  opacity: 60%;
 }
 
 .profileActionWalletImg {
-	background-image: url("../img/walletIcon.png");
-  opacity:60%;
+  background-image: url("../img/walletIcon.png");
+  opacity: 60%;
 }
 
 .profileActionLogoutImg {
-	background-image: url("../img/logoutIcon.png");
-  opacity:60%;
+  background-image: url("../img/logoutIcon.png");
+  opacity: 60%;
 }
 
 .tooltip {
-	position: relative;
-	display: flex;
-  }
+  position: relative;
+  display: flex;
+}
 
-  .profileActionAccountImg:hover{
-    opacity:100%;
-  }
+.profileActionAccountImg:hover {
+  opacity: 100%;
+}
 
-  .profileActionWalletImg:hover{
-    opacity:100%;
-  }
+.profileActionWalletImg:hover {
+  opacity: 100%;
+}
 
-  .profileActionLogoutImg:hover{
-    opacity:100%;
-  }
-  
-  .profileActionWalletImg {
-	background-image: url("../img/walletIcon.png");
-  }
-  
-  .profileActionLogoutImg {
-	background-image: url("../img/logoutIcon.png");
-  }
-  
-  .mainProfileContent {
-	position: relative;
-	top: 200px;
-	left: 100px;
-	width: fit-content;
-  }
-  
-  .userInfo {
-	background-color: #2c2628;
-	width: fit-content;
-	padding: 10px;
-	display: flex;
-	flex-direction: column;
-  }
-  
-  .tooltip {
-	  position: relative;
-	  display: flex;
-	}
-  
-	.userInfoUsername {
-	  font-size: 25px;
-	}
+.profileActionLogoutImg:hover {
+  opacity: 100%;
+}
 
-	.errorMessage {
-		color: #E9967A;
-		padding-bottom: 5px;
-	}
+.profileActionWalletImg {
+  background-image: url("../img/walletIcon.png");
+}
 
-	.editProfileButton {
-		background-color: #a89d81;
-		border: none;
-		color: #2c2628;
-		padding: 5px 10px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 16px;
-		cursor: pointer;
-		border-radius: 3px;
-		font-family: "TF2 Build", sans-serif;
-		margin-left: 10px;
-	  }
+.profileActionLogoutImg {
+  background-image: url("../img/logoutIcon.png");
+}
 
-	  .editProfileButton:hover {
-		color: #eae6cd;
-		background-color: #87443b;
-	  }
+.mainProfileContent {
+  position: relative;
+  top: 200px;
+  left: 100px;
+  width: fit-content;
+}
 
-	  .userInfoEditProfileContainer {
-		  display:flex;
-		  flex-direction: row;
-	  }
+.userInfo {
+  background-color: #2c2628;
+  width: fit-content;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.tooltip {
+  position: relative;
+  display: flex;
+}
+
+.userInfoUsername {
+  font-size: 25px;
+}
+
+.errorMessage {
+  color: #e9967a;
+  padding-bottom: 5px;
+}
+
+.editProfileButton {
+  background-color: #a89d81;
+  border: none;
+  color: #2c2628;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-family: "TF2 Build", sans-serif;
+  margin-left: 10px;
+}
+
+.editProfileButton:hover {
+  color: #eae6cd;
+  background-color: #87443b;
+}
+
+.userInfoEditProfileContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.teamSelect {
+	background-color: #a89d81;
+	color: #2c2628;
+	width: 70px;
+	font-size: 16px;
+	border: none;
+	height: 30px;
+	text-align: center;
+}
