@@ -189,7 +189,10 @@
  				<?php
 					if (!empty($errors) && isset($errors['username'][0])) { # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
 						
-						echo $errors['username'][1] . "<br>";
+						if($errors['username'][0]==true){
+							echo $errors['username'][1] . "<br>";
+						}
+					
 					}
 					?>
  				<input class="loginInput" type="email" id="email" name="email" placeholder="E-mail" value="<?php
@@ -202,19 +205,25 @@
  				<?php
 					if (!empty($errors) && isset($errors['email'][0] )) {
 						
-						echo $errors['email'][1] . "<br>";
+						if($errors['email'][0]==true){
+							echo $errors['email'][1] . "<br>";
+						}
 					}
 					?>
  				<input class="loginInput" type="password" id="password" name="password" placeholder="Password"><br>
  				<?php
 					if (!empty($errors) && isset($errors['password'][0])) {
-						echo $errors['password'][1] . "<br>";
+						if($errors['password'][0]==true){
+							echo $errors['password'][1] . "<br>";
+						}
 					}
 					?>
  				<input class="loginInput" type="password" id="rpassword" name="rpassword" placeholder="Repeat Password"><br>
  				<?php
 					if (!empty($errors) && isset($errors['rpassword'][0])) {
-						echo $errors['rpassword'][1] . "<br>";
+						if($errors['rpassword'][0]==true){
+							echo $errors['rpassword'][1] . "<br>";
+						}
 					}
 					?><br>
  				<div class="teamPickContainer">
@@ -240,7 +249,9 @@
 
  					<?php
 						if (!empty($errors) && isset($errors['team'][0])) {
-							echo $errors['team'][1] . "<br>";
+							if($errors['team'][0]==true){
+								echo $errors['team'][1] . "<br>";
+							}
 						}
 						?>
  				</div>
