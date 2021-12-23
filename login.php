@@ -42,7 +42,7 @@
     
     ?>"><br>
     <?php
-      if ( !empty($errors) && !$errors['email'][0]){ # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
+      if ( !empty($errors) && !$errors['username'][0]){ # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
         echo $errors['username'][1] . "<br>";
       }  		
     ?>
