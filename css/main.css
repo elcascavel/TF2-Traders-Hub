@@ -399,34 +399,33 @@
 	.userInfoUsername {
 	  font-size: 25px;
 	}
-	
-	.navProfileButtons ul {
-	  display: flex;
-	  list-style: none;
-	  padding: 10px;
-	  margin: 0;
-	  flex-wrap: wrap;
-	  background: #282a36;
-	  position: relative;
-	  top: 200px;
-	}
-	
-	.navProfileButtons li {
-	  margin-right: 16px;
-	}
-  
-	.navButton {
-		cursor: pointer;
-		font-weight: bold;
-		color: white;
-		text-transform: uppercase;
-	}
-
-	.navButtonSelected {
-		color: orange;
-	}
 
 	.errorMessage {
 		color: #E9967A;
 		padding-bottom: 5px;
 	}
+
+	.editProfileButton {
+		background-color: #a89d81;
+		border: none;
+		color: #2c2628;
+		padding: 5px 10px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		cursor: pointer;
+		border-radius: 3px;
+		font-family: "TF2 Build", sans-serif;
+		margin-left: 10px;
+	  }
+
+	  .editProfileButton:hover {
+		color: #eae6cd;
+		background-color: #87443b;
+	  }
+
+	  .userInfoEditProfileContainer {
+		  display:flex;
+		  flex-direction: row;
+	  }

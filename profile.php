@@ -5,6 +5,8 @@ session_start();
 if (!isset($_SESSION['username'])) {
 	header("Location: index.php");
 }
+
+require_once('cookies/configDb.php');
 ?>
 
 <head>
@@ -41,14 +43,23 @@ if (!isset($_SESSION['username'])) {
 			</div>
 			<div class="mainProfileContent">
 				<div class="userInfo">
+					<div class=userInfoEditProfileContainer>
 					<a class="userInfoUsername">
 						<?php
 						if (!empty($_SESSION) && array_key_exists("username", $_SESSION)) {
 							echo $_SESSION['username'];
 						}
-						?>
+						?>	
 					</a>
+					<input class="editProfileButton" type="submit" value="EDIT PROFILE">
+					</div>
 					<a>Member since December 22, 2021</a>
+					<a>
+						<?php
+						 if (!empty($_SESSION) && array_key_exists("email", $_SESSION)) {
+							echo $_SESSION['email'];
+						}
+						?>
 					<a>
 						<?php
 						 if (!empty($_SESSION) && array_key_exists("team", $_SESSION)) {
@@ -57,42 +68,5 @@ if (!isset($_SESSION['username'])) {
 						?>
 				</div>     
 			</div>
-			<nav class="navProfileButtons">
-					<ul >
-						<li>
-							<a>
-								<div id="overviewButton" class="navButton">
-									Overview
-								</div>
-							</a>
-						</li>
-						<li>
-							<a>
-								<div id="statsButton" class="navButton">
-									Stats
-								</div>
-							</a>
-						</li>
-					</ul>
-				</nav>
-				<div class = "overviewContent">
-						
-				</div>
 		</div>
-	<script>
-		let isClicked = false;
-		document.getElementById("overviewButton").onclick = function() {
-			if (isClicked == false) {
-				document.getElementById("overviewButton").classList.toggle('navButtonSelected');
-				isClicked = true;
-			}
-			
-		}
-		document.getElementById("statsButton").onclick = function() {
-			if (isClicked == false) {
-				document.getElementById("statsButton").classList.toggle('navButtonSelected');
-				isClicked = true;
-			}
-		}
-	</script>
 	</body>
