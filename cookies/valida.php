@@ -181,8 +181,8 @@
 function validaPayment ($data) {
         require_once('config.php');
 
-        $errors = array('owner' => array(false, "Invalid Name: it must have between 4 and 20 chars ando no special chars."),
-								    'cardnum' => array(false, "Invalid Card Number: it must have 16 numbers and no special chars."),
+        $errors = array('owner' => array(false, "Invalid Name: it must have between $minOwner and $maxOwner chars ando no special chars."),
+								    'cardnum' => array(false, "Invalid Card Number: it must have $minNum numbers and no special chars."),
 								    'cvv' => array(false, "Invalid CVV."),
 								    'cardname' => array(false,'Please select a Card.'),
 								    'amount' => array(false,'Please select an Amount.')

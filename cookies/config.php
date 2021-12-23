@@ -7,6 +7,8 @@
     $maxcvv = 3;
     $minNum = 16;
     $maxNum = 16;
+    $minOwner = 4;
+    $maxOwner = 20;
 
     // db config values
     $host = "localhost";
