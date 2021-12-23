@@ -163,7 +163,7 @@ if (!empty($_POST)) {
          <form class="loginForm" action="" method="POST">
              <input class="loginInput" type="text" id="owner" name="owner" placeholder="owner" value=""<?php
 
-                                                                                                                                                                                                                    if (!empty($errors) && isset($errors['owner'][0])) { #this is done to keep the value inputted by the user if this field is valid but others are not
+                                                                                                                                                                                                                    if (!empty($errors) && !isset($errors['owner'][0])) { #this is done to keep the value inputted by the user if this field is valid but others are not
                                                                                                                                                                                                                         echo $_POST['owner'];
                                                                                                                                                                                                                     }
 
@@ -175,7 +175,7 @@ if (!empty($_POST)) {
                 ?>
              <input class="loginInput" type="text" id="cardnum" name="cardnum" placeholder="cardnum" value=""<?php
 
-                                                                                                                                                                                                    if (!empty($errors) && isset($errors['cardnum'][0])) {
+                                                                                                                                                                                                    if (!empty($errors) && !isset($errors['cardnum'][0])) {
                                                                                                                                                                                                         echo $_POST['cardnum'];
                                                                                                                                                                                                     }
 
@@ -187,7 +187,7 @@ if (!empty($_POST)) {
                 ?>
               <input class="loginInput" type="text" id="cvv" name="cvv" placeholder="cvv" value=""<?php
 
-                    if (!empty($errors) && isset($errors['cvv'][0])) {
+                    if (!empty($errors) && !isset($errors['cvv'][0])) {
                          echo $_POST['cvv'];
                     }
 

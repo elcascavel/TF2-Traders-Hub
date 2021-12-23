@@ -179,7 +179,7 @@
  			<img class="loginLogo" src="../TH/img/logo.png" />
  			<form class="loginForm" action="" method="POST">
  				<input class="loginInput" type="text" id="username" name="username" placeholder="Username" value="<?php
-						if (!empty($errors) && isset($errors['username'][0])) { #this is done to keep the value inputted by the user if this field is valid but others are not
+						if (!empty($errors) && !isset($errors['username'][0])) { #this is done to keep the value inputted by the user if this field is valid but others are not
 							echo $_POST['username'];
 						}
 					?>"><br>
@@ -190,7 +190,7 @@
 					?>
  				<input class="loginInput" type="email" id="email" name="email" placeholder="E-mail" value="<?php
 
-					if (!empty($errors) && isset($errors['email'][0])) {
+					if (!empty($errors) && !isset($errors['email'][0])) {
 								echo $_POST['email'];
 							}
 					?>"><br>
