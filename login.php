@@ -36,20 +36,20 @@
             <form class="loginForm" action="" method="POST">
                 <input class="loginInput" type="text" id="username" name="username" placeholder="Username"  value="<?php
   		
-      if ( !empty($errors) && !isset($errors['username'][0] )){ #this is done to keep the value inputted by the user if this field is valid but others are not
+      if ( !empty($errors) && $errors['username'][0]){ #this is done to keep the value inputted by the user if this field is valid but others are not
         echo $_POST['username'];
       }  
     
     ?>"><br>
     <?php
-      if ( !empty($errors) && isset($errors['username'][0] )){ # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
+      if ( !empty($errors) && !$errors['email'][0]){ # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
         echo $errors['username'][1] . "<br>";
       }  		
     ?>
     <br>
                 <input class="loginInput" type="password" id="password" name="password" placeholder="Password" ><br>
                 <?php
-  			if ( !empty($errors) && isset($errors['password'][0] )){
+  			if ( !empty($errors) && !$errors['password'][0]){
   				echo $errors['password'][1] . "<br>";
   			}  		
   		?>
