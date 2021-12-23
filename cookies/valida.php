@@ -122,7 +122,7 @@
 					$errors['password'][0] = true;
 					$flag = true;				
 				}
-				elseif( $data['rpassword'] != $data['password']){
+				if( $data['rpassword'] != $data['password']){
 					$errors['rpassword'][0] = true;
 					$flag = true;
 				}
