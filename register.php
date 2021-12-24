@@ -117,10 +117,10 @@
 				//now do it as you normally did it					
 				while ($row = mysqli_fetch_assoc($result)) {
 
-					if ($row['username'] == $username) {
+					if ($row !== null && $row['username'] == $username) {
 						$existingRecords['username'] = true;
 					}
-					if ($row['email'] == $email) {
+					if ($row !== null && $row['email'] == $email) {
 						$existingRecords['email'] = true;
 					}
 				} //end while																
@@ -133,25 +133,6 @@
 			unset($errors);
 		}
 	}
-	?>
- <?php
-	//show if there is already either the same username or email in the user table on the database. This code can be placed anywhere the student desires. 
-	if (!empty($existingRecords)) {
-
-		if ($existingRecords['username'] && $existingRecords['email']) {
-			
-			//both the username and the email already exist in the database
-			echo "Both username and email already exist in our records.";
-		} elseif ($existingRecords['username']) {
-			
-			//only the username exists (you can erase the written username so that it does not show up in the filled form, but it seams better to keep it so that the user knows what was the input)
-			echo "This username is already taken. Please choose another one.";
-		} else {
-			
-			//only the email exists (you can erase the written email so that it does not show up in the filled form, but it seams better to keep it so that the user knows what was the input)
-			echo "This email is already taken. Please choose another one.";
-		}
-	} //end main if
 	?>
 
  <!DOCTYPE html>
@@ -202,35 +183,54 @@
 					 <label>Pick your team, soldier!</label><br><br>
 				 <select class="teamSelect" name="team" id="team">
   					<option id="redTeam" value="RED">RED</option>
+					  
   					<option id="bluTeam" value="BLU">BLU</option>
 				</select>
  				</div>
 				 <br>
 				 <?php
+					//show if there is already either the same username or email in the user table on the database. This code can be placed anywhere the student desires. 
+					if (!empty($existingRecords)) {
+
+					if ($existingRecords['username'] && $existingRecords['email']) {
+			
+			//both the username and the email already exist in the database
+						echo '<a class="errorMessage"> Both username and email already exist in our records.</a><br><br>';
+						} elseif ($existingRecords['username']) {
+			
+			//only the username exists (you can erase the written username so that it does not show up in the filled form, but it seams better to keep it so that the user knows what was the input)
+						echo '<a class="errorMessage"> This username is already taken. Please choose another one.</a><br><br>';
+					} else {
+			
+					//only the email exists (you can erase the written email so that it does not show up in the filled form, but it seams better to keep it so that the user knows what was the input)
+						echo '<a class="errorMessage">This email is already taken. Please choose another one.</a><br><br>';
+						}
+					} //end main if
+					?>
+				 <?php
 				 if (!empty($errors)) { # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
-						
-					if ($errors['username'][0]==true)
+					
+					if (isset($errors['username']) && $errors['username'][0]==true)
 					{
-						
 						echo '<a class="errorMessage">' . $errors['username'][1] . '</a>' . '<br><br>';
 					}
 
-					if ($errors['email'][0]==true)
+					if (isset($errors['email']) && $errors['email'][0]==true)
 					{
 						echo '<a class="errorMessage">' . $errors['email'][1] . '</a>' . '<br><br>';
 					}
 
-					if ($errors['password'][0]==true)
+					if (isset($errors['password']) && $errors['password'][0]==true)
 					{
-							echo '<a class="errorMessage">' . $errors['password'][1] . '</a>' . '<br><br>';
+						echo '<a class="errorMessage">' . $errors['password'][1] . '</a>' . '<br><br>';
 					}
 
-					if($errors['rpassword'][0]==true)
+					if(isset($errors['rpassword']) && $errors['rpassword'][0]==true)
 					{
 						echo '<a class="errorMessage">' . $errors['rpassword'][1] . '</a>' . '<br><br>';
 					}
 
-					if($errors['team'][0]==true)
+					if(isset($errors['team']) && $errors['team'][0]==true)
 					{
 						echo '<a class="errorMessage">' . $errors['team'][1] . '</a>' . '<br><br>';
 					}
