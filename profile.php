@@ -42,7 +42,7 @@ require_once('cookies/configDb.php');
 				</div>
 			</div>
 			<div class="mainProfileContent">
-				<div class="userInfo">
+				<div id="profileContainer" class="userInfo">
 					<div class=userInfoEditProfileContainer>
 					<a class="userInfoUsername">
 						<?php
@@ -51,7 +51,7 @@ require_once('cookies/configDb.php');
 						}
 						?>	
 					</a>
-					<input class="editProfileButton" type="submit" value="EDIT PROFILE">
+					<input onclick="editProfile()" class="editProfileButton" type="submit" value="EDIT PROFILE">
 					</div>
 					<a>Member since December 22, 2021</a>
 					<a>
@@ -66,7 +66,64 @@ require_once('cookies/configDb.php');
 							echo $_SESSION['team'] . " Team";
 						}
 						?>
-				</div>     
+				</div>
+				
+				<div id="editProfileContainer" class="userInfo" style="display:none">
+						<div class="userInfoEditProfileContainer">
+						<input class="loginInput" type="text" id="username" name="username" placeholder="Username" value="<?php
+					
+						if (!empty($_SESSION) && array_key_exists("username", $_SESSION)) 
+						{	
+							echo $_SESSION['username'];
+						}
+						?>"><br>
+						</div>
+
+						<input class="loginInput" type="text" id="email" name="email" placeholder="E-mail" value="<?php
+					
+						if (!empty($_SESSION) && array_key_exists("email", $_SESSION)) 
+						{	
+							echo $_SESSION['email'];
+						}
+						?>"><br>
+						<input class="loginInput" type="password" id="password" name="password" placeholder="New Password" value=""><br>
+						<input class="loginInput" type="rpassword" id="rpassword" name="rpassword" placeholder="Repeat Password" value=""><br>
+						<div style="text-align:center; padding-bottom:10px">
+						<select class="teamSelect" name="team" id="team">
+  						<option id="redTeam" value="RED">RED</option>
+  						<option id="bluTeam" value="BLU">BLU</option>
+						</select>
+						</div><br>
+						
+						<div style="text-align:center">
+							<input onclick="saveProfile()" class="editProfileButton" type="submit" value="SAVE">
+							<input onclick="saveProfile()" class="editProfileButton" type="submit" value="CANCEL">
+						</div>
+						</div>
+
+						
+						</div>
+				</div>
 			</div>
 		</div>
+		<script>
+			let profileInfoBox = document.getElementById("profileContainer");
+			let editProfileBox = document.getElementById("editProfileContainer");
+
+			function editProfile() {
+				if (profileInfoBox.style.display === "none") {
+					profileInfoBox.style.display = "flex";
+  				} else {
+					profileInfoBox.style.display = "none";
+					editProfileBox.style.display = "flex";
+  				}
+			}
+
+			function saveProfile() {
+				if (editProfileBox.style.display == "flex") {
+					editProfileBox.style.display = "none";
+					profileInfoBox.style.display = "flex";
+				}
+			}
+		</script>
 	</body>
