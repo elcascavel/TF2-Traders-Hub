@@ -70,6 +70,7 @@ require_once('cookies/configDb.php');
 				
 				<div id="editProfileContainer" class="userInfo" style="display:none">
 						<div class="userInfoEditProfileContainer">
+						<form action="" method="POST">
 						<input class="loginInput" type="text" id="username" name="username" placeholder="Username" value="<?php
 					
 						if (!empty($_SESSION) && array_key_exists("username", $_SESSION)) 
@@ -99,6 +100,7 @@ require_once('cookies/configDb.php');
 							<input onclick="saveProfile()" class="editProfileButton" type="submit" value="SAVE">
 							<input onclick="saveProfile()" class="editProfileButton" type="submit" value="CANCEL">
 						</div>
+						</form>
 						</div>
 
 						
