@@ -183,7 +183,9 @@ if (!isset($_SESSION['username'])) {
 							$result = closeDb($db);
 								
 							//user information updated
-							
+							$_SESSION['username'] = $username;
+							$_SESSION['email'] = $email;
+							$_SESSION['team'] = $team;
 							header('Location:index.php');
 							
 							die();
@@ -350,16 +352,7 @@ if (!isset($_SESSION['username'])) {
   			echo '<input type="hidden" name="id" value="' . $id . '"><br>';
   		?>
 						<div style="text-align:center">
-							<input onclick="saveProfile()" class="editProfileButton" type="submit" value="SAVE<?php 
-							
-			  						
-											$_SESSION['username'] = $user['username'];
-											$_SESSION['email'] = $user['email'];
-											$_SESSION['team'] = $user['team'];
-						
-											
-																
-							?>">
+							<input onclick="saveProfile()" class="editProfileButton" type="submit" value="SAVE">
 							<input onclick="saveProfile()" class="editProfileButton" type="submit" value="CANCEL">
 						</div>
 						</form>
