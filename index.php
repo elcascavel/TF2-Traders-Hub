@@ -108,7 +108,8 @@
                             {   
                                 
                                 while( $row = mysqli_fetch_assoc($result) ){
-                                                                     
+                                    if($row['username'] == $_SESSION['username']){
+                   
                                 echo '<div class="accountActionsButtonContainer">
                                 <form action="profile.php" method="POST" name="formModifica">
                                 <input type="hidden" value="' . $row['id_users'] . '" name="id">
@@ -118,7 +119,7 @@
                                 <a class="profileActionButton profileActionLogoutImg" href="logout.php"> </a>
                                 </div>';
                                     
-                                 
+                                    }  
                                 }
                             }
                         ?>
