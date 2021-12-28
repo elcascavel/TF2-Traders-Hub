@@ -193,8 +193,18 @@ if (!isset($_SESSION['username'])) {
 				}
 				else{
 					//the returned email does belong to the user that is having it's data updated
-					$existingRecords['email'] = true;
-					$existingRecords['username'] = true;	
+					$existingRecords = array('email' => false, 'username' => false);
+						
+				//now do it as you normally did it					
+				while ($row = mysqli_fetch_assoc($result)) {
+
+					if ($row !== null && $row['username'] == $_SESSION['username']) {
+						$existingRecords['username'] = true;
+					}
+					if ($row !== null && $row['email'] == $_SESSION['email']) {
+						$existingRecords['email'] = true;
+					}
+				} //end while		
 				}
   			}
   			elseif( is_string($errors) ){
@@ -214,20 +224,22 @@ if (!isset($_SESSION['username'])) {
   	}
 
 		//show if there is already either the same username or email in the user table on the database. This code can be placed anywhere the student desires. 
-		if ( !empty($existingRecords) ){
+		if (!empty($existingRecords)) {
+
+					if ($existingRecords['username'] && $existingRecords['email']) {
 			
-			if ( $existingRecords['email'] ){
-				//the email already exists in the database
-				echo "The email already exists in our records.";				
-			} elseif ( $existingRecords['username'] ){
-				//the email already exists in the database
-				echo "The username already exists in our records.";				
-			}	
-			elseif ( $existingRecords['email'] && $existingRecords['username']){
-				//the email already exists in the database
-				echo "The username and email already exists in our records.";				
-			}			
-		}
+			//both the username and the email already exist in the database
+						echo '<a class="errorMessage"> Both username and email already exist in our records.</a><br><br>';
+						} elseif ($existingRecords['username']) {
+			
+			//only the username exists (you can erase the written username so that it does not show up in the filled form, but it seams better to keep it so that the user knows what was the input)
+						echo '<a class="errorMessage"> This username is already taken. Please choose another one.</a><br><br>';
+					} else {
+			
+					//only the email exists (you can erase the written email so that it does not show up in the filled form, but it seams better to keep it so that the user knows what was the input)
+						echo '<a class="errorMessage">This email is already taken. Please choose another one.</a><br><br>';
+						}
+					} //end main if
 	  
 ?>
 
