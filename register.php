@@ -42,7 +42,7 @@
 
 			if (!$statement) {
 				//error preparing the statement. This should be regarded as a fatal error.
-				echo "Something went wrong. Please try again later.";
+				echo "Something went wrong. Please try again later.1";
 				die();
 			}
 
@@ -51,7 +51,7 @@
 
 			if (!$result) {
 				//error binding the parameters to the prepared statement. This is also a fatal error.
-				echo "Something went wrong. Please try again later.";
+				echo "Something went wrong. Please try again later.2";
 				die();
 			}
 
@@ -60,7 +60,7 @@
 
 			if (!$result) {
 				//again a fatal error when executing the prepared statement
-				echo "Something went very wrong. Please try again later.";
+				echo "Something went very wrong. Please try again later.3";
 				die();
 			}
 
@@ -69,7 +69,7 @@
 
 			if (!$result) {
 				//again a fatal error: if the result cannot be stored there is no going forward
-				echo "Something went wrong. Please try again later.";
+				echo "Something went wrong. Please try again later.4";
 				die();
 			} elseif (mysqli_num_rows($result) == 0) {
 
@@ -80,7 +80,7 @@
 
 				if (!$statement) {
 					//error preparing the statement. This should be regarded as a fatal error.
-					echo "Something went wrong. Please try again later.";
+					echo "Something went wrong. Please try again later.5";
 					die();
 				}
 
@@ -89,7 +89,7 @@
 
 				if (!$result) {
 					//error binding the parameters to the prepared statement. This is also a fatal error.
-					echo "Something went wrong. Please try again later.";
+					echo "Something went wrong. Please try again later.6";
 					die();
 				}
 
@@ -98,7 +98,7 @@
 
 				if (!$result) {
 					//again a fatal error when executing the prepared statement
-					echo "Something went very wrong. Please try again later.";
+					echo "Something went very wrong. Please try again later.7";
 					die();
 				} else {
 

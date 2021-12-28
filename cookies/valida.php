@@ -4,26 +4,41 @@
 
         $errors = array('password' => array(false, "Invalid password: it must have between $minPassword and $maxPassword chars and special chars."),
 								    'rpassword' => array(false, "Passwords mismatch."),
-								    'email' => array(false,'Invalid email.')
+								    'email' => array(false,'Invalid email.'),
+                                    'username' => array(false,'Invalid username.'),
+                                    'team' => array(false,'Please select a team.')
 								   );
 
 		$flag = false;
 
         if (!is_array($data) || count(array_intersect(array_keys($errors), array_keys($data) ) ) < sizeof($errors)) {
-            return("This function needs a parameter with the following format: array(\"password\"=> \"value\", \"rpassword\"=> \"value\", \"email\"=> \"value\"");
+            return("This function needs a parameter with the following format: array(\"password\"=> \"value\",\"username\"=> \"value\", \"rpassword\"=> \"value\", \"email\"=> \"value\", \"team\"=> \"value\"");
 			die();
         }
 
         $data['password'] = trim($data['password']);
 		$data['rpassword'] = trim($data['rpassword']);
 		$data['email'] = trim($data['email']);
+        $data['username'] = trim($data['username']);
+        $data['team'] = $data['team'];
+
+        if( !validateUsername($data['username'], $minUsername, $maxUsername) ){
+            $errors['username'][0] = true;
+            $flag = true;				
+        }
+    
+        //check if team is selected
+        if ( !array_key_exists('team', $data)){
+            $errors['team'][0] = true;
+            $flag = true;
+        }		
 
         if (!validatePassword($data['password'], $minPassword, $maxPassword)) {
             $errors['password'][0] = true;
             $flag = true;
         }
 
-        else if ($data['rpassword'] != $data['password']) {
+        if ($data['rpassword'] != $data['password']) {
             $errors['rpassword'][0] = true;
             $flag = true;
         }

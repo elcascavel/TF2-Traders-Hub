@@ -321,8 +321,11 @@ a:hover {
 }
 
 .profileActionAccountImg {
-  background-image: url("../img/accountIcon.png");
+  background: url("../img/accountIcon.png") no-repeat;
   opacity: 60%;
+  border:none;
+  cursor: pointer;
+  
 }
 
 .profileActionWalletImg {
