@@ -190,22 +190,14 @@ if (!isset($_SESSION['username'])) {
 							
 							die();
 						}
-				}
-				else{
-					//the returned email does belong to the user that is having it's data updated
-					$existingRecords = array('email' => false, 'username' => false);
-						
-				//now do it as you normally did it					
-				while ($row = mysqli_fetch_assoc($result)) {
+				}else{
 
-					if ($row !== null && $row['username'] == $_SESSION['username']) {
-						$existingRecords['username'] = true;
-					}
-					if ($row !== null && $row['email'] == $_SESSION['email']) {
-						$existingRecords['email'] = true;
-					}
-				} //end while		
+					$existingRecords['email'] = true;
+					$existingRecords['username'] = true;	
 				}
+				
+			}
+				
   			}
   			elseif( is_string($errors) ){
 				  	//the function has received an invalid argument - this is a programmer error and must be corrected
@@ -215,7 +207,7 @@ if (!isset($_SESSION['username'])) {
 				  	unset($errors);
   			}
   		}
-  	}
+  	
   	else{
 		//this page cannot be loaded without the id data.
 		
@@ -281,7 +273,7 @@ if (!isset($_SESSION['username'])) {
 					<a class="userInfoUsername">
 						<?php
 						if (!empty($_SESSION) && array_key_exists("username", $_SESSION)) {
-							echo $user['username'];
+							echo $_SESSION['username'];
 							
 						}
 						?>	
@@ -292,13 +284,13 @@ if (!isset($_SESSION['username'])) {
 					<a>
 						<?php
 						 if (!empty($_SESSION) && array_key_exists("email", $_SESSION)) {
-							echo $user['email'];
+							echo $_SESSION['email'];
 						}
 						?>
 					<a>
 						<?php
 						 if (!empty($_SESSION) && array_key_exists("team", $_SESSION)) {
-							echo $user['team'] . " Team";
+							echo $_SESSION['team'] . " Team";
 						}
 						?>
 				</div>
@@ -308,7 +300,7 @@ if (!isset($_SESSION['username'])) {
 						<form action="" method="POST" >
 						<input class="loginInput" type="text" id="username" name="username" placeholder="Username" value="<?php
 					
-					if ( !empty($errors) && !$errors['username'][0] ){ 
+					if (!empty($errors) && isset($errors['username'][0])) { 
 						echo $_POST['username'];
 						
 						
@@ -318,39 +310,23 @@ if (!isset($_SESSION['username'])) {
 						echo $user['username'];
 					}
 						?>"><br>
-						<?php
-	  if ( !empty($errors) && $errors['username'][0] ){
-		  echo $errors['username'][1] . "<br>";
-	  }  		
-  ?>
+						
 						</div>
 						
 						<input class="loginInput" type="text" id="email" name="email" placeholder="E-mail" value="<?php
   		
-		  if ( !empty($errors) && !$errors['email'][0] ){ 
+		  if (!empty($errors) && isset($errors['email'][0])){ 
 			  echo $_POST['email'];
 		  }
 		  elseif( !empty($user) ){
 			  echo $user['email'];
 		  }
 	  
-	  ?>"><br><?php
-	  if ( !empty($errors) && $errors['email'][0] ){
-		  echo $errors['email'][1] . "<br>";
-	  }  		
-  ?>
+	  ?>"><br>
 						<input class="loginInput" type="password" id="password" name="password" placeholder="New Password">
-						<?php
-  			if ( !empty($errors) && $errors['password'][0] ){
-  				echo $errors['password'][1] . "<br>";
-  			}  		
-  		?><br>
+						<br>
 						<input class="loginInput" type="password" id="rpassword" name="rpassword" placeholder="Repeat Password">
-						<?php
-  			if ( !empty($errors) && $errors['rpassword'][0] ){
-  				echo $errors['rpassword'][1] . "<br>";
-  			}  		
-  		?>
+					
   <br>
 						<div style="text-align:center; padding-bottom:10px">
 						<select class="teamSelect" name="team" id="team">
@@ -358,6 +334,35 @@ if (!isset($_SESSION['username'])) {
   						<option id="bluTeam" value="BLU">BLU</option>
 						</select>
 						</div><br>
+						<?php
+						if (!empty($errors)) { # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
+					
+							if (isset($errors['username']) && $errors['username'][0]==true)
+							{
+								echo '<a class="errorMessage">' . $errors['username'][1] . '</a>' . '<br><br>';
+							}
+		
+							if (isset($errors['email']) && $errors['email'][0]==true)
+							{
+								echo '<a class="errorMessage">' . $errors['email'][1] . '</a>' . '<br><br>';
+							}
+		
+							if (isset($errors['password']) && $errors['password'][0]==true)
+							{
+								echo '<a class="errorMessage">' . $errors['password'][1] . '</a>' . '<br><br>';
+							}
+		
+							if(isset($errors['rpassword']) && $errors['rpassword'][0]==true)
+							{
+								echo '<a class="errorMessage">' . $errors['rpassword'][1] . '</a>' . '<br><br>';
+							}
+		
+							if(isset($errors['team']) && $errors['team'][0]==true)
+							{
+								echo '<a class="errorMessage">' . $errors['team'][1] . '</a>' . '<br><br>';
+							}
+						}
+						?>
 								
   		<?php
   			//set up an hidden field to sustain the user's id throughout this process.
