@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
     <?php
-    
     session_start();
+    if (!isset($_SESSION['username'])) {
+        header("Location: index.php");
+    }
     ?>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -138,24 +140,27 @@
                     </div>
                 </div>
             </div>
-            <div class= "backgroundHeader">
-                <div class="backgroundVideoContainer">
-                    <video class="backgroundVideo" autoplay="" preload="auto" loop="" playsinline muted>
-                        <source type="video/mp4" src="../TH/img/video.mp4">
-                    </video>
+            <div class="buyBody">
+                <table style="padding-top:12px; padding-bottom:12px; border-spacing: 20px;">
+  <tr class="table-listing-header">
+    <th>NAME</th>
+    <th>QUANTITY</th>
+    <th>PRICE</th>
+  </tr>
+  <tr class="table-row-item">
+    <td class="table-listing-item "><img class= "table-image" src= https://community.akamai.steamstatic.com/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZULUrsm1j-9xgEAaR4uURrwvz0N252yVaDVWrRTno9m4ccG2GNqxlQoZrC2aG9hcVGUWflbX_drrVu5UGki5sAij6tOtQ/62fx62f>
+    <span class="table-listing-title">Mann Co. Supply Crate Key</span></td>
+    <td class="table-listing-item">34,181</td>
+    <td class="table-listing-item">€2.08 EUR</td>
+  </tr>
+  <tr class="table-row-item">
+    <td class="table-listing-item"><img class= "table-image" src= https://community.akamai.steamstatic.com/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZULUrsm1j-9xgEMZQEFYgjrtj9PjffqDOCLDa4CzYhtsZVWjjRoxQB5YrawYjJld1TDWPIMWKY8pQm0CiVkuJdhVdSyuasILgK_i0fr/62fx62f>
+    <span class="table-listing-title">Secret Saxton</span></td>
+    <td class="table-listing-item">66,791</td>
+    <td class="table-listing-item">€0.09 EUR</td>
+  </tr>
+</table>
                 </div>
-                <div class="quoteContainer" data-aos="fade-right" data-aos-delay="500" data-aos-duration="2500">
-                    <div>
-                        <div class="quote">
-                            Trade, buy or sell TF2 skins
-                        </div>
-                        <div class="quoteCredits">
-                            TF2 Trader's Hub is safe and efficient.
-                        </div>
-                    </div>
-                </div>
-                <div class="headerFade"></div>
-            </div>
             <div class="footerArea">
                 <div class="footerLogos">
                     <a href="https://www.valvesoftware.com/en/about"><img class="footerLogoImg" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/valve_logo.png"></a>
