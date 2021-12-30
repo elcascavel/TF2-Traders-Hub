@@ -213,6 +213,7 @@ function validaPayment ($data) {
                 $data['owner'] = trim($data['owner']);
 				$data['cardnum'] = trim($data['cardnum']);
 				$data['cvv'] = trim($data['cvv']);
+                
 				
 
                 
@@ -221,7 +222,7 @@ function validaPayment ($data) {
 					$flag = true;	
                     if ( $flag == true ){
                       
-                        return("pila5");
+                        return("error1");
                     }			
 				}
 			
@@ -231,7 +232,7 @@ function validaPayment ($data) {
 					$flag = true;
                     if ( $flag == true ){
                        
-                        return("pila");
+                        return("error2");
                     }	
 				}
                 
@@ -240,7 +241,7 @@ function validaPayment ($data) {
 					$flag = true;
                     if ( $flag == true ){
                        
-                        return("pila3");
+                        return("error3");
                     }	
 				}	
 				
@@ -250,7 +251,7 @@ function validaPayment ($data) {
 					$flag = true;	
                     if ( $flag == true ){
                         
-                        return("pila1");
+                        return("error4");
                     }				
 				}
 				
@@ -259,7 +260,7 @@ function validaPayment ($data) {
 					$flag = true;	
                     if ( $flag == true ){
                         
-                        return("pila2");
+                        return("error5");
                     }	
                     			
 				}

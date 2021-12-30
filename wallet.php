@@ -160,7 +160,7 @@ if (!empty($existingRecords)) {
 		<h1 class="loginHeader">ADD FUNDS</h1>
 		<div class="loginBreak"></div>
 		<div class="loginFormContainer">
-			<img class="loginLogo" src="../TH/img/logo.png" />
+			<a href="index.php"> <img class="loginLogo" src="../TH/img/logo.png" /></a>
 			<form class="loginForm" action="" method="POST">
 				<input class="loginInput" type="text" id="owner" name="owner" placeholder="owner" value="" <?php
 
@@ -199,7 +199,7 @@ if (!empty($existingRecords)) {
 				}
 				?>
 				<div class="teamPickContainer">
-				<select class="teamSelect" name="team" id="team">
+				<select class="teamSelect" name="cardname" id="team">
   					<option id="visa" name="cardname" value="Visa">Visa</option>
   					<option id="mastercard" name="cardname" value="MasterCard">MasterCard</option>
 				</select>
@@ -211,9 +211,9 @@ if (!empty($existingRecords)) {
 					}
 					?>
 				<div class="teamPickContainer">
-				<select class="teamSelect" name="team" id="team">
-  					<option id="eu5" name="amount" value="5EUR">Add 5,--€</option> 
-  					<option id="mastercard" name="cardname" value="10EUR">Add 10,--€</option>
+				<select class="teamSelect" name="amount" id="team">
+  					<option id="eu5" name="amount" value="5">Add 5,--€</option> 
+  					<option id="eu10" name="amount" value="10">Add 10,--€</option>
 				</select>
 					<?php
 					if (!empty($errors) && isset($errors['amount'][0])) {
@@ -223,7 +223,26 @@ if (!empty($existingRecords)) {
 				</div>
 				<br>
 				<input class="loginButton" type="submit" value="VALIDATE">
+				<?php 
+			
+			
+
+			$conn = new mysqli("localhost", "root", "cm", "trabalhoTeste");
+		
+		
+			$sql = "SELECT  SUM(amount) from wallet";
+			$result = $conn->query($sql);
+			echo "<br>"."<br>";
+			while($row = mysqli_fetch_array($result)){
+				echo " Wallet: ". $row['SUM(amount)']."€";
+				echo "<br>";
+			}
+			
+			
+			?>
 			</form>
+
+			
 			<img style="width:300px" src="../TH/img/soldierRegister.png" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1500" />
 		</div>
 
