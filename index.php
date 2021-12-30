@@ -54,7 +54,13 @@
                         if( !empty ($_SESSION) && array_key_exists("username", $_SESSION))
                         {   
                                 
-                                echo $_SESSION['username'];
+                                echo $_SESSION['username']."<br>";
+                                if(array_key_exists("amount", $_SESSION))
+                                {
+                                   echo "Wallet: ". $_SESSION['amount']. "€";
+                                }
+                                
+                                
                                 
                         }
                             ?>

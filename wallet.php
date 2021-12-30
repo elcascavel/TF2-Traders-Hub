@@ -129,7 +129,7 @@ if (!empty($existingRecords)) {
 
 	if ($existingRecords['cardnum']) {
 
-		echo "This Card Number already exist in our records.";
+		echo '<a class="errorMessage">This Card Number already exist in our records.';
 	}
 }
 ?>
@@ -226,18 +226,21 @@ if (!empty($existingRecords)) {
 				<?php 
 			
 			
+		
+			require_once('cookies/configDb.php');
 
-			$conn = new mysqli("localhost", "root", "cm", "trabalhoTeste");
+
+			$db = connectDB();
 		
 		
 			$sql = "SELECT  SUM(amount) from wallet";
-			$result = $conn->query($sql);
+			$result = $db->query($sql);
 			echo "<br>"."<br>";
-			while($row = mysqli_fetch_array($result)){
+			$row = mysqli_fetch_array($result);
 				echo " Wallet: ". $row['SUM(amount)']."€";
+				$_SESSION['amount'] = $row['SUM(amount)'];
 				echo "<br>";
-			}
-			
+								
 			
 			?>
 			</form>
