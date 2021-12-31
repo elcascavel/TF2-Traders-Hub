@@ -62,7 +62,7 @@ if (isset($_POST['login_button'])) {
 
     else {
         echo '<a class="errorMessage">Invalid Username/Password</a><br><br>';
-      $result = closeDb($db);
+        $result = closeDb($db);
     } 
 }
 else if( is_string($errors) ){

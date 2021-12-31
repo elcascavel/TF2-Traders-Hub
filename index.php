@@ -38,7 +38,7 @@
                         <a class="accountActions" href="login.php" >
                         
                         <?php 
-                                if(!isset($_SESSION['username']))
+                                if(!isset($userLoggedIn))
                                 {      
                                         echo "Login";
                                 }
@@ -50,9 +50,8 @@
                        <?php 
                        
                     
-                        if( !empty ($_SESSION) && array_key_exists("username", $_SESSION))
-                        {   
-                                
+                        if(isset($userLoggedIn))
+                        {
                                 echo $userLoggedIn."<br>";
                                 if(array_key_exists("amount", $_SESSION))
                                 {
@@ -65,72 +64,22 @@
                         
                            
                         <?php
-                        
-                        require_once('cookies/configDb.php');
-                          
-                      //connected to the database
-                      $db = connectDB();
-                              
-                      //success?				
-                      if ( is_string($db) ){
-                          //error connecting to the database
-                          echo ("Fatal error! Please return later.");
-                          die();
-                      }
-                      
-                      //select all columns from all users in the table
-                      $query = "SELECT id_users,username,email,team FROM users";
-                        
-                        //prepare the statement				
-                      $statement = mysqli_prepare($db, $query);
-                              
-                      if (!$statement ){
-                          //error preparing the statement. This should be regarded as a fatal error.
-                          echo "Something went wrong. Please try again later.";
-                          die();				
-                      }				
-                              
-                      //execute the prepared statement
-                      $result = mysqli_stmt_execute($statement);
-                                          
-                      if( !$result ) {
-                          //again a fatal error when executing the prepared statement
-                          echo "Something went very wrong. Please try again later.";
-                          die();
-                      }
-                              
-                      //get the result set to further deal with it
-                      $result = mysqli_stmt_get_result($statement);
-                              
-                      if (!$result){
-                          //again a fatal error: if the result cannot be stored there is no going forward
-                          echo "Something went wrong. Please try again later.";	
-                          die();
-                      }
-                            if( !empty ($_SESSION) && array_key_exists("username", $_SESSION))
+                            if(isset($userLoggedIn) && $userLoggedIn == $_SESSION['username'])
                             {   
-                                
-                                while( $row = mysqli_fetch_assoc($result) ){
-                                    if($row['username'] == $_SESSION['username']){
-                   
                                 echo '<div class="accountActionsButtonContainer">
                                 <form action="profile.php" method="POST" name="formModifica">
-                                <input type="hidden" value="' . $row['id_users'] . '" name="id">
                                 <input class="profileActionButton profileActionAccountImg" type="submit" name="modificar" value="">
                             </form>
                                 <a class="profileActionButton profileActionWalletImg" href="wallet.php"> </a>
                                 <a class="profileActionButton profileActionLogoutImg" href="logout.php"> </a>
                                 </div>';
-                                    
-                                    }  
-                                }
                             }
                         ?>
                         
 
                         <a class="accountActions" href="register.php">
                         <?php
-                        if (!isset($_SESSION['username'])) {
+                        if (!isset($userLoggedIn)) {
                             echo "Sign Up";
                         } 
                                 

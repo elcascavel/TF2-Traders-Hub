@@ -10,6 +10,8 @@ $errors = array();
 
 if (isset($_POST['register_button'])) {
     require_once "config/config.php";
+    require_once "validation.php";
+    
     $errors = array('username' => array(false, "Invalid username: it must have between $minUsername and $maxUsername chars."),
 								    'password' => array(false, "Invalid password: it must have between $minPassword and $maxPassword chars and special chars."),
 								    'rpassword' => array(false, "Passwords mismatch."),
@@ -68,43 +70,6 @@ if (isset($_POST['register_button'])) {
     if ( $flag == true ){
         //there are fields with invalid contents: return the errors array
         return($errors);
-    }
-}
-
-function validateUsername($username, $min, $max){
-				
-    $exp = "/^[A-z0-9_]{" . $min . "," . $max .'}$/';			
-                            
-    if( !preg_match($exp, $username )){
-        return (false);				
-    }else {
-        return(true);
-    }
-}
-
-function validateEmail ($email){
-        
-    //remove unwanted chars that maybe included in the email field content
-    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-    
-    //verify if the inputted email is according to validation standards
-    if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-        return (false);				
-    }
-    else {
-        return(true);
-    }
-}
-
-function validatePassword($data, $min, $max){
-        
-    $exp = "/^[A-z0-9_\\\*\-]{" . $min . "," . $max .'}$/';			
-        
-    if( !preg_match($exp, $data)){
-        return (false);				
-    }
-    else {
-        return(true);
     }
 }
 
