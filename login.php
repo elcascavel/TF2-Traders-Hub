@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <?php
+  include("./cookies/header.php");
   session_start();
     if (isset($_SESSION['username'])) {
       header("Location: index.php");
@@ -155,7 +156,7 @@ if(!empty ($_POST)){
     }
   }
 ?>
-                <input class="loginButton" type="submit" value="LOGIN">
+                <input class="loginButton" name= "login_button" type="submit" value="LOGIN">
                 <div class="logSignUp">
                       Don't have an account yet? <a class="signUpLink" href="register.php">Sign Up</a>
                 </div>

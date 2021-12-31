@@ -101,6 +101,12 @@ require_once('cookies/configDb.php');
 							<input onclick="saveProfile()" class="editProfileButton" type="submit" value="CANCEL">
 						</div>
 						</form>
+
+						<form action="profile.php" method="POST">
+						<div style="text-align:center; margin-top: 10px">
+							<input class="editProfileButton" type="submit" name="closeAccount" id="closeAccount" value="DELETE ACCOUNT">
+						</div>
+						</form>
 						</div>
 
 						
@@ -108,6 +114,12 @@ require_once('cookies/configDb.php');
 				</div>
 			</div>
 		</div>
+
+		<?php
+			if (isset($_POST['closeAccount'])) {
+				header("Location: closeAccount.php");
+			}
+		?>
 		<script>
 			let profileInfoBox = document.getElementById("profileContainer");
 			let editProfileBox = document.getElementById("editProfileContainer");

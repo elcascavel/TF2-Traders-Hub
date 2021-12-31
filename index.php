@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
     <?php
-    
-    session_start();
+        include("includes/header.php");
     ?>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
