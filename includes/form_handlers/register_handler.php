@@ -25,27 +25,20 @@ if (isset($_POST['register_button'])) {
     $username = strip_tags($_POST['username']); // Remove html tags
     $username = trim($username);
 
-    $usernameExp = "/^[A-z0-9_]{" . $minUsername . "," . $maxUsername .'}$/';			
-                                
-    if(!preg_match($usernameExp, $username))
-    {
+    if (!validateUsername($username, $minUsername, $maxUsername)) {
         $errors['username'][0] = true;
         $flag = true;
     }
-    else 
-    {
+    else {
         $_SESSION['username'] = $username;
     }
 
     $email = strip_tags($_POST['email']);
     $email = trim($email);
 
-    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-        
-    if(!filter_var($email, FILTER_VALIDATE_EMAIL))
-    {
+    if(!validateEmail($email)){
         $errors['email'][0] = true;
-        $flag = true;			
+        $flag = true;				
     }
     else 
     {
@@ -57,12 +50,9 @@ if (isset($_POST['register_button'])) {
     $rpassword = strip_tags($_POST['rpassword']);
     $rpassword = trim($rpassword);
 
-    $passwordExp = "/^[A-z0-9_\\\*\-]{" . $minPassword . "," . $maxPassword .'}$/';			
-            
-    if(!preg_match($passwordExp, $password)){
+    if(!validatePassword($password, $minPassword, $maxPassword) ){
         $errors['password'][0] = true;
-        $flag = true;
-        return false;		
+        $flag = true;				
     }
     
     if($rpassword != $password){
@@ -73,6 +63,49 @@ if (isset($_POST['register_button'])) {
     $team = $_POST['team'];
 
     $date = date("Y-m-d");
+
+    //deal with the validation results
+    if ( $flag == true ){
+        //there are fields with invalid contents: return the errors array
+        return($errors);
+    }
+}
+
+function validateUsername($username, $min, $max){
+				
+    $exp = "/^[A-z0-9_]{" . $min . "," . $max .'}$/';			
+                            
+    if( !preg_match($exp, $username )){
+        return (false);				
+    }else {
+        return(true);
+    }
+}
+
+function validateEmail ($email){
+        
+    //remove unwanted chars that maybe included in the email field content
+    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+    
+    //verify if the inputted email is according to validation standards
+    if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+        return (false);				
+    }
+    else {
+        return(true);
+    }
+}
+
+function validatePassword($data, $min, $max){
+        
+    $exp = "/^[A-z0-9_\\\*\-]{" . $min . "," . $max .'}$/';			
+        
+    if( !preg_match($exp, $data)){
+        return (false);				
+    }
+    else {
+        return(true);
+    }
 }
 
 if (!empty($_POST)) { 
@@ -123,7 +156,6 @@ if (!empty($_POST)) {
             $statement = mysqli_prepare($db, $query);
 
             if (!$statement) {
-                echo $query;
                 echo "Error preparing statement. Try again later.";
                 die();
             }

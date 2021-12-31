@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html>
 <?php
-session_start();
-if (!isset($_SESSION['username'])) {
-	header("Location: index.php");
-}
+include("includes/header.php");
 
 require_once('cookies/configDb.php');
 ?>
@@ -46,25 +43,19 @@ require_once('cookies/configDb.php');
 					<div class=userInfoEditProfileContainer>
 					<a class="userInfoUsername">
 						<?php
-						if (!empty($_SESSION) && array_key_exists("username", $_SESSION)) {
-							echo $_SESSION['username'];
-						}
+						echo $userLoggedIn;
 						?>	
 					</a>
 					<input onclick="editProfile()" class="editProfileButton" type="submit" value="EDIT PROFILE">
 					</div>
-					<a>Member since December 22, 2021</a>
+					<a>Member since<?php echo " " . $user['signup_date'] ?></a>
 					<a>
 						<?php
-						 if (!empty($_SESSION) && array_key_exists("email", $_SESSION)) {
-							echo $_SESSION['email'];
-						}
+						 echo $user['email'];
 						?>
 					<a>
 						<?php
-						 if (!empty($_SESSION) && array_key_exists("team", $_SESSION)) {
-							echo $_SESSION['team'] . " Team";
-						}
+						 echo $user['team'];
 						?>
 				</div>
 				
@@ -117,7 +108,7 @@ require_once('cookies/configDb.php');
 
 		<?php
 			if (isset($_POST['closeAccount'])) {
-				header("Location: closeAccount.php");
+				header("Location: close_account.php");
 			}
 		?>
 		<script>

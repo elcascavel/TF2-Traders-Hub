@@ -49,7 +49,7 @@
                        <?php 
                         if( !empty ($_SESSION) && array_key_exists("username", $_SESSION))
                         {   
-                                echo $_SESSION['username'];
+                                echo $userLoggedIn;
                         }
                             ?>
                         </a>

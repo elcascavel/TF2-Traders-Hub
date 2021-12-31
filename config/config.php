@@ -1,4 +1,11 @@
 <?php
+if(!isset($_SESSION)) 
+{ 
+    session_start(); 
+} 
+
+$timezone = date_default_timezone_set("Europe/London");
+
     $minUsername = 4;
     $maxUsername = 12;
     $minPassword = 8;

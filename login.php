@@ -1,12 +1,9 @@
+<?php
+  require 'config/config.php';
+  require 'includes/form_handlers/login_handler.php';
+?>
 <!DOCTYPE html>
 <html>
-  <?php
-  include("./cookies/header.php");
-  session_start();
-    if (isset($_SESSION['username'])) {
-      header("Location: index.php");
-  }
-  ?>
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=9" />
@@ -35,7 +32,7 @@
         <div class="loginFormContainer">
             <img class="loginLogo" src="../TH/img/logo.png"/>
             <form class="loginForm" action="" method="POST">
-                <input class="loginInput" type="text" id="username" name="username" placeholder="Username"  value="<?php
+                <input class="loginInput" type="text" id="log_username" name="log_username" placeholder="Username"  value="<?php
   		
       if ( !empty($errors) && !isset($errors['username'][0])){ #this is done to keep the value inputted by the user if this field is valid but others are not
         echo $_POST['username'];
@@ -48,114 +45,13 @@
       }  		
     ?>
     <br>
-                <input class="loginInput" type="password" id="password" name="password" placeholder="Password" ><br>
+                <input class="loginInput" type="password" id="password" name="log_password" placeholder="Password" ><br>
                 <?php
   			if ( !empty($errors) && isset($errors['password'][0])){
   				echo $errors['password'][1] . "<br>";
   			}  		
   		?>
       <br>
-      <?php
-
-if(!empty ($_POST)){
-  
-  require_once('cookies/valida.php');
-
-  $errors = validaFormLogin($_POST);
-
-  if(!is_array($errors) && !is_string($errors)){
-
-    require_once('cookies/configDb.php');
-
-
-    $db = connectDB();
-
-
-    if(is_string($db)){
-        
-      echo '<a class="errorMessage">Fatal error. Please try again later.</a><br><br>';
-      die();
-    }
-    
-
-    //building query string
-    $username = trim($_POST['username']);
-    $password = md5(trim($_POST['password']));
-
-
-    //construct the intend query
-    $query = "SELECT * FROM users WHERE username=? AND password=?";
-
-
-    //prepare the statement				
-    $statement = mysqli_prepare($db,$query);
-      
-    if (!$statement ){
-    //error preparing the statement. This should be regarded as a fatal error.
-      echo '<a class="errorMessage">Something went wrong. Please try again later.</a><br><br>';
-      die();				
-    }				
-         
-    //now bind the parameters by order of appearance
-    $result = mysqli_stmt_bind_param($statement,'ss',$username,$password); # 'ss' means that both parameters are expected to be strings.
-         
-    if ( !$result ){
-      //error binding the parameters to the prepared statement. This is also a fatal error.
-      echo '<a class="errorMessage">Something went wrong. Please try again later.</a><br><br>';
-      die();
-    }
- 
-    //execute the prepared statement
-    $result = mysqli_stmt_execute($statement);
-       
-    if( !$result ) {
-    //again a fatal error when executing the prepared statement
-      echo '<a class="errorMessage">Something went wrong. Please try again later.</a><br><br>';
-    die();
-    }
- 
-    //get the result set to further deal with it
-    $result = mysqli_stmt_get_result($statement);
- 
-     if (!$result){
-    //again a fatal error: if the result cannot be stored there is no going forward
-      echo '<a class="errorMessage">Something went wrong. Please try again later.</a><br><br>';
-    die();
-    }	
-    elseif( mysqli_num_rows($result) == 1){
-      //there is one user only with these credentials
-             
-      //open session
-      session_start();
-   
-      //get user data
-      $user = mysqli_fetch_assoc($result);
-   
-      //save username and id in session					
-      $_SESSION['username'] = $user['username'];
-      $_SESSION['id'] = $user['id_users'];
-      $_SESSION['team'] = $user['team'];
- 
-      //user registered - close db connection
-      $result = closeDb($db);
-   
-      //send the user to another page
-      header('Location:index.php');
-    }
-    else{
-      echo '<a class="errorMessage">Invalid Username/Password</a><br><br>';
-      $result = closeDb($db);
-    }
-    }
-    elseif( is_string($errors) ){
-        //the function has received an invalid argument - this is a programmer error and must be corrected
-        echo $errors;
-
-        //so that there is no problem when displaying the form
-        unset($errors);
-    }
-  }
-?>
                 <input class="loginButton" name= "login_button" type="submit" value="LOGIN">
                 <div class="logSignUp">
                       Don't have an account yet? <a class="signUpLink" href="register.php">Sign Up</a>
