@@ -3,7 +3,7 @@
 // Connect to DB; Query DB (CRUD); disconnect DB
 function connectDB(){
 	
-	include('config.php');
+	include('config/config.php');
 
 	$db = mysqli_connect($host, $username, $password, $dbName);
 

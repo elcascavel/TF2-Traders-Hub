@@ -1,143 +1,9 @@
- <?php
-
-	session_start();
-	if (isset($_SESSION['username'])) {
-		header("Location: index.php");
-	}
-
-	if (!empty($_POST)) {
-
-		//include validation tools
-		require_once('cookies/valida.php');
-
-		//call general form validation function
-		$errors = validaFormRegisto($_POST);
-
-		//check validation result and act upon it
-		if (!is_array($errors) && !is_string($errors)) {
-
-			require_once('cookies/configDb.php');
-
-			//connected to the database
-			$db = connectDB();
-
-			//success?				
-			if (is_string($db)) {
-				//error connecting to the database
-				echo ("Fatal error! Please return later.");
-				die();
-			}
-
-			//building query string
-			$username = trim($_POST['username']);
-			$email = trim($_POST['email']);
-			$password = md5(trim($_POST['password']));
-			$team = $_POST['team'];
-
-			//check if username or email already exist - Prepared statement
-			$query = "SELECT username,email FROM users WHERE username=? OR email=?";
-
-			//prepare the statement				
-			$statement = mysqli_prepare($db, $query);
-
-			if (!$statement) {
-				//error preparing the statement. This should be regarded as a fatal error.
-				echo "Something went wrong. Please try again later.1";
-				die();
-			}
-
-			//now bind the parameters by order of appearance
-			$result = mysqli_stmt_bind_param($statement, 'ss', $username, $email); # 'ss' means that both parameters are expected to be strings.
-
-			if (!$result) {
-				//error binding the parameters to the prepared statement. This is also a fatal error.
-				echo "Something went wrong. Please try again later.2";
-				die();
-			}
-
-			//execute the prepared statement
-			$result = mysqli_stmt_execute($statement);
-
-			if (!$result) {
-				//again a fatal error when executing the prepared statement
-				echo "Something went very wrong. Please try again later.3";
-				die();
-			}
-
-			//get the result set to further deal with it
-			$result = mysqli_stmt_get_result($statement);
-
-			if (!$result) {
-				//again a fatal error: if the result cannot be stored there is no going forward
-				echo "Something went wrong. Please try again later.4";
-				die();
-			} elseif (mysqli_num_rows($result) == 0) {
-
-				$query = "INSERT INTO users (username, email, password, team) VALUES (?,?,?,?)";
-
-				//prepare the statement				
-				$statement = mysqli_prepare($db, $query);
-
-				if (!$statement) {
-					//error preparing the statement. This should be regarded as a fatal error.
-					echo "Something went wrong. Please try again later.5";
-					die();
-				}
-
-				//now bind the parameters by order of appearance
-				$result = mysqli_stmt_bind_param($statement, 'ssss', $username, $email, $password, $team); # 'ssss' means that all parameters are expected to be strings.
-
-				if (!$result) {
-					//error binding the parameters to the prepared statement. This is also a fatal error.
-					echo "Something went wrong. Please try again later.6";
-					die();
-				}
-
-				//execute the prepared statement
-				$result = mysqli_stmt_execute($statement);
-
-				if (!$result) {
-					//again a fatal error when executing the prepared statement
-					echo "Something went very wrong. Please try again later.7";
-					die();
-				} else {
-
-					//user registered - close db connection
-					$result = closeDb($db);
-
-					header("Location: index.php");
-					exit();
-				}
-			} else {
-				//there already an username or an email in the database matching the imputed data. Which one is it? Or they both exist?
-
-				//get all rows returned in the result: one can have a row if there is only the email or username or two rows if both exist in different records
-				$existingRecords = array('email' => false, 'username' => false);
-
-				//now do it as you normally did it					
-				while ($row = mysqli_fetch_assoc($result)) {
-
-					if ($row !== null && $row['username'] == $username) {
-						$existingRecords['username'] = true;
-					}
-					if ($row !== null && $row['email'] == $email) {
-						$existingRecords['email'] = true;
-					}
-				} //end while																
-			} //end else	
-		} elseif (is_string($errors)) {
-			//the function has received an invalid argument - this is a programmer error and must be corrected
-			echo $errors;
-
-			//so that there is no problem when displaying the form
-			unset($errors);
-		}
-	}
-	?>
-
+ <?php 
+	require 'config/config.php';
+	require 'includes/form_handlers/register_handler.php';
+ ?>
  <!DOCTYPE html>
  <html>
-
  <head>
  	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
  	<meta http-equiv="X-UA-Compatible" content="IE=9" />
@@ -162,7 +28,7 @@
  		<div class="loginBreak"></div>
  		<div class="loginFormContainer">
  			<img class="loginLogo" src="../TH/img/logo.png" />
- 			<form class="loginForm" action="" method="POST">
+ 			<form class="loginForm" action="register.php" method="POST">
  				<input class="loginInput" type="text" id="username" name="username" placeholder="Username" value="<?php
 					
 					if (!empty($errors) && isset($errors['username'][0])) 
@@ -237,7 +103,7 @@
 					}
 				}
 				 ?>
- 				<input class="loginButton" type="submit" value="REGISTER">
+ 				<input class="loginButton" type="submit" name="register_button" value="REGISTER">
  				<div class="signUpLog">
  					Do you have an account? <a class="loginLink" href="login.php">Login</a>
  				</div>

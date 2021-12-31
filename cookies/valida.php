@@ -57,7 +57,7 @@
     }
 
      function validaFormLogin ($data){//include the web application configuration file to have boundaries to be able to validate fields
-     require_once('config.php');
+     require_once('config/config.php');
      
      $errors = array('username' => array(false, "Invalid username: it must have between $minUsername and $maxUsername chars."),
                          'password' => array(false, "Invalid password: it must have between $minPassword and $maxPassword chars and special chars."),

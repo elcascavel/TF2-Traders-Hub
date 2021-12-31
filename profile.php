@@ -1,10 +1,7 @@
 <!DOCTYPE html>
 <html>
 <?php
-session_start();
-if (!isset($_SESSION['username'])) {
-	header("Location: index.php");
-}
+include("includes/header.php");
 
   		//this update will be done by having the user id passed on by POST
   		if ( !empty($_POST)){
@@ -272,26 +269,19 @@ if (!isset($_SESSION['username'])) {
 					<div class=userInfoEditProfileContainer>
 					<a class="userInfoUsername">
 						<?php
-						if (!empty($_SESSION) && array_key_exists("username", $_SESSION)) {
-							echo $_SESSION['username'];
-							
-						}
+						echo $userLoggedIn;
 						?>	
 					</a>
 					<input onclick="editProfile()" class="editProfileButton" type="submit" value="EDIT PROFILE">
 					</div>
-					<a>Member since December 22, 2021 </a>
+					<a>Member since<?php echo " " . $user['signup_date'] ?></a>
 					<a>
 						<?php
-						 if (!empty($_SESSION) && array_key_exists("email", $_SESSION)) {
-							echo $_SESSION['email'];
-						}
+						 echo $user['email'];
 						?>
 					<a>
 						<?php
-						 if (!empty($_SESSION) && array_key_exists("team", $_SESSION)) {
-							echo $_SESSION['team'] . " Team";
-						}
+						 echo $user['team'];
 						?>
 				</div>
 				
@@ -373,6 +363,12 @@ if (!isset($_SESSION['username'])) {
 							<input onclick="saveProfile()" class="editProfileButton" type="submit" value="CANCEL">
 						</div>
 						</form>
+
+						<form action="profile.php" method="POST">
+						<div style="text-align:center; margin-top: 10px">
+							<input class="editProfileButton" type="submit" name="closeAccount" id="closeAccount" value="DELETE ACCOUNT">
+						</div>
+						</form>
 						</div>
 
 						
@@ -380,6 +376,12 @@ if (!isset($_SESSION['username'])) {
 				</div>
 			</div>
 		</div>
+
+		<?php
+			if (isset($_POST['closeAccount'])) {
+				header("Location: close_account.php");
+			}
+		?>
 		<script>
 			let profileInfoBox = document.getElementById("profileContainer");
 			let editProfileBox = document.getElementById("editProfileContainer");

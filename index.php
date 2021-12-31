@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
     <?php
-    
-    session_start();
+        include("includes/header.php");
     ?>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -54,14 +53,11 @@
                         if( !empty ($_SESSION) && array_key_exists("username", $_SESSION))
                         {   
                                 
-                                echo $_SESSION['username']."<br>";
+                                echo $userLoggedIn."<br>";
                                 if(array_key_exists("amount", $_SESSION))
                                 {
                                    echo "Wallet: ". $_SESSION['amount']. "€";
-                                }
-                                
-                                
-                                
+                                }    
                         }
                             ?>
                         </a>
