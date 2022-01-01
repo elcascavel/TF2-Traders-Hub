@@ -6,12 +6,6 @@ $message = "";
 if (isset($_POST['login_button'])) {
     require_once "config/config.php";
     require_once('cookies/configDb.php');
-    $errors = array('username' => array(false, "Invalid username: it must have between $minUsername and $maxUsername chars."),
-								    'password' => array(false, "Invalid password: it must have between $minPassword and $maxPassword chars and special chars."),
-								    'rpassword' => array(false, "Passwords mismatch."),
-								    'email' => array(false,'Invalid email.'),
-								    'team' => array(false,'Please select a team.')
-								   );
 
     $db = connectDB();
 

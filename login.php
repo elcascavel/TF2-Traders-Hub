@@ -1,6 +1,11 @@
 <?php
 require 'config/config.php';
 require 'includes/form_handlers/login_handler.php';
+require 'includes/header.php';
+
+if(isset($userLoggedIn)) {
+	header("Location: index.php");
+}
 ?>
 <!DOCTYPE html>
 <html>

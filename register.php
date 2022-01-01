@@ -1,6 +1,11 @@
  <?php 
 	require 'config/config.php';
 	require 'includes/form_handlers/register_handler.php';
+	require 'includes/header.php';
+
+	if(isset($userLoggedIn)) {
+		header("Location: index.php");
+	}
  ?>
  <!DOCTYPE html>
  <html>
@@ -67,6 +72,7 @@
 			
 			//only the username exists (you can erase the written username so that it does not show up in the filled form, but it seams better to keep it so that the user knows what was the input)
 						echo '<a class="errorMessage"> This username is already taken. Please choose another one.</a><br><br>';
+
 					} else {
 			
 					//only the email exists (you can erase the written email so that it does not show up in the filled form, but it seams better to keep it so that the user knows what was the input)

@@ -1,6 +1,12 @@
 <?php
 include("includes/header.php");
 include("includes/form_handlers/settings_handler.php");
+require 'includes/header.php';
+
+if(!isset($userLoggedIn)) {
+	header("Location: index.php");
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -93,6 +99,7 @@ include("includes/form_handlers/settings_handler.php");
   						<option id="bluTeam" value="BLU">BLU</option>
 						</select>
 						</div><br>
+						<?php if (isset($message)) { echo $message; } ?><br>
 						<?php
 						if (!empty($errors)) { # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
 					
@@ -135,7 +142,6 @@ include("includes/form_handlers/settings_handler.php");
 						</form>
 						</div>
 						</div>
-						<?php if (isset($message)) { echo $message; } ?>
 				</div>
 			</div>
 		</div>

@@ -36,3 +36,4 @@ function validatePassword($data, $min, $max)
         return (true);
     }
 }
+?>

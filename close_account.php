@@ -1,6 +1,10 @@
 <?php
 include("includes/header.php");
 
+if(!isset($userLoggedIn)) {
+	header("Location: index.php");
+}
+
 if (isset($_POST['cancel'])) {
     header("Location: profile.php");
 }

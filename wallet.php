@@ -1,8 +1,9 @@
 <?php
-if (!isset($_SESSION['username'])) {
+require 'includes/header.php';
+
+if(!isset($userLoggedIn)) {
 	header("Location: index.php");
 }
-
 if (!empty($_POST)) {
 
 
