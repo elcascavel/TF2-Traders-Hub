@@ -16,7 +16,7 @@ if (isset($_POST['saveAccount'])) {
 								   );
 
     $flag = false;
-    $sameUsername = false;
+    $existingRecord = false;
 
     $username = $_POST['username'];
     $email = $_POST['email'];
@@ -27,7 +27,7 @@ if (isset($_POST['saveAccount'])) {
     }
 
     if ($username == $user['username']) {
-        $sameUsername = true;
+        $existingRecord = true;
     }
 
     if(!validateEmail($email)){
@@ -41,7 +41,7 @@ if (isset($_POST['saveAccount'])) {
         return($errors);
     }
 
-    if (!$sameUsername) {
+    if (!$existingRecord) {
         if (!checkField($db, $username, "users", "username")) {
             $query = "UPDATE users SET username = ? WHERE username = ?";
             $statement = mysqli_prepare($db, $query);
@@ -134,6 +134,7 @@ function checkField($database, $field, $table, $column) {
     }
 
     if (mysqli_num_rows($result) != 0) {
+        global $message;
         $message = "<a class='errorMessage'>$column already in use!</a><br><br>";
         $result = closeDb($database);
         return true;
