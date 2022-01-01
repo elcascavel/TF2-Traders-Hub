@@ -1,4 +1,8 @@
 <?php
+
+$db = connectDB();
+$message = "";
+
 if (isset($_POST['saveAccount'])) {
     include("includes/header.php");
     require_once "config/config.php";
@@ -12,8 +16,7 @@ if (isset($_POST['saveAccount'])) {
 								   );
 
     $flag = false;
-
-    $db = connectDB();
+    $sameUsername = false;
 
     $username = $_POST['username'];
     $email = $_POST['email'];
@@ -24,7 +27,7 @@ if (isset($_POST['saveAccount'])) {
     }
 
     if ($username == $user['username']) {
-        return;
+        $sameUsername = true;
     }
 
     if(!validateEmail($email)){
@@ -38,26 +41,88 @@ if (isset($_POST['saveAccount'])) {
         return($errors);
     }
 
-    $query = "SELECT * FROM users WHERE username = ?";
+    if (!$sameUsername) {
+        if (!checkField($db, $username, "users", "username")) {
+            $query = "UPDATE users SET username = ? WHERE username = ?";
+            $statement = mysqli_prepare($db, $query);
 
-    $statement = mysqli_prepare($db, $query);
+            if (!$statement) {
+                echo 'Error preparing username statement.';
+                die();
+            }
+
+            $result = mysqli_stmt_bind_param($statement, 'ss', $username, $userLoggedIn);
+
+            if (!$result) {
+                echo 'Error binding prepared username statement.';
+                die();
+            }
+
+            $result = mysqli_stmt_execute($statement);
+
+            if (!$result) {
+                echo 'Prepared statement result cannot be executed.';
+                die();
+            }
+
+            $userLoggedIn = $username;
+            $_SESSION['username'] = $username;
+
+            $message = "";
+        }
+    }
+    
+    if (!checkField($db, $email, "users", "email")) {
+        $query = "UPDATE users SET email = ? WHERE email = ?";
+        $statement = mysqli_prepare($db, $query);
+
+        if (!$statement) {
+            echo 'Error preparing email statement.';
+            die();
+        }
+
+        $result = mysqli_stmt_bind_param($statement, 'ss', $email, $user['email']);
+
+        if (!$result) {
+            echo 'Error binding prepared email statement.';
+            die();
+        }
+
+        $result = mysqli_stmt_execute($statement);
+
+        if (!$result) {
+            echo 'Prepared statement result cannot be executed.';
+            die();
+        }
+
+        $user['email'] = $email;
+        $_SESSION['email'] = $email;
+
+        $message = "";
+    }
+}
+
+function checkField($database, $field, $table, $column) {
+    $query = "SELECT * FROM $table WHERE $column = ?";
+
+    $statement = mysqli_prepare($database, $query);
 
     if (!$statement) {
-        echo 'Error preparing username statement.';
+        echo "Error preparing $column statement.";
         die();
     }
 
-    $result = mysqli_stmt_bind_param($statement, 's', $username);
+    $result = mysqli_stmt_bind_param($statement, 's', $field);
 
     if (!$result) {
-        echo 'Error binding prepared username statement.';
+        echo "Error binding prepared $column statement.";
         die();
     }
 
     $result = mysqli_stmt_execute($statement);
 
     if (!$result) {
-        echo 'Prepared statement result cannot be executed.';
+        echo "Prepared statement result cannot be executed.";
         die();
     }
 
@@ -69,39 +134,12 @@ if (isset($_POST['saveAccount'])) {
     }
 
     if (mysqli_num_rows($result) != 0) {
-        $message = '<a class="errorMessage">Username already in use!</a><br><br>';
-        $result = closeDb($db);
+        $message = "<a class='errorMessage'>$column already in use!</a><br><br>";
+        $result = closeDb($database);
+        return true;
     }
-
     else {
-        $query = "UPDATE users SET username = ? WHERE username = ?";
-        $statement = mysqli_prepare($db, $query);
-
-        if (!$statement) {
-            echo 'Error preparing username statement.';
-            die();
-        }
-
-        $result = mysqli_stmt_bind_param($statement, 'ss', $username, $userLoggedIn);
-
-        if (!$result) {
-            echo 'Error binding prepared username statement.';
-            die();
-        }
-
-        $result = mysqli_stmt_execute($statement);
-
-        if (!$result) {
-            echo 'Prepared statement result cannot be executed.';
-            die();
-        }
-
-        $userLoggedIn = $username;
-        $_SESSION['username'] = $username;
-
-        $result = closeDb($db);
-        $message = "";
-    } 
+        return false;
+    }
 }
-
 ?>
