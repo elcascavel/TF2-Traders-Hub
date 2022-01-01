@@ -31,6 +31,18 @@ a:hover {
   padding: 0px 30px;
 }
 
+.headerParentProfile {
+  width: 100%;
+  position: relative;
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  padding: 0px 30px;
+}
+
 .headerLogo {
   width: 200px;
   min-width: 200px;
@@ -363,30 +375,6 @@ a:hover {
   background-image: url("../img/logoutIcon.png");
 }
 
-.mainProfileContent {
-  position: relative;
-  top: 200px;
-  left: 100px;
-  width: fit-content;
-}
-
-.userInfo {
-  background-color: #2c2628;
-  width: fit-content;
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-}
-
-.tooltip {
-  position: relative;
-  display: flex;
-}
-
-.userInfoUsername {
-  font-size: 25px;
-}
-
 .errorMessage {
   color: #e9967a;
   padding-bottom: 5px;
@@ -407,24 +395,27 @@ a:hover {
   margin-left: 10px;
 }
 
+.profileContainer {
+  text-align: center;
+}
+
+.profileContainer h3 {
+  font-family: "TF2 Build", sans-serif;
+  font-size: 50px;
+}
+
+.profileDetails {
+  font-size: 18px;
+  justify-content: center; /* alinha horizontalmente */
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+}
+
+
 .editProfileButton:hover {
   color: #eae6cd;
   background-color: #87443b;
-}
-
-.userInfoEditProfileContainer {
-  display: flex;
-  flex-direction: row;
-}
-
-.teamSelect {
-	background-color: #a89d81;
-	color: #2c2628;
-	max-width: 100%;
-	font-size: 16px;
-	border: none;
-	height: 30px;
-	text-align: center;
 }
 
 .buyBody {

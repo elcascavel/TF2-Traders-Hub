@@ -1,5 +1,6 @@
 <?php
-if (isset($_POST['update_details'])) {
+if (isset($_POST['saveAccount'])) {
+    include("includes/header.php");
     require_once "config/config.php";
     require_once "validation.php";
 
@@ -20,6 +21,10 @@ if (isset($_POST['update_details'])) {
     if (!validateUsername($username, $minUsername, $maxUsername)) {
         $errors['username'][0] = true;
         $flag = true;
+    }
+
+    if ($username == $user['username']) {
+        return;
     }
 
     if(!validateEmail($email)){

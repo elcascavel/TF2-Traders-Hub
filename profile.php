@@ -1,15 +1,14 @@
 <?php
 include("includes/header.php");
-include("includes/form_handlers/settings_handler.php");
-require 'includes/header.php';
 
-if(!isset($userLoggedIn)) {
+if (!isset($userLoggedIn)) {
 	header("Location: index.php");
 }
 
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=9">
@@ -28,7 +27,7 @@ if(!isset($userLoggedIn)) {
 
 	<body style="width:100%;margin:0;background-color:black">
 		<div class="homepage">
-			<div class="headerParent">
+			<div class="headerParentProfile">
 				<a class="headerLogo" href="index.php"></a>
 				<div class="headerNavItems">
 					<a class="navLink" href="index.php">
@@ -42,133 +41,41 @@ if(!isset($userLoggedIn)) {
 					</a>
 				</div>
 			</div>
-			<div class="mainProfileContent">
-				<div id="profileContainer" class="userInfo">
-					<div class=userInfoEditProfileContainer>
-					<a class="userInfoUsername">
-						<?php
-						echo $userLoggedIn;
-						?>	
-					</a>
-					<input onclick="editProfile()" class="editProfileButton" type="submit" value="EDIT PROFILE">
-					</div>
-					<a>Member since <?php echo $user['signup_date'] ?></a>
-					<a>
-						<?php
-						 echo $user['email'];
-						?>
-					<a>
-						<?php
-						 echo $user['team'];
-						?>
-				</div>
-				
-				<div id="editProfileContainer" class="userInfo" style="display:none">
-						<div class="userInfoEditProfileContainer">
-						<form action="" method="POST" >
-						<input class="loginInput" type="text" id="username" name="username" placeholder="Username" value="<?php
-					
-					if (!empty($errors) && isset($errors['username'][0])) { 
-						echo $_POST['username'];
-					}
-					elseif( !empty($user) ){
-						echo $user['username'];
-					}
-						?>"><br>
-						
-						</div>
-						
-						<input class="loginInput" type="text" id="email" name="email" placeholder="E-mail" value="<?php
-  		
-		  if (!empty($errors) && isset($errors['email'][0])){ 
-			  echo $_POST['email'];
-		  }
-		  elseif( !empty($user) ){
-			  echo $user['email'];
-		  }
-	  
-	  ?>"><br>
-						<input class="loginInput" type="password" id="password" name="password" placeholder="New Password">
-						<br>
-						<input class="loginInput" type="password" id="rpassword" name="rpassword" placeholder="Repeat Password">
-					
-  <br>
-						<div style="text-align:center; padding-bottom:10px">
-						<select class="teamSelect" name="team" id="team">
-  						<option id="redTeam" value="RED">RED</option>
-  						<option id="bluTeam" value="BLU">BLU</option>
-						</select>
-						</div><br>
-						<?php if (isset($message)) { echo $message; } ?><br>
-						<?php
-						if (!empty($errors)) { # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
-					
-							if (isset($errors['username']) && $errors['username'][0]==true)
-							{
-								echo '<a class="errorMessage">' . $errors['username'][1] . '</a>' . '<br><br>';
-							}
-		
-							if (isset($errors['email']) && $errors['email'][0]==true)
-							{
-								echo '<a class="errorMessage">' . $errors['email'][1] . '</a>' . '<br><br>';
-							}
-		
-							if (isset($errors['password']) && $errors['password'][0]==true)
-							{
-								echo '<a class="errorMessage">' . $errors['password'][1] . '</a>' . '<br><br>';
-							}
-		
-							if(isset($errors['rpassword']) && $errors['rpassword'][0]==true)
-							{
-								echo '<a class="errorMessage">' . $errors['rpassword'][1] . '</a>' . '<br><br>';
-							}
-		
-							if(isset($errors['team']) && $errors['team'][0]==true)
-							{
-								echo '<a class="errorMessage">' . $errors['team'][1] . '</a>' . '<br><br>';
-							}
-						}
-						?>
-						<div style="text-align:center">
-							<input onclick="saveProfile()" class="editProfileButton" name="update_details" type="submit" value="SAVE">
-							<input onclick="saveProfile()" class="editProfileButton" type="submit" value="CANCEL">
-						</div>
-						</form>
-
-						<form action="profile.php" method="POST">
-						<div style="text-align:center; margin-top: 10px">
-							<input class="editProfileButton" type="submit" name="closeAccount" id="closeAccount" value="DELETE ACCOUNT">
-						</div>
-						</form>
-						</div>
-						</div>
-				</div>
+			<div class="profileContainer">
+				<?php if ($user['team'] == "RED") {
+					$teamColor = "#B8383B";
+				}
+				else if ($user['team'] == "BLU") {
+					$teamColor = "#5885A2";
+				}
+					echo "<h3 style=color:$teamColor;>$userLoggedIn</h3"; 
+				?>
 			</div>
+			<div class="profileDetails">
+					<a>Member since <?php echo date("jS F, Y", strtotime($user['signup_date'])); ?></a>
+					<?php echo $user['email'] . "<br>"; ?>
+					<?php echo "Team " . $user['team']?>
+				</div>
+			</form>
+
+			<form action="profile.php" method="POST">
+				<div style="text-align:center; margin-top: 10px">
+				<input class="editProfileButton" type="submit" name="editAccount" id="editAccount" value="EDIT ACCOUNT">
+				<input class="editProfileButton" type="submit" name="closeAccount" id="closeAccount" value="DELETE ACCOUNT">
+				</div>
+			</form>
+		</div>
+		</div>
+		</div>
+		</div>
 		</div>
 
 		<?php
-			if (isset($_POST['closeAccount'])) {
-				header("Location: close_account.php");
-			}
+		if (isset($_POST['closeAccount'])) {
+			header("Location: close_account.php");
+		}
+		else if (isset($_POST['editAccount'])) {
+			header("Location: edit_account.php");
+		}
 		?>
-		<script>
-			let profileInfoBox = document.getElementById("profileContainer");
-			let editProfileBox = document.getElementById("editProfileContainer");
-
-			function editProfile() {
-				if (profileInfoBox.style.display === "none") {
-					profileInfoBox.style.display = "flex";
-  				} else {
-					profileInfoBox.style.display = "none";
-					editProfileBox.style.display = "flex";
-  				}
-			}
-
-			function saveProfile() {
-				if (editProfileBox.style.display == "flex") {
-					editProfileBox.style.display = "none";
-					profileInfoBox.style.display = "flex";
-				}
-			}
-		</script>
 	</body>
