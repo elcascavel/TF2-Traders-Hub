@@ -1,6 +1,7 @@
 <?php
 
 $errors = array();
+$message = "";
 
 if (isset($_POST['login_button'])) {
     require_once "config/config.php";
@@ -24,28 +25,28 @@ if (isset($_POST['login_button'])) {
     $statement = mysqli_prepare($db, $query);
 
     if (!$statement) {
-        echo '<a class="errorMessage">Error preparing login statement.</a><br><br>';
+        echo 'Error preparing login statement.';
         die();
     }
 
     $result = mysqli_stmt_bind_param($statement, 'ss', $username, $password);
 
     if (!$result) {
-        echo '<a class="errorMessage">Error binding prepared login statement.</a><br><br>';
+        echo 'Error binding prepared login statement.';
         die();
     }
 
     $result = mysqli_stmt_execute($statement);
 
     if (!$result) {
-        echo '<a class="errorMessage">Prepared statement result cannot be executed.</a><br><br>';
+        echo 'Prepared statement result cannot be executed.';
         die();
     }
 
     $result = mysqli_stmt_get_result($statement);
 
     if (!$result){
-          echo '<a class="errorMessage">Prepared statement result cannot be stored.</a><br><br>';
+          echo 'Prepared statement result cannot be stored.';
         die();
     }
 
@@ -61,15 +62,12 @@ if (isset($_POST['login_button'])) {
     }
 
     else {
-        echo '<a class="errorMessage">Invalid Username/Password</a><br><br>';
+        $message = '<a class="errorMessage">The username or password was incorrect.<br>Please try again (make sure your caps lock is off).</a><br><br>';
         $result = closeDb($db);
     } 
 }
-else if( is_string($errors) ){
-    
+else if (is_string($errors)){
     echo $errors;
-
-    
     unset($errors);
 }
 ?>
