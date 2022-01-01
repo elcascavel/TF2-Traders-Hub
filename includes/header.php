@@ -41,5 +41,16 @@ if (isset($_SESSION['username'])) {
     }
 
 	$user = mysqli_fetch_array($result);
+
+    $sql = "SELECT  SUM(amount) from wallet";
+    $result = $db->query($sql);
+  
+    $row = mysqli_fetch_array($result);
+   
+    $money = $row['SUM(amount)'];
+
 }
+
+
+
 ?>

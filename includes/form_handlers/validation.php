@@ -36,4 +36,37 @@ function validatePassword($data, $min, $max)
         return (true);
     }
 }
+
+function validateOwner($owner, $minUsername, $maxUsername){
+				
+    $exp = "/^[A-z]{" . $minUsername . "," . $maxUsername .'}$/';			
+                            
+    if( !preg_match($exp, $owner )){
+        return (false);				
+    }else {
+        return(true);
+    }
+}
+
+function validateCardnum($cardnum, $minNum, $maxNum){
+    
+    $exp = "/^[0-9]{" . $minNum . "," . $maxNum .'}$/';			
+        
+    if( !preg_match($exp, $cardnum)){
+        return (false);				
+    }else {
+        return(true);
+    }
+}
+
+function validateCVV($cvv, $mincvv, $maxcvv){
+    
+    $exp = "/^[0-9]{" . $mincvv . "," . $maxcvv .'}$/';			
+        
+    if( !preg_match($exp, $cvv)){
+        return (false);				
+    }else {
+        return(true);
+    }
+}
 ?>

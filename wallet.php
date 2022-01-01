@@ -225,21 +225,9 @@ if (!empty($existingRecords)) {
 				<?php 
 			
 			
-		
-			require_once('cookies/configDb.php');
-
-
-			$db = connectDB();
-		
-		
-			$sql = "SELECT  SUM(amount) from wallet";
-			$result = $db->query($sql);
-			echo "<br>"."<br>";
-			$row = mysqli_fetch_array($result);
-				echo " Wallet: ". $row['SUM(amount)']."€";
-				$_SESSION['amount'] = $row['SUM(amount)'];
-				echo "<br>";
-								
+				echo "<br>"."<br>";	
+				echo " Wallet: ". $money."€";
+				echo "<br>";					
 			
 			?>
 			</form>
