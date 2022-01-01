@@ -35,9 +35,7 @@ if (isset($_POST['saveAccount'])) {
         $flag = true;				
     }
 
-    //deal with the validation results
     if ( $flag == true ){
-        //there are fields with invalid contents: return the errors array
         return($errors);
     }
 

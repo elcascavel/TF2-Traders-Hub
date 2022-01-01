@@ -61,24 +61,9 @@
  				</div>
 				 <br>
 				 <?php
-					//show if there is already either the same username or email in the user table on the database. This code can be placed anywhere the student desires. 
-					if (!empty($existingRecords)) {
-
-					if ($existingRecords['username'] && $existingRecords['email']) {
-			
-			//both the username and the email already exist in the database
-						echo '<a class="errorMessage"> Both username and email already exist in our records.</a><br><br>';
-						} elseif ($existingRecords['username']) {
-			
-			//only the username exists (you can erase the written username so that it does not show up in the filled form, but it seams better to keep it so that the user knows what was the input)
-						echo '<a class="errorMessage"> This username is already taken. Please choose another one.</a><br><br>';
-
-					} else {
-			
-					//only the email exists (you can erase the written email so that it does not show up in the filled form, but it seams better to keep it so that the user knows what was the input)
-						echo '<a class="errorMessage">This email is already taken. Please choose another one.</a><br><br>';
-						}
-					} //end main if
+					if (isset($message)) {
+						echo $message;
+					}
 					?>
 				 <?php
 				 if (!empty($errors)) { # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content

@@ -132,3 +132,4 @@ function checkField($database, $field, $table, $column) {
         return false;
     }
 }
+?>
