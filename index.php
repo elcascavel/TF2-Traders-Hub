@@ -53,10 +53,9 @@
                         if(isset($userLoggedIn))
                         {
                                 echo $userLoggedIn."<br>";
-                                if(array_key_exists("amount", $_SESSION))
-                                {
+                                
                                    echo "Wallet: ". $money. "€";
-                                }    
+                                   
                         }
                             ?>
                         </a>

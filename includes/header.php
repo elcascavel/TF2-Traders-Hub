@@ -48,7 +48,6 @@ if (isset($_SESSION['username'])) {
     $row = mysqli_fetch_array($result);
    
     $money = $row['SUM(amount)'];
-
 }
 
 
