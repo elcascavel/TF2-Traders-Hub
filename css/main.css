@@ -31,6 +31,17 @@ a:hover {
   padding: 0px 30px;
 }
 
+.headerParentNonIndex {
+  width: 100%;
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 80px;
+  padding: 0px 30px;
+}
+
 .headerParentProfile {
   width: 100%;
   position: relative;

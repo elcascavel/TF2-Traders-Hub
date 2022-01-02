@@ -18,12 +18,13 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     </head>
 
     <body style="width:100%;margin:0;background-color:black">
         <div class="homepage">
-            <div class="headerParent">
+            <div class="headerParentNonIndex">
                 <a class ="headerLogo" href="index.php"></a>
                 <div class="headerNavItems">
                     <a class="navLink" href="index.php">
@@ -140,27 +141,40 @@
                     </div>
                 </div>
             </div>
-            <div class="buyBody">
-                <table style="padding-top:12px; padding-bottom:12px; border-spacing: 20px;">
-  <tr class="table-listing-header">
-    <th>NAME</th>
-    <th>QUANTITY</th>
-    <th>PRICE</th>
-  </tr>
-  <tr class="table-row-item">
-    <td class="table-listing-item "><img class= "table-image" src= https://community.akamai.steamstatic.com/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZULUrsm1j-9xgEAaR4uURrwvz0N252yVaDVWrRTno9m4ccG2GNqxlQoZrC2aG9hcVGUWflbX_drrVu5UGki5sAij6tOtQ/62fx62f>
-    <span class="table-listing-title">Mann Co. Supply Crate Key</span></td>
-    <td class="table-listing-item">34,181</td>
-    <td class="table-listing-item">€2.08 EUR</td>
-  </tr>
-  <tr class="table-row-item">
-    <td class="table-listing-item"><img class= "table-image" src= https://community.akamai.steamstatic.com/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZULUrsm1j-9xgEMZQEFYgjrtj9PjffqDOCLDa4CzYhtsZVWjjRoxQB5YrawYjJld1TDWPIMWKY8pQm0CiVkuJdhVdSyuasILgK_i0fr/62fx62f>
-    <span class="table-listing-title">Secret Saxton</span></td>
-    <td class="table-listing-item">66,791</td>
-    <td class="table-listing-item">€0.09 EUR</td>
-  </tr>
-</table>
-                </div>
+           <div class="container" style="margin-top: 20px; margin-bottom: 20px; color:black;">
+  <div class="row">
+    <div class="col">
+    <div class="card" style="width: 18rem;">
+  <img src="https://community.akamai.steamstatic.com/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZULUrsm1j-9xgEGegouSRLhsz1Xt8TnH_WJRuNVy49itMUB32JtklgoN7OzZTQxJFPEV_lfBa1irV-9C3Zr6sU6AdH457UBdvwbXdU/360fx360f" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Tour of Duty Ticket <a name="priceTag">($1,40)</a></h5>
+    <p class="card-text">Present this ticket in Mann vs. Machine to play Mann Up Mode on an official server to earn rare items and track progress on your Tour of Duty Badge.</p>
+    <a href="#" class="btn btn-primary">Add to Cart</a>
+  </div>
+</div>
+    </div>
+    <div class="col">
+    <div class="card" style="width: 18rem;">
+  <img src="https://community.akamai.steamstatic.com/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZULUrsm1j-9xgEIbzgCSBbvvSoR2JmzMvGDBe0JiMk094Nq2jlqhT53NfGyNXliIlzBVqQPBaI88lG9UXZl6586DI_jpe5TeF295taSNLcoON4fHJGBRLbYMc0UAi4a/360fx360f" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">Commissar's Coat <a name="priceTag">($2,03)</a></h5>
+    <p class="card-text">Mercenary Grade Coat</p>
+    <a href="#" class="btn btn-primary">Add to Cart</a>
+  </div>
+</div>
+    </div>
+    <div class="col">
+    <div class="card" style="width: 18rem;">
+  <img src="https://community.akamai.steamstatic.com/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZULUrsm1j-9xgEIUwQCWhTduS9Tt8TnH_WJRuJZyoMx5MMMi2FtlVUuZbblM29hKwaUBaVYDfRuoVu7DCIxvsZmVoH457UBFLISf9s/360fx360f" class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">AWPer Hand <a name="priceTag">($1,02)</a></h5>
+    <p class="card-text">''Apologies.''</p>
+    <a href="#" class="btn btn-primary">Add to Cart</a>
+  </div>
+</div>
+    </div>
+  </div>
+</div>
             <div class="footerArea">
                 <div class="footerLogos">
                     <a href="https://www.valvesoftware.com/en/about"><img class="footerLogoImg" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/valve_logo.png"></a>
