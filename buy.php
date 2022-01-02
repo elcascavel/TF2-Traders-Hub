@@ -1,9 +1,46 @@
 <!DOCTYPE html>
 <html>
-    <?php
-    session_start();
+<?php
+   
+   include("includes/header.php");
     if (!isset($_SESSION['username'])) {
         header("Location: index.php");
+    }
+
+    if(isset($_POST['add_to_cart']))
+    {
+        
+        if(isset($_SESSION['cart']))
+        {
+            $session_array_id=array_column($_SESSION['cart'],"id");
+                           
+          if(!in_array($_GET['id'],$session_array_id))
+          {
+           
+
+           $count= count($_SESSION['cart']);
+           $session_array = array('id' => $_GET['id'],
+           "product" => $_POST['product'],   
+           "desc" => $_POST['desc'],
+           "price" => $_POST['price'],
+           "rarity" => $_POST['rarity'],
+           "quantity" => $_POST['quantity'] );
+           $_SESSION['cart'][$count] =  $session_array;
+          
+          }
+
+        }else
+        {
+            $session_array = array('id' => $_GET['id'],
+                                   "product" => $_POST['product'],   
+                                   "desc" => $_POST['desc'],
+                                   "price" => $_POST['price'],
+                                   "rarity" => $_POST['rarity'],
+                                   "quantity" => $_POST['quantity'] );
+
+            $_SESSION['cart'][0] =  $session_array;
+            
+        }
     }
     ?>
     <head>
@@ -143,37 +180,53 @@
             </div>
            <div class="container" style="margin-top: 20px; margin-bottom: 20px; color:black;">
   <div class="row">
-    <div class="col">
+  
+  
+    <?php  
+      require 'config/config.php';
+      $db = connectDB();
+    if (is_string ($db)) {
+        echo ("Error connecting to database!");
+        die();
+    }
+      
+        $query = "SELECT * FROM shop";
+        $result = mysqli_query($db,$query);
+
+        while($row = mysqli_fetch_assoc($result))
+        {?>
+        <div class="col">
     <div class="card" style="width: 18rem;">
-  <img src="https://community.akamai.steamstatic.com/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZULUrsm1j-9xgEGegouSRLhsz1Xt8TnH_WJRuNVy49itMUB32JtklgoN7OzZTQxJFPEV_lfBa1irV-9C3Zr6sU6AdH457UBdvwbXdU/360fx360f" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Tour of Duty Ticket <a name="priceTag">($1,40)</a></h5>
-    <p class="card-text">Present this ticket in Mann vs. Machine to play Mann Up Mode on an official server to earn rare items and track progress on your Tour of Duty Badge.</p>
-    <a href="#" class="btn btn-primary">Add to Cart</a>
-  </div>
-</div>
-    </div>
-    <div class="col">
-    <div class="card" style="width: 18rem;">
-  <img src="https://community.akamai.steamstatic.com/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZULUrsm1j-9xgEIbzgCSBbvvSoR2JmzMvGDBe0JiMk094Nq2jlqhT53NfGyNXliIlzBVqQPBaI88lG9UXZl6586DI_jpe5TeF295taSNLcoON4fHJGBRLbYMc0UAi4a/360fx360f" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">Commissar's Coat <a name="priceTag">($2,03)</a></h5>
-    <p class="card-text">Mercenary Grade Coat</p>
-    <a href="#" class="btn btn-primary">Add to Cart</a>
-  </div>
-</div>
-    </div>
-    <div class="col">
-    <div class="card" style="width: 18rem;">
-  <img src="https://community.akamai.steamstatic.com/economy/image/fWFc82js0fmoRAP-qOIPu5THSWqfSmTELLqcUywGkijVjZULUrsm1j-9xgEIUwQCWhTduS9Tt8TnH_WJRuJZyoMx5MMMi2FtlVUuZbblM29hKwaUBaVYDfRuoVu7DCIxvsZmVoH457UBFLISf9s/360fx360f" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">AWPer Hand <a name="priceTag">($1,02)</a></h5>
-    <p class="card-text">''Apologies.''</p>
-    <a href="#" class="btn btn-primary">Add to Cart</a>
-  </div>
-</div>
-    </div>
-  </div>
+    
+         <form method="POST" action="buy.php?id=<?=$row['id'] ?>">
+         
+         <img class="card-img-top" src="https://www.lagzero.net/wp-content/uploads/2009/08/tf2_heavy.jpg" alt="">
+        
+         <h2 class="card-title"><?= $row['product'];?></h2> 
+          <p class="card-text"><?= $row['desc'];?></p>
+          <p class="card-text"><?= $row['rarity'];?></p> 
+          <h4><?= number_format($row['price'],2);?>$</h2>  
+          <input type="hidden" name="product" value="<?= $row['product']  ?>">
+          <input type="hidden" name="price" value="<?= $row['price']  ?>">
+          <input type="hidden" name="desc" value="<?= $row['desc']  ?>">
+          <input type="hidden" name="rarity" value="<?= $row['rarity']  ?>">
+          <input type="number" name="quantity" value="1"><br><br>
+          <input type="submit" name="add_to_cart" class="btn btn-primary" value="ADD TO CART">
+        </form>
+        
+       
+        </div>
+        <br>
+     </div>
+  
+       <?php }
+      
+
+      
+      
+      ?>
+    
+        
 </div>
             <div class="footerArea">
                 <div class="footerLogos">
