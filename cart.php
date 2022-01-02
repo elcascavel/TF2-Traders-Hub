@@ -23,6 +23,7 @@
            "product" => $_POST['product'],   
            "desc" => $_POST['desc'],
            "price" => $_POST['price'],
+           "rarity" => $_POST['rarity'],
            "quantity" => $_POST['quantity'] );
            $_SESSION['cart'][$count] =  $session_array;
           
@@ -34,6 +35,7 @@
                                    "product" => $_POST['product'],   
                                    "desc" => $_POST['desc'],
                                    "price" => $_POST['price'],
+                                   "rarity" => $_POST['rarity'],
                                    "quantity" => $_POST['quantity'] );
 
             $_SESSION['cart'][0] =  $session_array;
@@ -47,17 +49,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>TF2 Trader's Hub</title>
         <link rel="shortcut icon" href="https://steamcdn-a.akamaihd.net/apps/tf2/blog/images/favicon.ico">
+        <link rel="stylesheet" href="../TH/css/main.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-        <link rel="stylesheet" href="../TH/css/main.css">
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     </head>
 
-    <body id="bootstrap-overrides" style="width:100%;margin:0;background-color:black">
+    <body style="width:100%;margin:0;background-color:black">
         <div class="homepage">
             <div class="headerParentNonIndex">
                 <a class ="headerLogo" href="index.php"></a>
@@ -148,17 +150,9 @@
                                 
                                 while( $row = mysqli_fetch_assoc($result) ){
                                     if($row['username'] == $_SESSION['username']){
-                                        echo '<div class="accountActionsButtonContainer">';
-                                        if(isset($_SESSION['cart']))
-                                        {
-                                            $count=count($_SESSION['cart']);
-                                           
-                                            echo 
-                                           " <a class='profileActionButton profileActionWalletImg' href='cart.php'> </a>
-                                            <span class='text-warning bg-light'>$count</span>";
-                                           
-                                        }
-                                echo '<form action="profile.php" method="POST" name="formModifica">
+                   
+                                echo '<div class="accountActionsButtonContainer">
+                                <form action="profile.php" method="POST" name="formModifica">
                                 <input type="hidden" value="' . $row['id_users'] . '" name="id">
                                 <input class="profileActionButton profileActionAccountImg" type="submit" name="modificar" value="">
                             </form>
@@ -188,59 +182,95 @@
   <div class="row">
   
   
-    <?php  
-      require 'config/config.php';
-      $db = connectDB();
-    if (is_string ($db)) {
-        echo ("Error connecting to database!");
-        die();
+        <div class="col">
+        <h2>Item</h2>
+    <?php 
+
+        $total=0;
+        $output = "";
+
+        $output.="
+        <table class='table bordered table-striped'>
+        <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Total Price</th>
+        </tr>
+        ";
+
+      if(!empty($_SESSION['cart']))
+      {
+          foreach($_SESSION['cart'] as $key => $value)
+          {
+            $output.="
+        <tr>
+        <td>".$value['id']."</td>
+        <td>".$value['product']."</td>
+        <td>".$value['price']."</td>
+        <td>".$value['quantity']."</td>
+        <td>".number_format($value['price']*$value['quantity'],2)."</td>
+        <td>
+        <a href='cart.php?action=remove&id=".$value['id']."'>
+        <button class='btn btn-danger btn-block'>Remove</button>
+        </a>
+        </tr>
+        ";
+
+        $total = $total + $value['quantity']* $value['price'];
+          }
+
+
+          $output .="
+          
+          <tr>
+          <td colspan='3'></td>
+          <td>Total Price</td>
+          <td>".number_format($total,2)."</td>
+          <td>
+                <a href='cart.php?action=clearall'>
+                    <button class='btn btn-warning'>Clear</button>
+                </a>
+          </td>
+          
+               
+          
+          
+          </tr>
+          
+          
+          ";
+      }
+     
+      echo  "<a href='buy.php'>
+      <button class='btn btn-success'>Back to shop</button>
+  </a>";
+  echo $output;
+
+      if(isset($_GET['action']))
+      {
+          if($_GET['action']=="clearall")
+          {
+            unset($_SESSION['cart']);
+
+          }
+          if($_GET['action']=="remove")
+          {
+            foreach($_SESSION['cart'] as $key => $value)
+            {
+          
+              if($value['id'] == $_GET['id'])
+          {
+            unset($_SESSION['cart'][$key]);
+          }
+      }
     }
-      
-        $query = "SELECT * FROM shop";
-        $result = mysqli_query($db,$query);
-        while($row = mysqli_fetch_assoc($result))
-        { if ($row['rarity'] == "Unusual") {
-            $itemRarity = "#8650AC";
-        }
-        else if ($row['rarity'] == "Unique"){
-            $itemRarity = "#FFD700";
-        }
-        else if ($row['rarity'] == "Genuine"){
-            $itemRarity = "#4D7455";
-        }
-        else {
-            $itemRarity = "#B2B2B2";
-        }
-        ?>
-        <div class="col-lg-3 mb-3 d-flex align-items-stretch">
-    <div class="card" style="width: 18rem; background-color: #101822; padding-bottom:50px;">
-    
-         <form method="POST" action="buy.php?id=<?=$row['id'] ?>">
-         
-         <img class="card-img-top" style="background-color: #071215" src="<?= $row['item_image'];?>" alt="">
-        <div class="card-body d-flex flex-column">
-        <h5 class="card-title" style="color: <?= $itemRarity?>"><?= $row['product'];?> <span class="badge bg-dark">€<?= number_format($row['price'],2);?></span></h5> 
-        <h6 class="card-subtitle text-white"><?= $row['desc'];?></h6>
-          <input type="hidden" name="product" value="<?= $row['product']  ?>">
-          <input type="hidden" name="price" value="<?= $row['price']  ?>">
-          <input type="hidden" name="desc" value="<?= $row['desc']  ?>">
-          
-          
-<div class="card-footer" style="position:absolute; bottom: 0;">
-          <div class="input-group">
-  <div class="input-group-prepend">
-  <input type="submit" name="add_to_cart" class="btn btn-success" value="Add to Cart">
-  </div>
-  <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" type="number" name="quantity" value="1"><br>
-</div>
-</div>
-        </div>
-         
-        </form>
-        </div>
-        <br>
+}
+      ?>
      </div>
-       <?php } ?>
+  
+       
     
         
 </div>
@@ -259,5 +289,6 @@ Team Fortress is a trademark of Valve Corporation, TF2 Trader's Hub is a fan cre
   <script>
     AOS.init();
   </script>
+
     </body>
 </html>
