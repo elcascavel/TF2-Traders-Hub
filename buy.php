@@ -49,17 +49,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>TF2 Trader's Hub</title>
         <link rel="shortcut icon" href="https://steamcdn-a.akamaihd.net/apps/tf2/blog/images/favicon.ico">
-        <link rel="stylesheet" href="../TH/css/main.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <link rel="stylesheet" href="../TH/css/main.css">
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     </head>
 
-    <body style="width:100%;margin:0;background-color:black">
+    <body id="bootstrap-overrides" style="width:100%;margin:0;background-color:black">
         <div class="homepage">
             <div class="headerParentNonIndex">
                 <a class ="headerLogo" href="index.php"></a>
@@ -192,39 +192,49 @@
       
         $query = "SELECT * FROM shop";
         $result = mysqli_query($db,$query);
-
         while($row = mysqli_fetch_assoc($result))
-        {?>
-        <div class="col">
-    <div class="card" style="width: 18rem;">
+        { if ($row['rarity'] == "Unusual") {
+            $itemRarity = "#8650AC";
+        }
+        else if ($row['rarity'] == "Unique"){
+            $itemRarity = "#FFD700";
+        }
+        else if ($row['rarity'] == "Genuine"){
+            $itemRarity = "#4D7455";
+        }
+        else {
+            $itemRarity = "#B2B2B2";
+        }
+        ?>
+        <div class="col-lg-3 mb-3 d-flex align-items-stretch">
+    <div class="card" style="width: 18rem; background-color: #101822; padding-bottom:50px;">
     
          <form method="POST" action="buy.php?id=<?=$row['id'] ?>">
          
-         <img class="card-img-top" src="https://www.lagzero.net/wp-content/uploads/2009/08/tf2_heavy.jpg" alt="">
-        
-         <h2 class="card-title"><?= $row['product'];?></h2> 
-          <p class="card-text"><?= $row['desc'];?></p>
-          <p class="card-text"><?= $row['rarity'];?></p> 
-          <h4><?= number_format($row['price'],2);?>$</h2>  
+         <img class="card-img-top" style="background-color: #071215" src="<?= $row['item_image'];?>" alt="">
+        <div class="card-body d-flex flex-column">
+        <h5 class="card-title" style="color: <?= $itemRarity?>"><?= $row['product'];?> <span class="badge bg-dark">€<?= number_format($row['price'],2);?></span></h5> 
+        <h6 class="card-subtitle text-white"><?= $row['desc'];?></h6>
           <input type="hidden" name="product" value="<?= $row['product']  ?>">
           <input type="hidden" name="price" value="<?= $row['price']  ?>">
           <input type="hidden" name="desc" value="<?= $row['desc']  ?>">
-          <input type="hidden" name="rarity" value="<?= $row['rarity']  ?>">
-          <input type="number" name="quantity" value="1"><br><br>
-          <input type="submit" name="add_to_cart" class="btn btn-primary" value="ADD TO CART">
+          
+          
+<div class="card-footer" style="position:absolute; bottom: 0;">
+          <div class="input-group">
+  <div class="input-group-prepend">
+  <input type="submit" name="add_to_cart" class="btn btn-success" value="Add to Cart">
+  </div>
+  <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" type="number" name="quantity" value="1"><br>
+</div>
+</div>
+        </div>
+         
         </form>
-        
-       
         </div>
         <br>
      </div>
-  
-       <?php }
-      
-
-      
-      
-      ?>
+       <?php } ?>
     
         
 </div>
