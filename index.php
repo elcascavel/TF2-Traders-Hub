@@ -41,8 +41,7 @@
                                 if(!isset($userLoggedIn))
                                 {      
                                         echo "Login";
-                                }
-                                                    
+                                }   
                         ?>
                          </a>
 

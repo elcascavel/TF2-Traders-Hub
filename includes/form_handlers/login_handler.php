@@ -48,6 +48,7 @@ if (isset($_POST['login_button'])) {
         $user = mysqli_fetch_assoc($result);
 
         $_SESSION['username'] = $user['username'];
+        $_SESSION['is_admin'] = $user['is_admin'];
 
         $result = closeDb($db);
 
