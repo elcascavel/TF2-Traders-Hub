@@ -53,11 +53,12 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+        <script src="https://kit.fontawesome.com/6d446694b5.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../TH/css/main.css">
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     </head>
 
-    <body id="bootstrap-overrides" style="width:100%;margin:0;background-color:black">
+    <body style="width:100%;margin:0;background-color:black">
         <div class="homepage">
             <div class="headerParentNonIndex">
                 <a class ="headerLogo" href="index.php"></a>
@@ -153,9 +154,12 @@
                                         {
                                             $count=count($_SESSION['cart']);
                                            
-                                            echo 
-                                           " <a class='profileActionButton profileActionWalletImg' href='cart.php'> </a>
-                                            <span class='text-warning bg-light'>$count</span>";
+                                            echo "<a style='margin-right: 18px' class='fas fa-shopping-cart fa-lg position-relative' href='cart.php'>
+                                            <span class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
+    $count
+    <span class='visually-hidden'>items in cart</span>
+  </span></a>";
+
                                            
                                         }
                                 echo '<form action="profile.php" method="POST" name="formModifica">

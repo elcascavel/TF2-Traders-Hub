@@ -33,10 +33,10 @@ if (!isset($userLoggedIn)) {
 					<a class="navLink" href="index.php">
 						Trade
 					</a>
-					<a class="navLink" href="index.php">
+					<a class="navLink" href="buy.php">
 						Buy
 					</a>
-					<a class="navLink" href="index.php">
+					<a class="navLink" href="sell.php">
 						Sell
 					</a>
 				</div>
