@@ -81,7 +81,6 @@
                                 
                          ?>
                          </a>
-
                     </div>
                 </div>
             </div>
@@ -94,7 +93,7 @@
                 <div class="quoteContainer" data-aos="fade-right" data-aos-delay="500" data-aos-duration="2500">
                     <div>
                         <div class="quote">
-                            Trade, buy or sell TF2 skins
+                            Trade, buy or sell TF2 items
                         </div>
                         <div class="quoteCredits">
                             TF2 Trader's Hub is safe and efficient.

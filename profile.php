@@ -14,6 +14,7 @@ if (!isset($userLoggedIn)) {
 	<meta http-equiv="X-UA-Compatible" content="IE=9">
 	<title>TF2 Trader's Hub</title>
 	<link rel="shortcut icon" href="https://steamcdn-a.akamaihd.net/apps/tf2/blog/images/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="../TH/css/main.css">
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,33 +42,42 @@ if (!isset($userLoggedIn)) {
 					</a>
 				</div>
 			</div>
-			<div class="profileContainer">
-				<?php if ($user['team'] == "RED") {
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col col-md-9 col-lg-7 col-xl-5">
+        <div class="card" style="border-radius: 15px;">
+          <div class="card-body p-4">
+            <div class="d-flex text-black">
+              <div class="flex-shrink-0">
+                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp" alt="Generic placeholder image" class="img-fluid" style="width: 180px; border-radius: 10px;">
+              </div>
+              <div class="flex-grow-1 ms-3">
+			  <?php if ($user['team'] == "RED") {
 					$teamColor = "#B8383B";
 				}
 				else if ($user['team'] == "BLU") {
 					$teamColor = "#5885A2";
 				}
-					echo "<h3 style=color:$teamColor;>$userLoggedIn</h3"; 
+					echo "<h5 class='mb-1' style=color:$teamColor>$userLoggedIn</h5>";
 				?>
-			</div>
-			<div class="profileDetails">
-					<a>Member since <?php echo date("jS F, Y", strtotime($user['signup_date'])); ?></a>
+                <p class="mb-2 pb-1" style="color: #2b2a2a;">Member since <?php echo date("jS F, Y", strtotime($user['signup_date'])); ?></p>
+                <div class="d-flex justify-content-start rounded-3 p-2 mb-2" style="background-color: #efefef;">
 					<?php echo $user['email'] . "<br>"; ?>
 					<?php echo "Team " . $user['team']?>
-				</div>
-			</form>
-
-			<form action="profile.php" method="POST">
-				<div style="text-align:center; margin-top: 10px">
-				<input class="editProfileButton" type="submit" name="editAccount" id="editAccount" value="EDIT ACCOUNT">
-				<input class="editProfileButton" type="submit" name="closeAccount" id="closeAccount" value="DELETE ACCOUNT">
-				</div>
-			</form>
-		</div>
-		</div>
-		</div>
-		</div>
+                </div>
+                <div class="d-flex pt-1">
+				<form action="profile.php" method="POST">
+					<input class="btn btn-primary me-1 flex-grow-1" type="submit" name="editAccount" id="editAccount" value="Edit Account">
+					<input class="btn btn-danger flex-grow-1" type="submit" name="closeAccount" id="closeAccount" value="Delete Account">
+				</form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 		</div>
 
 		<?php
@@ -76,6 +86,9 @@ if (!isset($userLoggedIn)) {
 		}
 		else if (isset($_POST['editAccount'])) {
 			header("Location: edit_account.php");
+		}
+		else if (isset($_POST['adminPanel'])) {
+			header("Location: admin.php");
 		}
 		?>
 	</body>
