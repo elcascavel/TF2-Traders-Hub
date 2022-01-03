@@ -16,7 +16,8 @@ if (isset($_POST['saveAccount'])) {
 								   );
 
     $flag = false;
-    $existingRecord = false;
+    $existingRecords['username'] = false;
+    $existingRecords['email'] = false;
 
     $username = $_POST['username'];
     $email = $_POST['email'];
@@ -27,7 +28,7 @@ if (isset($_POST['saveAccount'])) {
     }
 
     if ($username == $user['username']) {
-        $existingRecord = true;
+        $existingRecord['username'] = true;
     }
 
     if(!validateEmail($email)){
@@ -35,11 +36,15 @@ if (isset($_POST['saveAccount'])) {
         $flag = true;				
     }
 
+    if ($email == $user['email']) {
+        $existingRecord['email'] = true;
+    }
+
     if ( $flag == true ){
         return($errors);
     }
 
-    if (!$existingRecord) {
+    if (!isset($existingRecord['username'])) {
         if (!checkField($db, $username, "users", "username")) {
             $query = "UPDATE users SET username = ? WHERE username = ?";
             $statement = mysqli_prepare($db, $query);
@@ -69,34 +74,37 @@ if (isset($_POST['saveAccount'])) {
             $message = "";
         }
     }
+    if (!isset($existingRecord['email'])) {
+        if (!checkField($db, $email, "users", "email")) {
+            $query = "UPDATE users SET email = ? WHERE email = ?";
+            $statement = mysqli_prepare($db, $query);
     
-    if (!checkField($db, $email, "users", "email")) {
-        $query = "UPDATE users SET email = ? WHERE email = ?";
-        $statement = mysqli_prepare($db, $query);
+            if (!$statement) {
+                echo 'Error preparing email statement.';
+                die();
+            }
+    
+            $result = mysqli_stmt_bind_param($statement, 'ss', $email, $user['email']);
+    
+            if (!$result) {
+                echo 'Error binding prepared email statement.';
+                die();
+            }
+    
+            $result = mysqli_stmt_execute($statement);
+    
+            if (!$result) {
+                echo 'Prepared statement result cannot be executed.';
+                die();
+            }
 
-        if (!$statement) {
-            echo 'Error preparing email statement.';
-            die();
+            else {
+                $user['email'] = $email;
+                $_SESSION['email'] = $email;
+        
+                $message = "";
+            }   
         }
-
-        $result = mysqli_stmt_bind_param($statement, 'ss', $email, $user['email']);
-
-        if (!$result) {
-            echo 'Error binding prepared email statement.';
-            die();
-        }
-
-        $result = mysqli_stmt_execute($statement);
-
-        if (!$result) {
-            echo 'Prepared statement result cannot be executed.';
-            die();
-        }
-
-        $user['email'] = $email;
-        $_SESSION['email'] = $email;
-
-        $message = "";
     }
 }
 
@@ -133,7 +141,7 @@ function checkField($database, $field, $table, $column) {
 
     if (mysqli_num_rows($result) != 0) {
         global $message;
-        $message = "<a class='errorMessage'>$column already in use!</a><br><br>";
+        $message = "<a class='errorMessage'>$column already in use!</a>";
         $result = closeDb($database);
         return true;
     }

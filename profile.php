@@ -58,12 +58,11 @@ if (!isset($userLoggedIn)) {
 				else if ($user['team'] == "BLU") {
 					$teamColor = "#5885A2";
 				}
-					echo "<h5 class='mb-1' style=color:$teamColor>$userLoggedIn</h5>";
+					echo "<h5 class='mb-1'>$userLoggedIn <span class='badge badge-pill' style='background:$teamColor; padding: .25em .45em;'>". $user['team'] ."</span></h5>";
 				?>
                 <p class="mb-2 pb-1" style="color: #2b2a2a;">Member since <?php echo date("jS F, Y", strtotime($user['signup_date'])); ?></p>
                 <div class="d-flex justify-content-start rounded-3 p-2 mb-2" style="background-color: #efefef;">
 					<?php echo $user['email'] . "<br>"; ?>
-					<?php echo "Team " . $user['team']?>
                 </div>
                 <div class="d-flex pt-1">
 				<form action="profile.php" method="POST">

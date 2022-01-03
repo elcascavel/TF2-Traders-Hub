@@ -15,6 +15,7 @@ if (!isset($userLoggedIn)) {
 	<meta http-equiv="X-UA-Compatible" content="IE=9">
 	<title>TF2 Trader's Hub</title>
 	<link rel="shortcut icon" href="https://steamcdn-a.akamaihd.net/apps/tf2/blog/images/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="../TH/css/main.css">
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,20 +43,12 @@ if (!isset($userLoggedIn)) {
 					</a>
 				</div>
 			</div>
-			<div class="profileContainer">
-				<?php if ($user['team'] == "RED") {
-					$teamColor = "#B8383B";
-				}
-				else if ($user['team'] == "BLU") {
-					$teamColor = "#5885A2";
-				}
-					echo "<h3 style=color:$teamColor;>$userLoggedIn</h3"; 
-				?>
 			</div>
-			<div class="profileDetails">
-
-					<form action="edit_account.php" method="POST" >
-						<input class="loginInput" type="text" id="username" name="username" placeholder="Username" value="<?php
+			<div class="container">
+				<div class="row">
+			<form action="edit_account.php" method="POST">
+  <div class="form-group">
+  <input class="form-control" type="text" id="username" name="username" placeholder="Username" value="<?php
 					
 					if (!empty($errors) && isset($errors['username'][0])) { 
 						echo $_POST['username'];
@@ -64,8 +57,7 @@ if (!isset($userLoggedIn)) {
 						echo $user['username'];
 					}
 						?>"><br>
-						
-                        <input class="loginInput" type="text" id="email" name="email" placeholder="E-mail" value="<?php
+    <input class="form-control" type="text" id="email" name="email" placeholder="E-mail" value="<?php
   		
 		  if (!empty($errors) && isset($errors['email'][0])){ 
 			  echo $_POST['email'];
@@ -73,21 +65,20 @@ if (!isset($userLoggedIn)) {
 		  elseif( !empty($user) ){
 			  echo $user['email'];
 		  }
-	  
 	  ?>"><br>
-      <input class="loginInput" type="password" id="password" name="password" placeholder="New Password">
-						<br>
-						<input class="loginInput" type="password" id="rpassword" name="rpassword" placeholder="Repeat Password">
-					
-  <br>
-						<div style="text-align:center; padding-bottom:10px">
-						<select class="teamSelect" name="team" id="team">
-  						<option id="redTeam" value="RED">RED</option>
-  						<option id="bluTeam" value="BLU">BLU</option>
-						</select>
-						</div><br>
-						<?php if (isset($message)) { echo $message; } ?><br>
-						<?php
+  </div>
+  <div class="form-group">
+    <input type="password" class="form-control" type="password" id="password" name="password" placeholder="Password"><br>
+	<input type="password" class="form-control" type="password" id="rpassword" name="rpassword" placeholder="Repeat Password"><br>
+  </div>
+  <div class="form-group">
+    <select class="form-control" name="team" id="team">
+      <option id="redTeam" value="RED">RED</option>
+      <option id="bluTeam" value="BLU">BLU</option>
+    </select>
+  </div>
+  <?php if (isset($message)) { echo $message; } ?><br>
+  <?php
 						if (!empty($errors)) { # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
 					
 							if (isset($errors['username']) && $errors['username'][0]==true)
@@ -116,12 +107,10 @@ if (!isset($userLoggedIn)) {
 							}
 						}
 						?>
-				</div>
-				<div style="text-align:center; margin-top: 10px">
-				<input class="editProfileButton" type="submit" name="saveAccount" id="saveAccount" value="SAVE">
-				<input class="editProfileButton" type="submit" name="cancelAccount" id="cancelAccount" value="CANCEL">
-				</div>
-			</form>
+  <input class="btn btn-primary" type="submit" name="saveAccount" id="saveAccount" value="Save">
+	<input class="btn btn-danger" type="submit" name="cancelAccount" id="cancelAccount" value="Cancel">
+</form>
+</div>
 		</div>
 		</div>
 		</div>
