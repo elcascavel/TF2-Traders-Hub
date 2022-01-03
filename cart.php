@@ -196,6 +196,7 @@
         <table class='table table-sm table-light table-hover table-bordered align-middle text-center'>
         <thead>
         <tr>
+        <th style='display:none' scope='col'>ID</th>
         <th scope='col'>Name</th>
         <th scope='col'>Price</th>
         <th scope='col'>Quantity</th>
@@ -211,6 +212,7 @@
           {
             $output.="
         <tr>
+        <td style='display:none'>".$value['id']."</td>
         <td>".$value['product']."</td>
         <td>€".$value['price']."</td>
         <td>".$value['quantity']."</td>
