@@ -239,7 +239,15 @@
                     <button class='btn btn-warning'>Clear</button>
                 </a>
           </td>
-          
+          <tr>
+          <td colspan='3'></td>
+          <td>€".number_format($total,2)."</td>
+          <td>
+                <a>
+                    <button class='btn btn-success'>Pay</button>
+                </a>
+          </td>
+         
                
           
           
@@ -265,6 +273,8 @@
               if($value['id'] == $_GET['id'])
           {
             unset($_SESSION['cart'][$key]);
+            
+            break;
           }
       }
     }

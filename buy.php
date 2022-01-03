@@ -14,8 +14,7 @@
         {
             $session_array_id=array_column($_SESSION['cart'],"id");
                            
-          if(!in_array($_GET['id'],$session_array_id))
-          {
+          
            
 
            $count= count($_SESSION['cart']);
@@ -26,7 +25,7 @@
            "quantity" => $_POST['quantity'] );
            $_SESSION['cart'][$count] =  $session_array;
           
-          }
+          
 
         }else
         {
