@@ -59,7 +59,8 @@
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     </head>
 
-    <body style="width:100%;margin:0;background-color:black">
+    <body style="width:100%;margin:0;background: linear-gradient(165deg, #262f3e, #1a2129);
+  background-attachment: fixed;">
         <div class="homepage">
             <div class="headerParentNonIndex">
                 <a class ="headerLogo" href="index.php"></a>
@@ -184,7 +185,8 @@
       <button class='btn btn-success'>Back to shop</button>
   </a>
         <div class="col">
-        <h2>Item</h2>
+            <br>
+      
     <?php 
 
         $total=0;
