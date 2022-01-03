@@ -100,6 +100,7 @@ if (isset($_POST['register_button'])) {
 
             $_SESSION['username'] = $username;
             $_SESSION['email'] = $email;
+            $_SESSION['is_admin'] = 0;
 
             header("Location: index.php");
             exit();
