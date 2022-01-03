@@ -1,5 +1,7 @@
-<?php 
+<?php
     include("includes/header.php");
+    require 'includes/form_handlers/admin_handler.php';
+    
     if($userIsAdmin == 0) {
         header("Location: index.php");
     }
@@ -21,24 +23,24 @@
 </head>
 
 <body>
-    <div class="container">
+    <div style="margin-top:20px" class="container">
+    <h1>Admin Panel</h1>
     <h2>Users</h2>
     <ul class="list-group">
-  <li class="list-group-item">Cascavel <button type="button" class="btn btn-danger btn-sm" style="float: right">Delete user</button> <button type="button" class="btn btn-warning btn-sm" style="float: right; margin-right: 10px">Make admin</button></li>
-  <li class="list-group-item">Nuno <button type="button" class="btn btn-danger btn-sm" style="float: right">Delete user</button> <button type="button" class="btn btn-warning btn-sm" style="float: right; margin-right: 10px">Make admin</button></li>
+        <?php 
+        while ($row = mysqli_fetch_assoc($result)) {
+            $name = $row['username'];
+        echo "<li class='list-group-item'>$name <button type='button' class='btn btn-danger btn-sm' style='float: right'>Delete user</button> <button type='button' class='btn btn-warning btn-sm' style='float: right; margin-right: 10px'>Make admin</button></li>";
+    }?>
 </ul>
-<h2>Items</h2>
+<h2 style="margin-top:20px">Items</h2>
 <ul class="list-group">
-  <li class="list-group-item">An active item</li>
-  <li class="list-group-item">A second item</li>
-  <li class="list-group-item">A third item</li>
-  <li class="list-group-item">A fourth item</li>
-  <li class="list-group-item">And a fifth one</li>
+<?php 
+        while ($row = mysqli_fetch_assoc($shop_result)) {
+            $productName = $row['product'];
+        echo "<li class='list-group-item'>$productName <button type='button' class='btn btn-danger btn-sm' style='float: right'>Delete item</button></li>";
+    }?>
 </ul>
     </div>
-    
-    
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
-
