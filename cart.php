@@ -180,8 +180,9 @@
             </div>
            <div class="container" style="margin-top: 20px; margin-bottom: 20px; color:black;">
   <div class="row">
-  
-  
+  <a href='buy.php'>
+      <button class='btn btn-success'>Back to shop</button>
+  </a>
         <div class="col">
         <h2>Item</h2>
     <?php 
@@ -190,14 +191,16 @@
         $output = "";
 
         $output.="
-        <table class='table bordered table-striped'>
+        <table class='table table-sm table-light table-hover table-bordered align-middle text-center'>
+        <thead>
         <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Quantity</th>
-        <th>Total Price</th>
+        <th scope='col'>Name</th>
+        <th scope='col'>Price</th>
+        <th scope='col'>Quantity</th>
+        <th scope='col'>Total Price</th>
+        <th scope='col'>Action</th>
         </tr>
+        </thead>
         ";
 
       if(!empty($_SESSION['cart']))
@@ -206,11 +209,10 @@
           {
             $output.="
         <tr>
-        <td>".$value['id']."</td>
         <td>".$value['product']."</td>
-        <td>".$value['price']."</td>
+        <td>€".$value['price']."</td>
         <td>".$value['quantity']."</td>
-        <td>".number_format($value['price']*$value['quantity'],2)."</td>
+        <td>€".number_format($value['price']*$value['quantity'],2)."</td>
         <td>
         <a href='cart.php?action=remove&id=".$value['id']."'>
         <button class='btn btn-danger btn-block'>Remove</button>
@@ -225,9 +227,9 @@
           $output .="
           
           <tr>
-          <td colspan='3'></td>
+          <td colspan='2'></td>
           <td>Total Price</td>
-          <td>".number_format($total,2)."</td>
+          <td>€".number_format($total,2)."</td>
           <td>
                 <a href='cart.php?action=clearall'>
                     <button class='btn btn-warning'>Clear</button>
@@ -242,10 +244,6 @@
           
           ";
       }
-     
-      echo  "<a href='buy.php'>
-      <button class='btn btn-success'>Back to shop</button>
-  </a>";
   echo $output;
 
       if(isset($_GET['action']))
@@ -269,26 +267,12 @@
 }
       ?>
      </div>
-  
-       
-    
-        
+          </div>
+  </a>
 </div>
-            <div class="footerArea">
-                <div class="footerLogos">
-                    <a href="https://www.valvesoftware.com/en/about"><img class="footerLogoImg" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/valve_logo.png"></a>
-                    <a href="https://necm.utad.pt/"><img class="footerLogoImg" src="../TH/img/cmLogo.png"></a>
-                </div>
-                
-                <div class="footerLegal">
-Team Fortress is a trademark of Valve Corporation, TF2 Trader's Hub is a fan creation and is not affiliated with Valve or Steam.
-                </div>
-            </div> 
-    </div>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>
     AOS.init();
   </script>
-
     </body>
 </html>
