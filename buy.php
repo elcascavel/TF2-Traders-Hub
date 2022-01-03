@@ -90,13 +90,11 @@
                        <?php 
                        
                     
-                        if( !empty ($_SESSION) && array_key_exists("username", $_SESSION))
-                        {   
-                                
-                                echo $_SESSION['username'];
-                                
-                        }
-                            ?>
+                       if(isset($userLoggedIn))
+                       {
+                               echo "<h5>$userLoggedIn <span class='badge bg-success'>$money €</span></h5>";              
+                       }
+                           ?>
                         </a>
                         
                         
