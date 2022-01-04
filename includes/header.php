@@ -43,7 +43,7 @@ if (isset($_SESSION['username'])) {
 
 	$user = mysqli_fetch_array($result);
 
-    $sql = "SELECT  SUM(amount) from wallet";
+    $sql = "SELECT SUM(amount) from wallet WHERE id_users = " . $user['id_users'];
     $result = $db->query($sql);
   
     $row = mysqli_fetch_array($result);
