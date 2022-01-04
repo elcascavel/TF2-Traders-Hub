@@ -39,6 +39,80 @@
             
         }
     }
+
+    $output="";
+    $nodata="";
+    if(isset($_POST['search']))
+    {
+        $input=$_POST['input'];
+
+        if(!empty($input))
+        {
+            $query="SELECT * FROM shop WHERE product LIKE '%$input%'";
+            $result = mysqli_query($db,$query);
+
+            $output.="";
+            $nodata.="";
+            
+
+            if(mysqli_num_rows($result)< 1)
+            {
+                $nodata.= '<a class="errorMessage" style="text-align:center">' . "NO DATA FOUND!" . '</a>' . '<br><br>';
+            }
+            else{
+                while($row = mysqli_fetch_assoc($result))
+                {
+                    if ($row['rarity'] == "Unusual") {
+                        $itemRarity = "#8650AC";
+                    }
+                    else if ($row['rarity'] == "Unique"){
+                        $itemRarity = "#FFD700";
+                    }
+                    else if ($row['rarity'] == "Genuine"){
+                        $itemRarity = "#4D7455";
+                    }
+                    else {
+                        $itemRarity = "#B2B2B2";
+                    }
+                    $output .= '<div class="col-lg-3 mb-3 d-flex align-items-stretch">
+                    <div class="card" style="width: 18rem; background-color: #101822; padding-bottom:50px;">
+                    
+                         <form method="POST" action="buy.php?id="".$row["id"].">
+                         
+                         <img class="card-img-top" style="background-color: #071215" src="'.$row["item_image"].'alt="">
+                        <div class="card-body d-flex flex-column">
+                        <h5 class="card-title" style="color:'.$itemRarity.'">'. $row["product"].'<span class="badge bg-dark">€'.number_format($row["price"],2).'</span></h5> 
+                        <h6 class="card-subtitle text-white">'. $row['desc'].'</h6>
+                          <input type="hidden" name="product" value="'.$row['product'].'">
+                          <input type="hidden" name="price" value="'.$row['price'].'">
+                          <input type="hidden" name="desc" value="'.$row['desc'].'">
+                          
+                          
+                <div class="card-footer" style="position:absolute; bottom: 0;">
+                          <div class="input-group">
+                  <div class="input-group-prepend">
+                  <input type="submit" name="add_to_cart" class="btn btn-success" value="Add to Cart">
+                  </div>
+                  <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" type="number" name="quantity" value="1"><br>
+                </div>
+                </div>
+                </div>
+                        
+                         
+                        </form>
+                        </div>
+                        <br>
+                        </div>
+                        
+                     ';
+                }
+
+            }
+
+        }  
+    }
+       
+    
     ?>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -70,6 +144,18 @@
                     </a>
                     <a class="navLink" href="index.php">
                         Sell
+                    </a>
+                    <a class="navLink" >
+                        <form method="post">
+                            <div class="row">
+                                <div class="col-md-9">
+                                    <input type="text" name="input" class="form-control" value="">
+                                </div>
+                                <div class="col-md-3">
+                                     <input type="submit" name="search" class="btn btn-success" value="Search">
+                                 </div>
+                            </div>
+                        </form>
                     </a>
                 </div>
                 <div class="navSide">
@@ -199,6 +285,9 @@
       
         $query = "SELECT * FROM shop";
         $result = mysqli_query($db,$query);
+        if(empty($_POST['input'] ))
+    {
+     
         while($row = mysqli_fetch_assoc($result))
         { if ($row['rarity'] == "Unusual") {
             $itemRarity = "#8650AC";
@@ -241,7 +330,17 @@
         </div>
         <br>
      </div>
-       <?php } ?>
+       <?php } 
+       
+    
+   
+    }else{
+       
+        echo $output;
+        
+    }
+       echo $nodata;
+       ?>
     
         
 </div>
