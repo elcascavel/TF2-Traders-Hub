@@ -50,7 +50,4 @@ if (isset($_SESSION['username'])) {
    
     $money = $row['SUM(amount)'];
 }
-
-
-
 ?>

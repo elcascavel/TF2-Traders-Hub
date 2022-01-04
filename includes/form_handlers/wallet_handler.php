@@ -61,7 +61,7 @@ if (isset($_POST['wallet_button'])) {
     }
     
     if (!checkField($db, $cardNumber, "wallet", "cardnum")) {
-        $query = "INSERT INTO wallet (owner, cardnum, cvv, cardname, amount) VALUES (?,?,?,?,?)";
+        $query = "INSERT INTO wallet (owner, cardnum, cvv, cardname, amount, id_users) VALUES (?,?,?,?,?,?)";
 
         $statement = mysqli_prepare($db, $query);
 
@@ -70,7 +70,7 @@ if (isset($_POST['wallet_button'])) {
             die();
         }
 
-        $result = mysqli_stmt_bind_param($statement, 'sssss', $owner, $cardNumber, $cvv, $cardBrand, $amount);
+        $result = mysqli_stmt_bind_param($statement, 'ssssdi', $owner, $cardNumber, $cvv, $cardBrand, $amount, $user['id_users']);
         if (!$result) {
             echo "Error binding prepared card number statement.";
             die();
