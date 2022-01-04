@@ -142,7 +142,7 @@
                     <a class="navLink" href="buy.php">
                         Buy
                     </a>
-                    <a class="navLink" href="index.php">
+                    <a class="navLink" href="sell.php">
                         Sell
                     </a>
                     <a class="navLink" >

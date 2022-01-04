@@ -40,18 +40,6 @@
                     <a class="navLink" href="sell.php">
                         Sell
                     </a>
-                    <a class="navLink" >
-                        <form method="post">
-                            <div class="row">
-                                <div class="col-md-9">
-                                    <input type="text" name="input" class="form-control" value="">
-                                </div>
-                                <div class="col-md-3">
-                                     <input type="submit" name="search" class="btn btn-success" value="Search">
-                                 </div>
-                            </div>
-                        </form>
-                    </a>
                 </div>
                 <div class="navSide">
                     <div class="navSideContent">
@@ -79,7 +67,7 @@
                         }else
                         {
                             echo "<h5>$userLoggedIn <span class='badge bg-success'>$money €</span></h5>"; 
-                        }            
+                        }
                        }
                            ?>
                         </a>
@@ -110,7 +98,7 @@
                           //error preparing the statement. This should be regarded as a fatal error.
                           echo "Something went wrong. Please try again later.";
                           die();				
-                      }				
+                      }
                               
                       //execute the prepared statement
                       $result = mysqli_stmt_execute($statement);
@@ -154,7 +142,7 @@
                         <?php
                         if (!isset($_SESSION['username'])) {
                             echo "Sign Up";
-                        } 
+                        }
                                 
                          ?>
                          </a>
@@ -163,7 +151,22 @@
                 </div>
             </div>
         </div>
-        
+        <form class="loginForm" action="" method="POST">
+        <input class="loginInput" type="text" id="log_username" name="log_username" placeholder="Product" value="<?php
+
+                                                                                                                  if (!empty($errors) && !isset($errors['username'][0])) { #this is done to keep the value inputted by the user if this field is valid but others are not
+                                                                                                                    echo $_POST['username'];
+                                                                                                                  }
+                                                                                                                  ?>"><br>
+        <br>
+        <input class="loginInput" type="password" id="password" name="log_password" placeholder="Password"><br>
+        <?php if (isset($message)) { echo $message; } ?>
+        <br>
+        <input class="loginButton" name="login_button" type="submit" value="LOGIN">
+        <div class="logSignUp">
+          Don't have an account yet? <a class="signUpLink" href="register.php">Sign Up</a>
+        </div>
+      </form>
             <form method="post" action="upload.php" enctype="multipart/form-data">
         <input type="file" name="myFile" />
         <input type="submit" value="Upload">
@@ -178,7 +181,7 @@
                 <div class="footerLegal">
 Team Fortress is a trademark of Valve Corporation, TF2 Trader's Hub is a fan creation and is not affiliated with Valve or Steam.
                 </div>
-            </div> 
+            </div>
     </div>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>
