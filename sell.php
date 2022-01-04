@@ -135,18 +135,7 @@
                                 while( $row = mysqli_fetch_assoc($result) ){
                                     if($row['username'] == $_SESSION['username']){
                                         echo '<div class="accountActionsButtonContainer">';
-                                        if(isset($_SESSION['cart']))
-                                        {
-                                            $count=count($_SESSION['cart']);
-                                           
-                                            echo "<a style='margin-right: 18px' class='fas fa-shopping-cart fa-lg position-relative' href='cart.php'>
-                                            <span class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
-    $count
-    <span class='visually-hidden'>items in cart</span>
-  </span></a>";
 
-                                           
-                                        }
                                 echo '<form action="profile.php" method="POST" name="formModifica">
                                 <input type="hidden" value="' . $row['id_users'] . '" name="id">
                                 <input class="profileActionButton profileActionAccountImg" type="submit" name="modificar" value="">
@@ -179,5 +168,21 @@
         <input type="file" name="myFile" />
         <input type="submit" value="Upload">
             </form>
+
+        <div class="footerArea">
+                <div class="footerLogos">
+                    <a href="https://www.valvesoftware.com/en/about"><img class="footerLogoImg" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/valve_logo.png"></a>
+                    <a href="https://necm.utad.pt/"><img class="footerLogoImg" src="../TH/img/cmLogo.png"></a>
+                </div>
+                
+                <div class="footerLegal">
+Team Fortress is a trademark of Valve Corporation, TF2 Trader's Hub is a fan creation and is not affiliated with Valve or Steam.
+                </div>
+            </div> 
+    </div>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
     </body>
 </html>
