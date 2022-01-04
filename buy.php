@@ -183,7 +183,7 @@
                             echo "<h5>$userLoggedIn <span class='badge bg-success'>0€</span></h5>";
                         }else
                         {
-                            echo "<h5>$userLoggedIn <span class='badge bg-success'>$money€</span></h5>"; 
+                            echo "<h5>$userLoggedIn <span class='badge bg-success'>$money €</span></h5>"; 
                         }            
                        }
                            ?>
