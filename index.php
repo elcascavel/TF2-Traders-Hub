@@ -24,7 +24,7 @@
             <div class="headerParent">
                 <a class ="headerLogo" href="index.php"></a>
                 <div class="headerNavItems">
-                    <a class="navLink" href="index.php">
+                    <a class="navLink" href="trade.php">
                         Trade
                     </a>
                     <a class="navLink" href="buy.php">

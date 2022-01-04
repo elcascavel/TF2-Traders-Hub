@@ -1,118 +1,13 @@
 <!DOCTYPE html>
 <html>
-<?php
-   
-   include("includes/header.php");
-    if (!isset($_SESSION['username'])) {
-        header("Location: index.php");
-    }
-
-    if(isset($_POST['add_to_cart']))
-    {
+    <?php
+     
+        include("includes/header.php");
         
-        if(isset($_SESSION['cart']))
-        {
-            $session_array_id=array_column($_SESSION['cart'],"id");
-                           
-          
-           
-
-           $count= count($_SESSION['cart']);
-           $session_array = array('id' => $_GET['id'],
-           "product" => $_POST['product'],   
-           "desc" => $_POST['desc'],
-           "price" => $_POST['price'],
-           "quantity" => $_POST['quantity'] );
-           $_SESSION['cart'][$count] =  $session_array;
-          
-          
-
-        }else
-        {
-            $session_array = array('id' => $_GET['id'],
-                                   "product" => $_POST['product'],   
-                                   "desc" => $_POST['desc'],
-                                   "price" => $_POST['price'],
-                                   "quantity" => $_POST['quantity'] );
-
-            $_SESSION['cart'][0] =  $session_array;
-            
+        if (!isset($_SESSION['username'])) {
+         header("Location: index.php");
         }
-    }
 
-    $output="";
-    $nodata="";
-    if(isset($_POST['search']))
-    {
-        $input=$_POST['input'];
-
-        if(!empty($input))
-        {
-            $query="SELECT * FROM shop WHERE product LIKE '%$input%'";
-            $result = mysqli_query($db,$query);
-
-            $output.="";
-            $nodata.="";
-            
-
-            if(mysqli_num_rows($result)< 1)
-            {
-                $nodata.= '<a class="errorMessage" style="text-align:center">' . "NO DATA FOUND!" . '</a>' . '<br><br>';
-            }
-            else{
-                while($row = mysqli_fetch_assoc($result))
-                {
-                    if ($row['rarity'] == "Unusual") {
-                        $itemRarity = "#8650AC";
-                    }
-                    else if ($row['rarity'] == "Unique"){
-                        $itemRarity = "#FFD700";
-                    }
-                    else if ($row['rarity'] == "Genuine"){
-                        $itemRarity = "#4D7455";
-                    }
-                    else {
-                        $itemRarity = "#B2B2B2";
-                    }
-                    $output .= '<div class="col-lg-3 mb-3 d-flex align-items-stretch">
-                    <div class="card" style="width: 18rem; background-color: #101822; padding-bottom:50px;">
-                    
-                         <form method="POST" action="buy.php?id="".$row["id"].">
-                         
-                         <img class="card-img-top" style="background-color: #071215" src="'.$row["item_image"].'alt="">
-                        <div class="card-body d-flex flex-column">
-                        <h5 class="card-title" style="color:'.$itemRarity.'">'. $row["product"].'<span class="badge bg-dark">€'.number_format($row["price"],2).'</span></h5> 
-                        <h6 class="card-subtitle text-white">'. $row['desc'].'</h6>
-                          <input type="hidden" name="product" value="'.$row['product'].'">
-                          <input type="hidden" name="price" value="'.$row['price'].'">
-                          <input type="hidden" name="desc" value="'.$row['desc'].'">
-                          
-                          
-                <div class="card-footer" style="position:absolute; bottom: 0;">
-                          <div class="input-group">
-                  <div class="input-group-prepend">
-                  <input type="submit" name="add_to_cart" class="btn btn-success" value="Add to Cart">
-                  </div>
-                  <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" type="number" name="quantity" value="1"><br>
-                </div>
-                </div>
-                </div>
-                        
-                         
-                        </form>
-                        </div>
-                        <br>
-                        </div>
-                        
-                     ';
-                }
-
-            }
-
-        }  
-    }
-       
-    
     ?>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -130,13 +25,13 @@
         <link rel="stylesheet" href="../TH/css/main.css">
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     </head>
-
+    
     <body style="width:100%;margin:0;background-color:black">
         <div class="homepage">
             <div class="headerParentNonIndex">
                 <a class ="headerLogo" href="index.php"></a>
                 <div class="headerNavItems">
-                    <a class="navLink" href="trade.php">
+                    <a class="navLink" href="index.php">
                         Trade
                     </a>
                     <a class="navLink" href="buy.php">
@@ -278,93 +173,11 @@
                     </div>
                 </div>
             </div>
-           <div class="container" style="margin-top: 20px; margin-bottom: 20px; color:black;">
-  <div class="row">
-  
-  
-    <?php  
-      require 'config/config.php';
-      $db = connectDB();
-    if (is_string ($db)) {
-        echo ("Error connecting to database!");
-        die();
-    }
-      
-        $query = "SELECT * FROM shop";
-        $result = mysqli_query($db,$query);
-        if(empty($_POST['input'] ))
-    {
-     
-        while($row = mysqli_fetch_assoc($result))
-        { if ($row['rarity'] == "Unusual") {
-            $itemRarity = "#8650AC";
-        }
-        else if ($row['rarity'] == "Unique"){
-            $itemRarity = "#FFD700";
-        }
-        else if ($row['rarity'] == "Genuine"){
-            $itemRarity = "#4D7455";
-        }
-        else {
-            $itemRarity = "#B2B2B2";
-        }
-        ?>
-        <div class="col-lg-3 mb-3 d-flex align-items-stretch">
-    <div class="card" style="width: 18rem; background-color: #101822; padding-bottom:50px;">
-    
-         <form method="POST" action="buy.php?id=<?=$row['id'] ?>">
-         
-         <img class="card-img-top" style="background-color: #071215" src="<?= $row['item_image'];?>" alt="">
-        <div class="card-body d-flex flex-column">
-        <h5 class="card-title" style="color: <?= $itemRarity?>"><?= $row['product'];?> <span class="badge bg-dark">€<?= number_format($row['price'],2);?></span></h5> 
-        <h6 class="card-subtitle text-white"><?= $row['desc'];?></h6>
-          <input type="hidden" name="product" value="<?= $row['product']  ?>">
-          <input type="hidden" name="price" value="<?= $row['price']  ?>">
-          <input type="hidden" name="desc" value="<?= $row['desc']  ?>">
-          
-          
-<div class="card-footer" style="position:absolute; bottom: 0;">
-          <div class="input-group">
-  <div class="input-group-prepend">
-  <input type="submit" name="add_to_cart" class="btn btn-success" value="Add to Cart">
-  </div>
-  <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" type="number" name="quantity" value="1"><br>
-</div>
-</div>
         </div>
-         
-        </form>
-        </div>
-        <br>
-     </div>
-       <?php } 
-       
-    
-   
-    }else{
-       
-        echo $output;
         
-    }
-       echo $nodata;
-       ?>
-    
-        
-</div>
-            <div class="footerArea">
-                <div class="footerLogos">
-                    <a href="https://www.valvesoftware.com/en/about"><img class="footerLogoImg" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/valve_logo.png"></a>
-                    <a href="https://necm.utad.pt/"><img class="footerLogoImg" src="../TH/img/cmLogo.png"></a>
-                </div>
-                
-                <div class="footerLegal">
-Team Fortress is a trademark of Valve Corporation, TF2 Trader's Hub is a fan creation and is not affiliated with Valve or Steam.
-                </div>
-            </div> 
-    </div>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script>
-    AOS.init();
-  </script>
+            <form method="post" action="upload.php" enctype="multipart/form-data">
+        <input type="file" name="myFile" />
+        <input type="submit" value="Upload">
+            </form>
     </body>
 </html>
