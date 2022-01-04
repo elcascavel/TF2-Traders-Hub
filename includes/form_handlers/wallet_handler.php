@@ -1,5 +1,6 @@
 <?php
 require_once "cookies/configDb.php";
+include("includes/header.php");
 $owner = "";
 $cardNumber = "";
 $cvv = "";
@@ -60,7 +61,7 @@ if (isset($_POST['wallet_button'])) {
         return($errors);
     }
     
-    if (!checkField($db, $cardNumber, "wallet", "cardnum")) {
+    
         $query = "INSERT INTO wallet (owner, cardnum, cvv, cardname, amount, id_users) VALUES (?,?,?,?,?,?)";
 
         $statement = mysqli_prepare($db, $query);
@@ -88,48 +89,8 @@ if (isset($_POST['wallet_button'])) {
             header("Location: index.php");
             exit();
         }
-    }
+    
 }
 
-function checkField($database, $field, $table, $column) {
-    $query = "SELECT * FROM $table WHERE $column = ?";
 
-    $statement = mysqli_prepare($database, $query);
-
-    if (!$statement) {
-        echo "Error preparing $column statement.";
-        die();
-    }
-
-    $result = mysqli_stmt_bind_param($statement, 's', $field);
-
-    if (!$result) {
-        echo "Error binding prepared $column statement.";
-        die();
-    }
-
-    $result = mysqli_stmt_execute($statement);
-
-    if (!$result) {
-        echo "Prepared statement result cannot be executed.";
-        die();
-    }
-
-    $result = mysqli_stmt_get_result($statement);
-
-    if (!$result){
-        echo 'Prepared statement result cannot be stored.';
-        die();
-    }
-
-    if (mysqli_num_rows($result) != 0) {
-        global $message;
-        $message = "<a class='errorMessage'>Card number already in use!</a><br><br>";
-        $result = closeDb($database);
-        return true;
-    }
-    else {
-        return false;
-    }
-}
 ?>
