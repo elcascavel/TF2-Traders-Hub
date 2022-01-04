@@ -13,7 +13,7 @@ if (isset($_POST['closeAccount'])) {
     require_once('cookies/configDb.php');
     $db = connectDB();
 
-    $close_query = "DELETE from users WHERE username = ?";
+    $close_query = "DELETE users,wallet FROM wallet INNER JOIN users ON wallet.id_users = users.id_users WHERE wallet.id_users=?";
     $statement = mysqli_prepare($db, $close_query);
 
     if (!$statement) {
