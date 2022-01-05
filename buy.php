@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <?php
-   
+  
    include("includes/header.php");
     if (!isset($_SESSION['username'])) {
         header("Location: index.php");
@@ -24,9 +24,32 @@
            "price" => $_POST['price'],
            "quantity" => $_POST['quantity'] );
            $_SESSION['cart'][$count] =  $session_array;
+     
           
+           $teste = $_GET['id'];
+           $db = connectDB();
+                       
           
-
+               $sql = "INSERT INTO cart (name,price,id) SELECT product,price,id FROM shop WHERE id='{$teste}'";
+               $statement = mysqli_prepare($db, $sql);
+                   
+                   
+           if (!$statement ){
+               //error preparing the statement. This should be regarded as a fatal error.
+               echo "Something went wrong. Please try again later.1";
+               die();				
+           }				
+                   
+           //execute the prepared statement
+           $result = mysqli_stmt_execute($statement);
+                               
+           if( !$result ) {
+               //again a fatal error when executing the prepared statement
+               echo "Something went very wrong. Please try again later.2";
+               die();
+           }
+                        
+        
         }else
         {
             $session_array = array('id' => $_GET['id'],
@@ -42,13 +65,18 @@
 
     $output="";
     $nodata="";
+   
     if(isset($_POST['search']))
     {
+      
         $input=$_POST['input'];
 
         if(!empty($input))
         {
+           
             $query="SELECT * FROM shop WHERE product LIKE '%$input%'";
+          
+       
             $result = mysqli_query($db,$query);
 
             $output.="";
@@ -62,6 +90,7 @@
             else{
                 while($row = mysqli_fetch_assoc($result))
                 {
+                   
                     if ($row['rarity'] == "Unusual") {
                         $itemRarity = "#8650AC";
                     }
@@ -104,7 +133,7 @@
                         <br>
                         </div>
                         
-                     ';
+                     '; 
                 }
 
             }
@@ -240,9 +269,38 @@
                                 while( $row = mysqli_fetch_assoc($result) ){
                                     if($row['username'] == $_SESSION['username']){
                                         echo '<div class="accountActionsButtonContainer">';
-                                        if(isset($_SESSION['cart']))
-                                        {
-                                            $count=count($_SESSION['cart']);
+                                       
+                                            $db = connectDB();
+    if (is_string ($db)) {
+        echo ("Error connecting to database!");
+        die();
+    }
+
+	$quer = "SELECT * FROM cart";
+    $state = mysqli_prepare($db, $quer);
+
+    if (!$state) {
+        echo "Error preparing statement. Try again later";
+        die();
+    }
+
+    $res = mysqli_stmt_execute($state);
+
+    if (!$res) {
+        echo "Error executing prepared statement.";
+        die();
+    }
+
+    $res = mysqli_stmt_get_result($state);
+
+    if (!$res) {
+        echo "Result of prepared statement cannot be stored.";
+        die();
+    }
+    
+        $count=mysqli_num_rows($res);
+    
+                                            
                                            
                                             echo "<a style='margin-right: 18px' class='fas fa-shopping-cart fa-lg position-relative' href='cart.php'>
                                             <span class='position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger'>
@@ -251,7 +309,7 @@
   </span></a>";
 
                                            
-                                        }
+                                        
                                 echo '<form action="profile.php" method="POST" name="formModifica">
                                 <input type="hidden" value="' . $row['id_users'] . '" name="id">
                                 <input class="profileActionButton profileActionAccountImg" type="submit" name="modificar" value="">
