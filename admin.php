@@ -5,6 +5,8 @@
     if($userIsAdmin == 0) {
         header("Location: index.php");
     }
+
+    
 ?>
 
 <head>
@@ -23,24 +25,90 @@
 </head>
 
 <body>
-    <div style="margin-top:20px" class="container">
+    <div class="container-xl mt-2">
     <h1>Admin Panel</h1>
-    <h2>Users</h2>
-    <ul class="list-group">
-        <?php 
-        while ($row = mysqli_fetch_assoc($result)) {
-            $name = $row['username'];
-        echo "<li class='list-group-item'>$name <button type='button' class='btn btn-danger btn-sm' style='float: right'>Delete user</button> <button type='button' class='btn btn-warning btn-sm' style='float: right; margin-right: 10px'>Make admin</button></li>";
-    }?>
-</ul>
-<h2 style="margin-top:20px">Items</h2>
-<ul class="list-group">
+    <?php echo "<h5>Welcome, $userLoggedIn</h5>"?>
+    <div class="row">
+    <?php 
+        $table = "";
+
+        $table.="
+        <table class='table table-hover table-bordered align-middle text-center'>
+        <thead>
+        <tr>
+        <th scope='col'>#</th>
+        <th scope='col'>Username</th>
+        <th scope='col'>Date Created</th>
+        <th scope='col'>Role</th>
+        <th scope='col'>Action</th>
+        </tr>
+        </thead>
+        ";
+ 
+        while($user = mysqli_fetch_assoc($user_result)) {
+            $adminCheck = $user['is_admin'];
+            if ($adminCheck) {
+                $adminCheck = "Admin";
+            }
+            else {
+                $adminCheck = "User";
+            }
+            $table.="
+            <tr>
+            <td>".$user['id_users']."</td>
+            <td><img class='adminPanelAvatar' src=".$user['user_pic']."><b>".$user['username']."</b></td>
+            <td>".date("jS F, Y", strtotime($user['signup_date']))."</td>
+            <td>".$adminCheck."</td>
+            <td><a type='button' href='admin.php?action=makeAdmin' class='btn btn-primary btn-sm'>Make admin</a> <button type='button' class='btn btn-danger btn-sm'>Delete user</button></td>
+            </tr>
+            ";
+        }
+        echo $table . "</table>";
+    ?>
+    </div> 
+<div class="row">
+<h2 class="mt-5">Items</h2>
 <?php 
-        while ($row = mysqli_fetch_assoc($shop_result)) {
-            $productName = $row['product'];
-        echo "<li class='list-group-item'>$productName <button type='button' class='btn btn-danger btn-sm' style='float: right'>Delete item</button></li>";
-    }?>
-</ul>
+         $table = "";
+
+         $table.="
+         <table class='table table-hover table-bordered align-middle text-center'>
+         <thead>
+         <tr>
+         <th scope='col'>#</th>
+         <th scope='col'>Item Name</th>
+         <th scope='col'>Price</th>
+         <th scope='col'>Action</th>
+         </tr>
+         </thead>
+         ";
+  
+         while($item = mysqli_fetch_assoc($shop_result)) {
+            if ($item['rarity'] == "Unusual") {
+                $itemRarity = "#8650AC";
+            }
+            else if ($item['rarity'] == "Unique"){
+                $itemRarity = "#FFD700";
+            }
+            else if ($item['rarity'] == "Genuine"){
+                $itemRarity = "#4D7455";
+            }
+            else {
+                $itemRarity = "#B2B2B2";
+            }
+             $table.="
+             <tr>
+             <td>".$item['id']."</td>
+             <td><img class='adminPanelAvatar' src=".$item['item_image']."><b><p style='color:$itemRarity; display:inline'>".$item['product']."</p></b></td>
+             <td>€".$item['price']."</td>
+             <td><button type='button' class='btn btn-primary btn-sm'>Edit item</button> <button type='button' class='btn btn-danger btn-sm'>Delete item</button></td>
+             </tr>
+             ";
+         }
+         echo $table . "</table>";
+         ?>
+</div>
+
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>

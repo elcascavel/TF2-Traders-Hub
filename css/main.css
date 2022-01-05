@@ -418,3 +418,10 @@ a:hover {
     align-items: center; /* alinha verticalmente */
     margin-top: 120px;
 }
+
+.adminPanelAvatar {
+  border-radius: 50%;
+vertical-align: middle;
+margin-right: 10px;
+height: 50px;
+}
