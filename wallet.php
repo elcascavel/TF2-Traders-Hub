@@ -16,6 +16,7 @@ if (!isset($userLoggedIn)) {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>TF2 Trader's Hub</title>
 	<link rel="shortcut icon" href="https://steamcdn-a.akamaihd.net/apps/tf2/blog/images/favicon.ico" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 	<link rel="stylesheet" href="../TH/css/main.css" />
 
 	<link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,98 +30,118 @@ if (!isset($userLoggedIn)) {
 </head>
 
 <body style="width: 100%; margin: 0; background-color: black">
-	<div class="homepage">
-		<h1 class="loginHeader">ADD FUNDS</h1>
+	<div class="container">
+		<div class="row justify-content-md-center">
+			<div class="col-md-auto">
+			<h1 class="loginHeader">ADD FUNDS</h1>
 		<div class="loginBreak"></div>
-		<div class="loginFormContainer">
+			</div>
+		</div>
+		<div class="row justify-content-md-center">
+			<div class="col-lg-2">
 			<a href="index.php"> <img class="loginLogo" src="../TH/img/logo.png" /></a>
-			<form class="loginForm" action="" method="POST">
-				<input class="loginInput" type="text" id="owner" name="owner" placeholder="owner" value="<?php
+			</div>
+			<div class="col-md-auto text-center">
+			<form action="" method="POST">
+				<div class="form-floating">
 
-if (!empty($errors) && isset($errors['owner'][0])) { #this is done to keep the value inputted by the user if this field is valid but others are not
+				<input class="form-control" type="text" id="owner" name="owner" placeholder="Card Holder Name" value="<?php
+
+if (!empty($errors) && !isset($errors['owner'][0])) { #this is done to keep the value inputted by the user if this field is valid but others are not
 	echo $_POST['owner'];
 }
 
 ?>"><br> 
-
-				<input class="loginInput" type="text" id="cardnum" name="cardnum" placeholder="cardnum" value="<?php
+<label for="owner">Card Holder Name</label>
+</div>
+<div class="form-floating">
+				<input class="form-control" type="text" id="cardnum" name="cardnum" placeholder="Card Number" value="<?php
 
 if (!empty($errors) && isset($errors['cardnum'][0])) {
 	echo $_POST['cardnum'];
 }
 
 ?>"><br>
-				<input class="loginInput" type="text" id="cvv" name="cvv" placeholder="cvv" value="<?php
+<label for="cardnum">Card Number</label>
+</div>
+<div class="form-floating">
+				<input class="form-control" type="text" id="cvv" name="cvv" placeholder="cvv" value="<?php
 
 if (!empty($errors) && isset($errors['cvv'][0])) {
 	echo $_POST['cvv'];
 }
 
 ?>"><br>
-				<div class="teamPickContainer">
-					<select class="teamSelect" name="cardname" id="team">
+<label for="cvv">CVV</label>
+</div>
+<div class="row">
+<div class="col-sm">
+<select class="form-select form-select-sm" name="cardname" id="team">
 						<option id="visa" name="cardname" value="Visa">Visa</option>
 						<option id="mastercard" name="cardname" value="MasterCard">MasterCard</option>
 					</select>
-				</div>
-				<br>
-				<div class="teamPickContainer">
-					<select class="teamSelect" name="amount" id="team">
+</div>
+<div class="col-sm">
+<select class="form-select form-select-sm" name="amount" id="team">
 						<option id="eu5" name="amount" value="5">Add 5,--€</option>
 						<option id="eu10" name="amount" value="10">Add 10,--€</option>
 					</select>
-				</div>
-				<br>
-				<?php
-					if (isset($message)) {
-						echo $message;
-					}
-					?>
-				 <?php
+</div>
+</div>
+<br>
+<div class="row">
+					 <div class="col-sm">
+					<div style="display:<?php if (empty($errors)) {$style = "none"; } else {$style = "block";} echo $style;?>" class="alert alert-warning align-items-center" role="alert">
+  <?php
+
+if (isset($message)) {
+	echo $message;
+}
 				 if (!empty($errors)) { # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
-					
 					if (isset($errors['owner']) && $errors['owner'][0]==true)
 					{
-						echo '<a class="errorMessage">' . $errors['owner'][1] . '</a>' . '<br><br>';
+						echo $errors['owner'][1] . '<br>';
 					}
 
 					if (isset($errors['cardnum']) && $errors['cardnum'][0]==true)
 					{
-						echo '<a class="errorMessage">' . $errors['cardnum'][1] . '</a>' . '<br><br>';
+						echo $errors['cardnum'][1] . '<br>';
 					}
 
 					if (isset($errors['cvv']) && $errors['cvv'][0]==true)
 					{
-						echo '<a class="errorMessage">' . $errors['cvv'][1] . '</a>' . '<br><br>';
+						echo $errors['cvv'][1] . '<br>';
 					}
 
 					if(isset($errors['cardname']) && $errors['cardname'][0]==true)
 					{
-						echo '<a class="errorMessage">' . $errors['cardname'][1] . '</a>' . '<br><br>';
+						echo $errors['cardname'][1] . '<br>';
 					}
 
 					if(isset($errors['amount']) && $errors['amount'][0]==true)
 					{
-						echo '<a class="errorMessage">' . $errors['amount'][1] . '</a>' . '<br><br>';
+						echo $errors['amount'][1] . '<br>';
 					}
 				}
 				 ?>
-				<input class="loginButton" name="wallet_button" type="submit" value="VALIDATE">
+</div>
+			</div>
+			</div>
+			<div class="row">
+<div class="col">
+<input class="btn btn-success" name="wallet_button" type="submit" value="Validate">
 				<?php
-
-
-				echo "<br>" . "<br>";
-				echo " Wallet: " . $money . "€";
-				echo "<br>";
-
+				echo "<span class='badge bg-primary'>$money €</span>";
 				?>
+</div>
+				</div>
 			</form>
-
+			</div>
 
 			<img style="width:300px" src="../TH/img/soldierRegister.png" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1500" />
 		</div>
-
-		<div class="footerArea">
+<div class="row">
+<div class="footerArea fixed-bottom">
 			<div class="footerLogos">
 				<a href="https://www.valvesoftware.com/en/about"><img class="footerLogoImg" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/valve_logo.png" /></a>
 				<a href="https://necm.utad.pt/"><img class="footerLogoImg" src="../TH/img/cmLogo.png" /></a>
@@ -131,6 +152,7 @@ if (!empty($errors) && isset($errors['cvv'][0])) {
 				a fan creation and is not affiliated with Valve or Steam.
 			</div>
 		</div>
+</div>	
 	</div>
 	<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 	<script>
