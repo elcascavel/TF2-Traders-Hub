@@ -55,10 +55,12 @@ if (!empty($errors) && !isset($errors['username'][0])) { #this is done to keep t
 </div>
               <div class="form-floating">
               <input class="form-control" type="password" id="floatingInput" name="log_password" placeholder="Password"><br>
+              <label for="floatingInput">Password</label>
+              </div>
+              <div style="display:<?php if ($message == null) {$style = "none"; } else {$style = "block";} echo $style;?>" class="alert alert-warning align-items-center" role="alert">
               <?php if (isset($message)) {
                 echo $message;
               } ?>
-              <label for="floatingInput">Password</label>
               </div>
               <input class="btn btn-success" name="login_button" type="submit" value="Login">
               <div class="logSignUp">
@@ -84,7 +86,6 @@ if (!empty($errors) && !isset($errors['username'][0])) { #this is done to keep t
           </div>
         </div>
       </div>
-    </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>

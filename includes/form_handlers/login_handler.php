@@ -57,7 +57,7 @@ if (isset($_POST['login_button'])) {
     }
 
     else {
-        $message = '<a class="errorMessage">The username or password was incorrect.<br>Please try again (make sure your caps lock is off).</a><br><br>';
+        $message = 'The username or password was incorrect.<br>Please try again (make sure your caps lock is off).';
         $result = closeDb($db);
     } 
 }
