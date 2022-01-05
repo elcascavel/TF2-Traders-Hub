@@ -217,9 +217,6 @@ a:hover {
 }
 
 .footerArea {
-  text-align: center;
-  width: 100%;
-  z-index: 5;
   padding: 30px 100px;
   background-color: #000;
 }
@@ -247,10 +244,7 @@ a:hover {
 }
 
 .loginHeader {
-  padding: 15px 25px;
   margin: 20px auto;
-  display: flex;
-  justify-content: center;
   font-family: "TF2 Build", sans-serif;
   color: #e6d9bc;
 }
@@ -265,20 +259,7 @@ a:hover {
 }
 
 .loginFormContainer {
-  padding: 15px 25px;
-  margin: 20px auto;
-  border-radius: 5px;
-  width: fit-content;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
   transition: 2s;
-}
-
-.loginForm {
-  text-align: center;
 }
 
 .loginButton {
@@ -314,6 +295,7 @@ a:hover {
 .logSignUp {
   font-size: 12px;
   margin: 20px;
+  color: #fff;
 }
 .signUpLog {
   font-size: 12px;
