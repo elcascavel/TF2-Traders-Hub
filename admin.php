@@ -31,6 +31,7 @@
     <div class="row">
     <?php 
         $table = "";
+        $is_adminString = "Make";
 
         $table.="
         <table class='table table-hover table-bordered align-middle text-center'>
@@ -49,9 +50,11 @@
             $adminCheck = $user['is_admin'];
             if ($adminCheck) {
                 $adminCheck = "Admin";
+                $is_adminString = "Remove";
             }
             else {
                 $adminCheck = "User";
+                $is_adminString = "Make";
             }
             $table.="
             <tr>
@@ -59,7 +62,7 @@
             <td><img class='adminPanelAvatar' src=".$user['user_pic']."><b>".$user['username']."</b></td>
             <td>".date("jS F, Y", strtotime($user['signup_date']))."</td>
             <td>".$adminCheck."</td>
-            <td><a type='button' href='admin.php?action=makeAdmin' class='btn btn-primary btn-sm'>Make admin</a> <button type='button' class='btn btn-danger btn-sm'>Delete user</button></td>
+            <td><a type='button' href='admin.php?id=".$user['id_users']."'class='btn btn-primary btn-sm'>".$is_adminString." admin</a> <button type='button' class='btn btn-danger btn-sm'>Delete user</button></td>
             </tr>
             ";
         }
