@@ -68,7 +68,7 @@
 				 <label for="password">Password</label>
 			</div>
 			<div class="form-floating">
- 				<input class="form-control" type="password" id="rpassword" name="rpassword" placeholder="Repeat Password"><br>
+ 				<input class="form-control" type="password" id="rpassword" name="rpassword" placeholder="Repeat Password">
 				 <label for="floatingInput">Repeat Password</label>
 			</div>
  				<div class="row">
