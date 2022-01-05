@@ -76,6 +76,15 @@ if (!isset($userLoggedIn)) {
 				<form action="profile.php" method="POST">
 					<input class="btn btn-primary me-1 flex-grow-1" type="submit" name="editAccount" id="editAccount" value="Edit Account">
 					<input class="btn btn-danger flex-grow-1" type="submit" name="closeAccount" id="closeAccount" value="Delete Account">
+					<div class="row mt-2">
+						<div class="col text-center">
+					<?php
+						if ($userIsAdmin == 1) {
+							echo "<input class='btn btn-outline-primary flex-grow-1' type='submit' name='adminPanel' id='adminPanel' value='Admin Panel'>";
+						}
+					 ?>
+					</div>
+					</div>
 				</form>
                 </div>
               </div>
