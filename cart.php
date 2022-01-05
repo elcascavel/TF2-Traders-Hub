@@ -7,41 +7,6 @@
         header("Location: index.php");
     }
 
-    if(isset($_POST['add_to_cart']))
-    {
-        
-        if(isset($_SESSION['cart']))
-        {
-            $session_array_id=array_column($_SESSION['cart'],"id");
-                           
-          if(!in_array($_GET['id'],$session_array_id))
-          {
-           
-
-           $count= count($_SESSION['cart']);
-           $session_array = array('id' => $_GET['id'],
-           "product" => $_POST['product'],   
-           "desc" => $_POST['desc'],
-           "price" => $_POST['price'],
-           "rarity" => $_POST['rarity'],
-           "quantity" => $_POST['quantity'] );
-           $_SESSION['cart'][$count] =  $session_array;
-          
-          }
-
-        }else
-        {
-            $session_array = array('id' => $_GET['id'],
-                                   "product" => $_POST['product'],   
-                                   "desc" => $_POST['desc'],
-                                   "price" => $_POST['price'],
-                                   "rarity" => $_POST['rarity'],
-                                   "quantity" => $_POST['quantity'] );
-
-            $_SESSION['cart'][0] =  $session_array;
-            
-        }
-    }
     ?>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -206,27 +171,68 @@
         </thead>
         ";
 
-      if(!empty($_SESSION['cart']))
-      {
-          foreach($_SESSION['cart'] as $key => $value)
+        require_once('cookies/configDb.php');
+                          
+        //connected to the database
+        $db = connectDB();
+                
+        //success?				
+        if ( is_string($db) ){
+            //error connecting to the database
+            echo ("Fatal error! Please return later.");
+            die();
+        }
+        
+        //select all columns from all users in the table
+        $query = "SELECT * FROM cart";
+          
+          //prepare the statement				
+        $statement = mysqli_prepare($db, $query);
+                
+        if (!$statement ){
+            //error preparing the statement. This should be regarded as a fatal error.
+            echo "Something went wrong. Please try again later.";
+            die();				
+        }				
+                
+        //execute the prepared statement
+        $result = mysqli_stmt_execute($statement);
+                            
+        if( !$result ) {
+            //again a fatal error when executing the prepared statement
+            echo "Something went very wrong. Please try again later.";
+            die();
+        }
+                
+        //get the result set to further deal with it
+        $result = mysqli_stmt_get_result($statement);
+                
+        if (!$result){
+            //again a fatal error: if the result cannot be stored there is no going forward
+            echo "Something went wrong. Please try again later.";	
+            die();
+        }
+        
+        while($row = mysqli_fetch_assoc($result))
           {
+              
+            
             $output.="
         <tr>
-        <td style='display:none'>".$value['id']."</td>
-        <td>".$value['product']."</td>
-        <td>€".$value['price']."</td>
-        <td>".$value['quantity']."</td>
-        <td>€".number_format($value['price']*$value['quantity'],2)."</td>
+        <td style='display:none'>".$row['id']."</td>
+        <td>".$row['name']."</td>
+        <td>€".$row['price']."</td>
+        <td>".$row['quantity']."</td>
+        <td>€".number_format($row['price']*$row['quantity'],2)."</td>
         <td>
-        <a href='cart.php?action=remove&id=".$value['id']."'>
+        <a href='cart.php?action=remove&id=".$row['id']."'>
         <button class='btn btn-danger btn-block'>Remove</button>
         </a>
         </tr>
         ";
-
-        $total = $total + $value['quantity']* $value['price'];
+        $total = $total + $row['quantity']* $row['price'];
           }
-
+        
 
           $output .="
           
@@ -243,9 +249,9 @@
           <td colspan='3'></td>
           <td>€".number_format($total,2)."</td>
           <td>
-                <a>
-                    <button class='btn btn-success'>Pay</button>
-                </a>
+          <a href='cart.php?action=pay'>
+          <button class='btn btn-success'>Pay</button>
+      </a>
           </td>
          
                
@@ -255,14 +261,31 @@
           
           
           ";
-      }
-  echo $output;
+      
+  echo $output."</table>";
 
       if(isset($_GET['action']))
       {
           if($_GET['action']=="clearall")
           {
             unset($_SESSION['cart']);
+            $db = connectDB();
+            $delete_query = "DELETE from cart";
+               $statement = mysqli_prepare($db, $delete_query);
+           
+               if (!$statement) {
+                   echo "Error preparing statement. Try again later";
+                   die();
+               }
+               //execute the prepared statement
+           $result = mysqli_stmt_execute($statement);
+                               
+           if( !$result) {
+               //again a fatal error when executing the prepared statement
+               echo "Something went very wrong. Please try again later.2";
+               die();
+           }
+        
 
           }
           if($_GET['action']=="remove")
@@ -272,18 +295,87 @@
           
               if($value['id'] == $_GET['id'])
           {
-            unset($_SESSION['cart'][$key]);
-            
+            $x=$_GET['id'];
+            $db = connectDB();
+            $delete_query = "DELETE from cart WHERE id='{$x}'";
+               $statement = mysqli_prepare($db, $delete_query);
+           
+               if (!$statement) {
+                   echo "Error preparing statement. Try again later";
+                   die();
+               }
+               //execute the prepared statement
+           $result = mysqli_stmt_execute($statement);
+                               
+           if( !$result) {
+               //again a fatal error when executing the prepared statement
+               echo "Something went very wrong. Please try again later.2";
+               die();
+           }
+            unset($_SESSION['cart'][$key]);  
             break;
+            
           }
-      }
+        }
     }
+          if($_GET['action']=="pay")
+          {
+            $db = connectDB();
+                       
+          
+               $query = "INSERT INTO inventory (name) SELECT name FROM cart";
+               $statement = mysqli_prepare($db, $query);
+               
+                   
+           if (!$statement ){
+               //error preparing the statement. This should be regarded as a fatal error.
+               echo "Something went wrong. Please try again later.1";
+               die();				
+           }				
+                   
+           //execute the prepared statement
+           $result = mysqli_stmt_execute($statement);
+                               
+           if( !$result ) {
+               //again a fatal error when executing the prepared statement
+               echo "Something went very wrong. Please try again later.2";
+               die();
+           }
+           unset($_SESSION['cart']);
+           $delete_query = "DELETE from cart";
+               $state = mysqli_prepare($db, $delete_query);
+           
+               if (!$state) {
+                   echo "Error preparing statement. Try again later";
+                   die();
+               }
+               //execute the prepared statement
+           $res = mysqli_stmt_execute($state);
+                               
+           if( !$res) {
+               //again a fatal error when executing the prepared statement
+               echo "Something went very wrong. Please try again later.2";
+               die();
+           }
+                   
+          } 
 }
       ?>
      </div>
           </div>
   </a>
 </div>
+<div class="footerArea">
+                <div class="footerLogos">
+                    <a href="https://www.valvesoftware.com/en/about"><img class="footerLogoImg" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/valve_logo.png"></a>
+                    <a href="https://necm.utad.pt/"><img class="footerLogoImg" src="../TH/img/cmLogo.png"></a>
+                </div>
+                
+                <div class="footerLegal">
+Team Fortress is a trademark of Valve Corporation, TF2 Trader's Hub is a fan creation and is not affiliated with Valve or Steam.
+                </div>
+            </div> 
+    </div>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>
     AOS.init();
