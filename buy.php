@@ -21,8 +21,7 @@
            $session_array = array('id' => $_GET['id'],
            "product" => $_POST['product'],   
            "desc" => $_POST['desc'],
-           "price" => $_POST['price'],
-           "quantity" => $_POST['quantity'] );
+           "price" => $_POST['price']);
            $_SESSION['cart'][$count] =  $session_array;
      
           
@@ -55,8 +54,7 @@
             $session_array = array('id' => $_GET['id'],
                                    "product" => $_POST['product'],   
                                    "desc" => $_POST['desc'],
-                                   "price" => $_POST['price'],
-                                   "quantity" => $_POST['quantity'] );
+                                   "price" => $_POST['price']);
 
             $_SESSION['cart'][0] =  $session_array;
             
@@ -122,7 +120,7 @@
                   <div class="input-group-prepend">
                   <input type="submit" name="add_to_cart" class="btn btn-success" value="Add to Cart">
                   </div>
-                  <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" type="number" name="quantity" value="1"><br>
+             
                 </div>
                 </div>
                 </div>
@@ -171,8 +169,8 @@
                     <a class="navLink" href="buy.php">
                         Buy
                     </a>
-                    <a class="navLink" href="sell.php">
-                        Sell
+                    <a class="navLink" href="contact.php">
+                        Contact
                     </a>
                     <a class="navLink" >
                         <form method="post">
@@ -386,7 +384,7 @@
   <div class="input-group-prepend">
   <input type="submit" name="add_to_cart" class="btn btn-success" value="Add to Cart">
   </div>
-  <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="basic-addon1" type="number" name="quantity" value="1"><br>
+ 
 </div>
 </div>
         </div>
