@@ -25,7 +25,10 @@
 <body>
     <div class="container-xl mt-2">
     <h1>Admin Panel</h1>
-    <?php echo "<h5>Welcome, $userLoggedIn</h5>";?>
+    <form action="admin.php" method="POST">
+    <input class="btn btn-outline-primary btn-sm" type="submit" name="returnProfile" id="returnProfile" value="Return to your profile">
+    </form>
+        <?php echo "<h5 class='mt-2'>Welcome, $userLoggedIn</h5>";?>
     <?php if($errorTrigger) { echo "<div class='alert alert-danger alert-alert-dismissible' role='alert'>$errorMessage</div>";} ?>
     <div class="row">
     <?php 

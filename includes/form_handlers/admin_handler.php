@@ -13,6 +13,10 @@
     $user_result = mysqli_query($db, $user_query);
     $shop_result = mysqli_query($db, $shop_query);
 
+    if (isset($_POST['returnProfile'])) {
+        header("Location: profile.php");
+    }
+
     if (isset($_POST['id'])) {
         $user_id = $_POST['id'];
         if (isset($_POST['setAdmin'])) {
