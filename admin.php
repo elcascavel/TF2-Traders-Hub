@@ -5,8 +5,6 @@
     if($userIsAdmin == 0) {
         header("Location: index.php");
     }
-
-    
 ?>
 
 <head>
@@ -27,11 +25,11 @@
 <body>
     <div class="container-xl mt-2">
     <h1>Admin Panel</h1>
-    <?php echo "<h5>Welcome, $userLoggedIn</h5>"?>
+    <?php echo "<h5>Welcome, $userLoggedIn</h5>";?>
+    <?php if($errorTrigger) { echo "<div class='alert alert-danger alert-alert-dismissible' role='alert'>$errorMessage</div>";} ?>
     <div class="row">
     <?php 
         $table = "";
-        $is_adminString = "Make";
 
         $table.="
         <table class='table table-hover table-bordered align-middle text-center'>
@@ -48,6 +46,7 @@
  
         while($user = mysqli_fetch_assoc($user_result)) {
             $adminCheck = $user['is_admin'];
+            $is_adminString = "Make";
             if ($adminCheck) {
                 $adminCheck = "Admin";
                 $is_adminString = "Remove";
@@ -62,7 +61,7 @@
             <td><img class='adminPanelAvatar' src=".$user['user_pic']."><b>".$user['username']."</b></td>
             <td>".date("jS F, Y", strtotime($user['signup_date']))."</td>
             <td>".$adminCheck."</td>
-            <td><a type='button' href='admin.php?id=".$user['id_users']."'class='btn btn-primary btn-sm'>".$is_adminString." admin</a> <button type='button' class='btn btn-danger btn-sm'>Delete user</button></td>
+            <td><form action='admin.php' method='post'><input type='hidden' name='id' value=".$user['id_users']."><button type='submit' name='setAdmin' class='btn btn-primary btn-sm'>".$is_adminString." admin</button> <input type='hidden' name='id' value=".$user['id_users']."><button type='submit' name='deleteUser' class='btn btn-danger btn-sm'>Delete user</button></td></form>
             </tr>
             ";
         }
