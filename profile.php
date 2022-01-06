@@ -37,8 +37,8 @@ if (!isset($userLoggedIn)) {
 					<a class="navLink" href="buy.php">
 						Buy
 					</a>
-					<a class="navLink" href="sell.php">
-						Sell
+					<a class="navLink" href="contact.php">
+                        Contact
 					</a>
 				</div>
 			</div>
