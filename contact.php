@@ -2,7 +2,9 @@
 <html>
     <?php
      
-        include("includes/header.php");
+     require 'config/config.php';
+     require 'includes/form_handlers/contact_handler.php';
+     require 'includes/header.php';
         
         if (!isset($_SESSION['username'])) {
          header("Location: index.php");
@@ -151,41 +153,112 @@
                 </div>
             </div>
         </div>
-        <form class="loginForm" action="" method="POST">
-        <input class="loginInput" type="text" id="log_username" name="log_username" placeholder="Product" value="<?php
+        <body style="width: 100%; margin: 0; background-color: black">
+ 	<div class="container">
+		 <div class= "row justify-content-md-center">
+			 <div class="col-md-auto">
+			 <h1 class="loginHeader">Talk to Us</h1>
+ 		<div class="loginBreak"></div>
+			 </div>
+		 </div>
+		 <div class="row justify-content-md-center">
+ 			<div class="col-lg-2">
+		 		<img class="loginLogo" src="../TH/img/logo.png" />
+			</div>
+			<div class="col-md-auto text-center">
+ 			<form action="contact.php" method="POST">
+				 <div class="form-floating">
+				 <input class="form-control" type="text" id="floatingInput" name="name" placeholder="Name" value="<?php
+					
+					if (!empty($errors) && !isset($errors['name'][0])) 
+					{ #this is done to keep the value inputted by the user if this field is valid but others are not	
+						
+						echo $_POST['name'];
+					}
+						?>"><br>
+						<label for="floatingInput">Name*</label>
+				 </div>
+ 				<div class="form-floating">
+ 				<input class="form-control" type="email" id="floatingInput" name="email" placeholder="E-mail" value="<?php
 
-                                                                                                                  if (!empty($errors) && !isset($errors['username'][0])) { #this is done to keep the value inputted by the user if this field is valid but others are not
-                                                                                                                    echo $_POST['username'];
-                                                                                                                  }
-                                                                                                                  ?>"><br>
-        <br>
-        <input class="loginInput" type="password" id="password" name="log_password" placeholder="Password"><br>
-        <?php if (isset($message)) { echo $message; } ?>
-        <br>
-        <input class="loginButton" name="login_button" type="submit" value="LOGIN">
-        <div class="logSignUp">
-          Don't have an account yet? <a class="signUpLink" href="register.php">Sign Up</a>
-        </div>
-      </form>
-            <form method="post" action="upload.php" enctype="multipart/form-data">
-        <input type="file" name="myFile" />
-        <input type="submit" value="Upload">
-            </form>
-
-        <div class="footerArea">
-                <div class="footerLogos">
-                    <a href="https://www.valvesoftware.com/en/about"><img class="footerLogoImg" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/valve_logo.png"></a>
-                    <a href="https://necm.utad.pt/"><img class="footerLogoImg" src="../TH/img/cmLogo.png"></a>
-                </div>
+				if (!empty($errors) && !isset($errors['email'][0]) ) 
+				{
+					echo $_POST['email'];	
+				}
+					?>"><br>
+					<label for="floatingInput">Email*</label>
+				</div>
+				<div class="form-floating">
+               
+                <textarea rows="5" cols="40" name="message" class="form-control"  value="<?php 
+                if (!empty($errors) && !isset($errors['message'][0]) ) 
+				{
+					echo $_POST['message'];	
+				}
                 
-                <div class="footerLegal">
-Team Fortress is a trademark of Valve Corporation, TF2 Trader's Hub is a fan creation and is not affiliated with Valve or Steam.
-                </div>
-            </div>
-    </div>
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
-  <script>
-    AOS.init();
-  </script>
-    </body>
-</html>
+                
+                
+                ?>"></textarea><br>
+                
+			</div>
+
+				 <br>
+				 <div class="row">
+					 <div class="col-sm">
+					<div style="display:<?php if (empty($errors)) {$style = "none"; $alertStyle="alert-success"; } elseif(!empty($errors)) {$style = "block"; $alertStyle="alert-warning";} echo $style;?>" class="alert <?php echo "$alertStyle ";?>  align-items-center" role="alert">
+  <?php
+  if (isset($text)) {
+	echo $text;
+}
+
+				 if (!empty($errors)) {
+                      # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
+					if (isset($errors['name']) && $errors['name'][0]==true)
+					{
+						echo $errors['name'][1] . '<br>';
+					}
+
+					if (isset($errors['email']) && $errors['email'][0]==true)
+					{
+						echo $errors['email'][1] . '<br>';
+					}
+
+					if (isset($errors['message']) && $errors['message'][0]==true)
+					{
+						echo $errors['message'][1] . '<br>';
+					}
+
+				}
+				 ?>
+</div>		 
+					 </div>			 
+				 </div>		 
+ 				<input class="btn btn-success" type="submit" name="send_button" value="Send">
+ 				
+ 			</form>
+			</div>
+			<div class="col-md-auto">
+ 			<img style="width:300px" src="../TH/img/soldierRegister.png" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1500" />
+			</div>
+			 </div>
+			 <div class="row">
+	<div class="col">
+	<div class="footerArea fixed-bottom">
+ 			<div class="footerLogos">
+ 				<a href="https://www.valvesoftware.com/en/about"><img class="footerLogoImg" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/valve_logo.png" /></a>
+ 				<a href="https://necm.utad.pt/"><img class="footerLogoImg" src="../TH/img/cmLogo.png" /></a>
+ 			</div>
+
+ 			<div class="footerLegal">
+ 				Team Fortress is a trademark of Valve Corporation, TF2 Trader's Hub is
+ 				a fan creation and is not affiliated with Valve or Steam.
+ 			</div>
+ 		</div>
+	</div>
+</div>
+ 		</div>
+ 	<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+ 	<script>
+ 		AOS.init();
+ 	</script>
+ </body>

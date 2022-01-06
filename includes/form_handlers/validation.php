@@ -69,4 +69,26 @@ function validateCVV($cvv, $mincvv, $maxcvv){
         return(true);
     }
 }
+
+function validateMessage($message, $minContact, $maxContact)
+{
+
+    $exp = "/^[A-z0-9_]{" . $minContact . "," . $maxContact . '}$/';
+    if (!preg_match($exp, $message)) {
+        return (false);
+    } else {
+        return (true);
+    }
+}
+
+function validateName($name, $minOwner, $maxOwner){
+				
+    $exp = "/^[A-z]{" . $minOwner . "," . $maxOwner .'}$/';			
+                            
+    if( !preg_match($exp, $name )){
+        return (false);				
+    }else {
+        return(true);
+    }
+}
 ?>

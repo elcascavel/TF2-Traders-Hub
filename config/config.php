@@ -16,6 +16,8 @@ $timezone = date_default_timezone_set("Europe/London");
     $maxNum = 16;
     $minOwner = 4;
     $maxOwner = 20;
+    $minContact = 10;
+    $maxContact = 300;
 
     // db config values
     $host = "localhost";
