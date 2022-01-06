@@ -5,6 +5,7 @@ if (isset($_SESSION['username'])) {
     require_once('cookies/configDb.php');
 	$userLoggedIn = $_SESSION['username'];
     $userIsAdmin = $_SESSION['is_admin'];
+    $userLoggedInID = $_SESSION['id_users'];
 
     $db = connectDB();
     if (is_string ($db)) {

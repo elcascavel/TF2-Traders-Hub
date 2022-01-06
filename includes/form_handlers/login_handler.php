@@ -49,6 +49,7 @@ if (isset($_POST['login_button'])) {
 
         $_SESSION['username'] = $user['username'];
         $_SESSION['is_admin'] = $user['is_admin'];
+        $_SESSION['id_users'] = $user['id_users'];
 
         $result = closeDb($db);
 

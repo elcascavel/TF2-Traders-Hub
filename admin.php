@@ -29,7 +29,7 @@
     <input class="btn btn-outline-primary btn-sm" type="submit" name="returnProfile" id="returnProfile" value="Return to your profile">
     </form>
         <?php echo "<h5 class='mt-2'>Welcome, $userLoggedIn</h5>";?>
-    <?php if($errorTrigger) { echo "<div class='alert alert-danger alert-alert-dismissible' role='alert'>$errorMessage</div>";} ?>
+    <?php if($alertTrigger) { echo "<div class='alert $alertType alert-dismissible' role='alert'>$alertMessage</div>";} ?>
     <div class="row">
     <?php 
         $table = "";
@@ -47,7 +47,7 @@
         </thead>
         ";
  
-        while($user = mysqli_fetch_assoc($user_result)) {
+        foreach($user_result as $user) {
             $adminCheck = $user['is_admin'];
             $is_adminString = "Make";
             if ($adminCheck) {
