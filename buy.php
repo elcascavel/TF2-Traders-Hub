@@ -9,23 +9,13 @@
 
     if(isset($_POST['add_to_cart']))
     {
-        
-        if(isset($_SESSION['cart']))
-        {
-            $session_array_id=array_column($_SESSION['cart'],"id");
-                           
-          
-           
-
-           $count= count($_SESSION['cart']);
-           $session_array = array('id' => $_GET['id'],
-           "product" => $_POST['product'],   
-           "item_description" => $_POST['item_description'],
-           "price" => $_POST['price']);
-           $_SESSION['cart'][$count] =  $session_array;
-     
-          
-           $teste = $_GET['id'];
+      
+        $session_array = array('id' => $_POST['id'],
+        "product" => $_POST['product'],   
+        "item_description" => $_POST['item_description'],
+        "price" => $_POST['price']);
+        $_SESSION['cart'][] =  $session_array;
+           $teste = $_POST['id'];
            $db = connectDB();
                        
           
@@ -47,18 +37,7 @@
                echo "Something went very wrong. Please try again later.2";
                die();
            }
-                        
         
-        }else
-        {
-            $session_array = array('id' => $_GET['id'],
-                                   "product" => $_POST['product'],   
-                                   "item_description" => $_POST['item_description'],
-                                   "price" => $_POST['price']);
-
-            $_SESSION['cart'][0] =  $session_array;
-            
-        }
     }
 
     $output="";
@@ -104,14 +83,15 @@
                     $output .= '<div class="col-lg-3 mb-3 d-flex align-items-stretch">
                     <div class="card" style="width: 18rem; background-color: #101822; padding-bottom:50px;">
                     
-                         <form method="POST" action="buy.php?id="".$row["id"].">
+                         <form method="POST" action="buy.php">
                          
-                         <img class="card-img-top" style="background-color: #071215" src="'.$row["item_image"].'alt="">
+                         <img class="card-img-top" style="background-color: #071215" src="'.$row["item_image"].'">
                         <div class="card-body d-flex flex-column">
                         <h5 class="card-title" style="color:'.$itemRarity.'">'. $row["product"].'<span class="badge bg-dark">€'.number_format($row["price"],2).'</span></h5> 
                         <h6 class="card-subtitle text-white">'. $row['item_description'].'</h6>
                           <input type="hidden" name="product" value="'.$row['product'].'">
                           <input type="hidden" name="price" value="'.$row['price'].'">
+                          <input type="hidden" name="id" value="'.$row['id'].'">
                           <input type="hidden" name="item_description" value="'.$row['item_description'].'">
                           
                           
@@ -131,13 +111,15 @@
                         <br>
                         </div>
                         
-                     '; 
+                     ';
+                     
                 }
 
             }
 
         }  
     }
+   
        
     
     ?>
@@ -366,17 +348,19 @@
         else {
             $itemRarity = "#B2B2B2";
         }
+       
         ?>
         <div class="col-lg-3 mb-3 d-flex align-items-stretch">
     <div class="card" style="width: 18rem; background-color: #101822; padding-bottom:50px;">
     
-         <form method="POST" action="buy.php?id=<?=$row['id'] ?>">
+         <form method="POST" action="buy.php">
          
          <img class="card-img-top" style="background-color: #071215" src="<?= $row['item_image'];?>" alt="">
         <div class="card-body d-flex flex-column">
         <h5 class="card-title" style="color: <?= $itemRarity?>"><?= $row['product'];?> <span class="badge bg-dark">€<?= number_format($row['price'],2);?></span></h5> 
         <h6 class="card-subtitle text-white"><?= $row['item_description'];?></h6>
           <input type="hidden" name="product" value="<?= $row['product']  ?>">
+          <input type="hidden" name="id" value="<?= $row['id']  ?>">
           <input type="hidden" name="price" value="<?= $row['price']  ?>">
           <input type="hidden" name="item_description" value="<?= $row['item_description']  ?>">
           

@@ -54,20 +54,24 @@
                          </a>
 
                          <a class="accountActionsLogin">
-                       <?php 
+                         <?php 
                        
                     
-                        if( !empty ($_SESSION) && array_key_exists("username", $_SESSION))
-                        {   
-                                
-                                echo $_SESSION['username'];
-                                
-                        }
-                            ?>
+                       if(isset($userLoggedIn))
+                       {
+                               
+                        if($money == 0)
+                        {
+                            echo "<h5>$userLoggedIn <span class='badge bg-success'>0€</span></h5>";
+                        }else
+                        {
+                            echo "<h5>$userLoggedIn <span class='badge bg-success'>$money €</span></h5>"; 
+                        }            
+                       }
+                           ?>
                         </a>
                         
-                        
-                           
+                                            
                         <?php
                         
                         require_once('cookies/configDb.php');
@@ -214,9 +218,7 @@
         }
         
         while($row = mysqli_fetch_assoc($result))
-          {
-              
-            
+          {           
             $output.="
         <tr>
         <td style='display:none'>".$row['id']."</td>
@@ -306,14 +308,12 @@
                }
                //execute the prepared statement
            $result = mysqli_stmt_execute($statement);
-                               
+                            
            if( !$result) {
                //again a fatal error when executing the prepared statement
                echo "Something went very wrong. Please try again later.2";
                die();
            }
-            unset($_SESSION['cart'][$key]);  
-            break;
             
           }
         }
@@ -341,7 +341,7 @@
                echo "Something went very wrong. Please try again later.2";
                die();
            }
-           unset($_SESSION['cart']);
+        
            $delete_query = "DELETE from cart";
                $state = mysqli_prepare($db, $delete_query);
            

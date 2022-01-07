@@ -50,5 +50,18 @@ if (isset($_SESSION['username'])) {
     $row = mysqli_fetch_array($result);
    
     $money = $row['SUM(amount)'];
+
+    $item_query="SELECT id FROM shop";
+
+    $res = $db->query($item_query);
+    $ro = mysqli_fetch_array($res);
+    
+        foreach($ro as $value )
+        {
+            $id_item = $value;
+        }
+       
+    
+    
 }
 ?>
