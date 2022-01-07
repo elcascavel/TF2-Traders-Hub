@@ -323,7 +323,7 @@
             $db = connectDB();
                        
           
-               $query = "INSERT INTO inventory (name) SELECT name FROM cart";
+               $query = "INSERT INTO inventory (name,id_users) SELECT name,id_users FROM cart";
                $statement = mysqli_prepare($db, $query);
                
                    
