@@ -86,6 +86,10 @@ if (!isset($userLoggedIn)) {
 					</div>
 					</div>
 				</form>
+				<form method="post" action="upload.php" enctype="multipart/form-data">
+        <input type="file" name="myFile" />
+        <input type="submit" value="Upload">
+            </form>
                 </div>
               </div>
             </div>

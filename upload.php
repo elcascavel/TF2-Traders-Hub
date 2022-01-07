@@ -1,9 +1,15 @@
 <?php
-    
-    if (!isset($_FILES["myFile"])) {
-        die("There is no file to upload.");
-    }
-    
+
+    require_once "config/config.php";
+    require_once('cookies/configDb.php');
+    include("includes/header.php");
+        
+    $db = connectDB();
+
+    if (isset($_FILES['myFile'])) {
+        include("includes/header.php");
+        require_once "config/config.php";
+
     $filepath = $_FILES['myFile']['tmp_name'];
     $fileSize = filesize($filepath);
     $fileinfo = finfo_open(FILEINFO_MIME_TYPE);
@@ -38,4 +44,36 @@
     unlink($filepath); // Delete the temp file
     
     echo "File uploaded successfully :)";
+
+  
+    // Get all the submitted data from the form
+    $query = "UPDATE users SET user_pic=? WHERE id_users=$userLoggedInId";
+
+    // Execute query
+    $statement = mysqli_prepare($db, $query);
+
+    if (!$statement) {
+        echo "Error preparing statement.";
+        die();
+    }
+
+    $result = mysqli_stmt_bind_param($statement, 'si', $filepath, $userLoggedInId);
+    if (!$result) {
+        echo "Error binding prepared statement.";
+        die();
+    }
+
+    $result = mysqli_stmt_execute($statement);
+
+    if (!$result) {
+        echo 'Prepared statement insert result cannot be executed.';
+        die();
+    }
+
+    else {
+        $result = closeDb($db);
+        header("Location: index.php");
+        exit();
+    }
+}
 ?>
