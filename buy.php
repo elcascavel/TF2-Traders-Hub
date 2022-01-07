@@ -274,7 +274,7 @@
         die();
     }
 
-	$quer = "SELECT * FROM cart";
+	$quer = "SELECT * FROM cart WHERE id_users='{$userLoggedInID}' ";
     $state = mysqli_prepare($db, $quer);
 
     if (!$state) {
@@ -295,7 +295,7 @@
         echo "Result of prepared statement cannot be stored.";
         die();
     }
-   
+  
         $count=mysqli_num_rows($res);
     
     

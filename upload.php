@@ -31,13 +31,13 @@
     if (!in_array($filetype, array_keys($allowedTypes))) {
         die("File not allowed.");
     }
-    
+    $ImageDirectory = "uploads";
     $filename = basename($filepath); // I'm using the original name here, but you can also change the name of the file here
     $extension = $allowedTypes[$filetype];
     $targetDirectory = __DIR__ . "/uploads"; // __DIR__ is the directory of the current PHP file
     
     $newFilepath = $targetDirectory . "/" . $filename . "." . $extension;
-    
+    $ImageDirectory .= "/" . $filename . "." . $extension;;
     if (!copy($filepath, $newFilepath)) { // Copy the file, returns false if failed
         die("Can't move file.");
     }
@@ -47,7 +47,7 @@
 
   
     // Get all the submitted data from the form
-    $query = "UPDATE users SET user_pic=? WHERE id_users=$userLoggedInId";
+    $query = "UPDATE users SET user_pic=? WHERE id_users='{$userLoggedInID}'";
 
     // Execute query
     $statement = mysqli_prepare($db, $query);
@@ -57,7 +57,7 @@
         die();
     }
 
-    $result = mysqli_stmt_bind_param($statement, 'si', $filepath, $userLoggedInId);
+    $result = mysqli_stmt_bind_param($statement, 's', $ImageDirectory);
     if (!$result) {
         echo "Error binding prepared statement.";
         die();
@@ -72,7 +72,7 @@
 
     else {
         $result = closeDb($db);
-        header("Location: index.php");
+        header("Location: profile.php");
         exit();
     }
 }
