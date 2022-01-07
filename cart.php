@@ -184,7 +184,7 @@
         }
         
         //select all columns from all users in the table
-        $query = "SELECT * FROM cart";
+        $query = "SELECT * FROM cart WHERE id_users='{$userLoggedInID}'";
           
           //prepare the statement				
         $statement = mysqli_prepare($db, $query);

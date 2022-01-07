@@ -29,7 +29,7 @@
            $db = connectDB();
                        
           
-               $sql = "INSERT INTO cart (name,price,id) SELECT product,price,id FROM shop WHERE id='{$teste}'";
+               $sql = "INSERT INTO cart (name,price,id,id_users) SELECT shop.product,shop.price,shop.id,users.id_users FROM (shop INNER JOIN users ON users.id_users='{$userLoggedInID}') WHERE id='{$teste}' ";
                $statement = mysqli_prepare($db, $sql);
                    
                    
@@ -295,8 +295,10 @@
         echo "Result of prepared statement cannot be stored.";
         die();
     }
-    
+   
         $count=mysqli_num_rows($res);
+    
+    
     
                                             
                                            
