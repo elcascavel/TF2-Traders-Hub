@@ -1,40 +1,42 @@
 <?php
-    include("includes/header.php");
-    require 'includes/form_handlers/admin_handler.php';
-    
-    if($userIsAdmin == 0) {
-        header("Location: index.php");
-    }
+include("includes/header.php");
+require 'includes/form_handlers/admin_handler.php';
+
+if ($userIsAdmin == 0) {
+    header("Location: index.php");
+}
 ?>
 
 <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=9">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>TF2 Trader's Hub - Admin</title>
-        <link rel="shortcut icon" href="https://steamcdn-a.akamaihd.net/apps/tf2/blog/images/favicon.ico">
-        <link rel="stylesheet" href="../TH/css/main.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TF2 Trader's Hub - Admin</title>
+    <link rel="shortcut icon" href="https://steamcdn-a.akamaihd.net/apps/tf2/blog/images/favicon.ico">
+    <link rel="stylesheet" href="../TH/css/main.css">
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 
 <body>
     <div class="container-xl mt-2">
-    <h1>Admin Panel</h1>
-    <form action="admin.php" method="POST">
-    <input class="btn btn-outline-primary btn-sm" type="submit" name="returnProfile" id="returnProfile" value="Return to your profile">
-    </form>
-        <?php echo "<h5 class='mt-2'>Welcome, $userLoggedIn</h5>";?>
-    <?php if($alertTrigger) { echo "<div class='alert $alertType alert-dismissible' role='alert'>$alertMessage</div>";} ?>
-    <div class="row">
-    <?php 
-        $table = "";
+        <h1>Admin Panel</h1>
+        <form action="admin.php" method="POST">
+            <input class="btn btn-outline-primary btn-sm" type="submit" name="returnProfile" id="returnProfile" value="Return to your profile">
+        </form>
+        <?php echo "<h5 class='mt-2'>Welcome, $userLoggedIn</h5>"; ?>
+        <?php if ($alertTrigger) {
+            echo "<div class='alert $alertType alert-dismissible' role='alert'>$alertMessage</div>";
+        } ?>
+        <div class="row">
+            <?php
+            $table = "";
 
-        $table.="
+            $table .= "
         <table class='table table-hover table-bordered align-middle text-center'>
         <thead>
         <tr>
@@ -46,42 +48,89 @@
         </tr>
         </thead>
         ";
- 
-        foreach($user_result as $user) {
-            $adminCheck = $user['is_admin'];
-            $is_adminString = "Make";
-            if ($adminCheck) {
-                $adminCheck = "Admin";
-                $is_adminString = "Remove";
-            }
-            else {
-                $adminCheck = "User";
+
+            foreach ($user_result as $user) {
+                $adminCheck = $user['is_admin'];
                 $is_adminString = "Make";
-            }
-            $table.="
+                if ($adminCheck) {
+                    $adminCheck = "Admin";
+                    $is_adminString = "Remove";
+                } else {
+                    $adminCheck = "User";
+                    $is_adminString = "Make";
+                }
+                $table .= "
             <tr>
-            <td>".$user['id_users']."</td>
-            <td><img class='adminPanelAvatar' src=".$user['user_pic']."><b>".$user['username']."</b></td>
-            <td>".date("jS F, Y", strtotime($user['signup_date']))."</td>
-            <td>".$adminCheck."</td>
-            <td><form action='admin.php' method='post'><input type='hidden' name='id' value=".$user['id_users']."><button type='submit' name='setAdmin' class='btn btn-primary btn-sm'>".$is_adminString." admin</button> <input type='hidden' name='id' value=".$user['id_users']."><button type='submit' name='deleteUser' class='btn btn-danger btn-sm'>Delete user</button></td></form>
+            <td>" . $user['id_users'] . "</td>
+            <td><img class='adminPanelAvatar' src=" . $user['user_pic'] . "><b>" . $user['username'] . "</b></td>
+            <td>" . date("jS F, Y", strtotime($user['signup_date'])) . "</td>
+            <td>" . $adminCheck . "</td>
+            <td><form action='admin.php' method='post'><input type='hidden' name='id' value=" . $user['id_users'] . "><button type='submit' name='setAdmin' class='btn btn-primary btn-sm'>" . $is_adminString . " admin</button> <input type='hidden' name='id' value=" . $user['id_users'] . "><button type='submit' name='deleteUser' class='btn btn-danger btn-sm'>Delete user</button></td></form>
             </tr>
             ";
-        }
-        echo $table . "</table>";
-    ?>
-    </div> 
-<div class="row">
-<h2 class="mt-5">Items</h2>
-<div class="col">
-<button class="btn btn-primary float-start mb-2">Add item</button>
-</div>
+            }
+            echo $table . "</table>";
+            ?>
+        </div>
+        <div class="row">
+            <h2 class="mt-5">Items</h2>
+            <div class="col">
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary float-start mb-2" data-bs-toggle="modal" data-bs-target="#addItemModal">
+                    Add Item
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="addItemModal" tabindex="-1" aria-labelledby="addItemModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addItemModal">Add a new item!</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="admin.php" id="addItem_form" method="POST">
+                                    <div class="mb-3">
+                                        <label for="item-name" class="col-form-label">Item Name</label>
+                                        <input type="text" class="form-control" id="item-name" name="item-name">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="item-description" class="col-form-label">Description</label>
+                                        <textarea class="form-control" id="item-description" name="item-description"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="price" class="col-form-label">Price</label>
+                                        <input type="text" class="form-control" id="item-price" name="item-price">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="formFileSm" class="form-label">Upload an image (360x360) for your item.</label>
+                                        <input class="form-control form-control-sm" id="formFileSm" type="file">
+                                    </div>
+                                    <div class="mb-3">
+                                        <select class="form-select form-select-sm" name="item-rarity" aria-label="Item rarity select">
+                                            <option value="Normal">Normal</option>
+                                            <option value="Unique">Unique</option>
+                                            <option value="Genuine">Genuine</option>
+                                            <option value="Unusual">Unusual</option>
+                                        </select>
+                                    </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <input name="addItem_button" type="submit" class="btn btn-primary" value="Add item">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
 
 
-<?php 
-         $table = "";
+            <?php
+            $table = "";
 
-         $table.="
+            $table .= "
          <table class='table table-hover table-bordered align-middle text-center'>
          <thead>
          <tr>
@@ -92,32 +141,29 @@
          </tr>
          </thead>
          ";
-  
-         while($item = mysqli_fetch_assoc($shop_result)) {
-            if ($item['rarity'] == "Unusual") {
-                $itemRarity = "#8650AC";
-            }
-            else if ($item['rarity'] == "Unique"){
-                $itemRarity = "#FFD700";
-            }
-            else if ($item['rarity'] == "Genuine"){
-                $itemRarity = "#4D7455";
-            }
-            else {
-                $itemRarity = "#B2B2B2";
-            }
-             $table.="
+
+            while ($item = mysqli_fetch_assoc($shop_result)) {
+                if ($item['rarity'] == "Unusual") {
+                    $itemRarity = "#8650AC";
+                } else if ($item['rarity'] == "Unique") {
+                    $itemRarity = "#FFD700";
+                } else if ($item['rarity'] == "Genuine") {
+                    $itemRarity = "#4D7455";
+                } else {
+                    $itemRarity = "#B2B2B2";
+                }
+                $table .= "
              <tr>
-             <td>".$item['id']."</td>
-             <td><img class='adminPanelAvatar' src=".$item['item_image']."><b><p style='color:$itemRarity; display:inline'>".$item['product']."</p></b></td>
-             <td>€".$item['price']."</td>
+             <td>" . $item['id'] . "</td>
+             <td><img class='adminPanelAvatar' src=" . $item['item_image'] . "><b><p style='color:$itemRarity; display:inline'>" . $item['product'] . "</p></b></td>
+             <td>€" . $item['price'] . "</td>
              <td><button type='button' class='btn btn-primary btn-sm'>Edit item</button> <button type='button' class='btn btn-danger btn-sm'>Delete item</button></td>
              </tr>
              ";
-         }
-         echo $table . "</table>";
-         ?>
-</div>
+            }
+            echo $table . "</table>";
+            ?>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>

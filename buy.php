@@ -20,7 +20,7 @@
            $count= count($_SESSION['cart']);
            $session_array = array('id' => $_GET['id'],
            "product" => $_POST['product'],   
-           "desc" => $_POST['desc'],
+           "item_description" => $_POST['item_description'],
            "price" => $_POST['price']);
            $_SESSION['cart'][$count] =  $session_array;
      
@@ -53,7 +53,7 @@
         {
             $session_array = array('id' => $_GET['id'],
                                    "product" => $_POST['product'],   
-                                   "desc" => $_POST['desc'],
+                                   "item_description" => $_POST['item_description'],
                                    "price" => $_POST['price']);
 
             $_SESSION['cart'][0] =  $session_array;
@@ -109,10 +109,10 @@
                          <img class="card-img-top" style="background-color: #071215" src="'.$row["item_image"].'alt="">
                         <div class="card-body d-flex flex-column">
                         <h5 class="card-title" style="color:'.$itemRarity.'">'. $row["product"].'<span class="badge bg-dark">€'.number_format($row["price"],2).'</span></h5> 
-                        <h6 class="card-subtitle text-white">'. $row['desc'].'</h6>
+                        <h6 class="card-subtitle text-white">'. $row['item_description'].'</h6>
                           <input type="hidden" name="product" value="'.$row['product'].'">
                           <input type="hidden" name="price" value="'.$row['price'].'">
-                          <input type="hidden" name="desc" value="'.$row['desc'].'">
+                          <input type="hidden" name="item_description" value="'.$row['item_description'].'">
                           
                           
                 <div class="card-footer" style="position:absolute; bottom: 0;">
@@ -373,10 +373,10 @@
          <img class="card-img-top" style="background-color: #071215" src="<?= $row['item_image'];?>" alt="">
         <div class="card-body d-flex flex-column">
         <h5 class="card-title" style="color: <?= $itemRarity?>"><?= $row['product'];?> <span class="badge bg-dark">€<?= number_format($row['price'],2);?></span></h5> 
-        <h6 class="card-subtitle text-white"><?= $row['desc'];?></h6>
+        <h6 class="card-subtitle text-white"><?= $row['item_description'];?></h6>
           <input type="hidden" name="product" value="<?= $row['product']  ?>">
           <input type="hidden" name="price" value="<?= $row['price']  ?>">
-          <input type="hidden" name="desc" value="<?= $row['desc']  ?>">
+          <input type="hidden" name="item_description" value="<?= $row['item_description']  ?>">
           
           
 <div class="card-footer" style="position:absolute; bottom: 0;">

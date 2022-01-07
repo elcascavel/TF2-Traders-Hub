@@ -91,4 +91,15 @@ function validateName($name, $minOwner, $maxOwner){
         return(true);
     }
 }
+
+function validateItemName($item_name, $minItemName, $maxItemName)
+{
+    $exp = "/^[A-z0-9 .'-]{" . $minItemName . "," . $maxItemName . '}$/';
+
+    if (!preg_match($exp, $item_name)) {
+        return (false);
+    } else {
+        return (true);
+    }
+}
 ?>

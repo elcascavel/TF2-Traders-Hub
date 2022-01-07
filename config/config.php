@@ -19,6 +19,9 @@ $timezone = date_default_timezone_set("Europe/London");
     $minContact = 10;
     $maxContact = 300;
 
+    $minItemName = 1;
+    $maxItemName = 60;
+
     // db config values
     $host = "localhost";
     $username = "root";
