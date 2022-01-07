@@ -72,7 +72,7 @@
 
     else {
         $result = closeDb($db);
-        header("Location: profile.php");
+        header("Location: edit_account.php");
         exit();
     }
 }
