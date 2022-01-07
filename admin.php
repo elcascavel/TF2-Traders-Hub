@@ -123,7 +123,6 @@ if ($userIsAdmin == 0) {
                         </div>
                     </div>
                 </div>
-
             </div>
 
 
@@ -142,7 +141,7 @@ if ($userIsAdmin == 0) {
          </thead>
          ";
 
-            while ($item = mysqli_fetch_assoc($shop_result)) {
+            foreach ($shop_result as $item) {
                 if ($item['rarity'] == "Unusual") {
                     $itemRarity = "#8650AC";
                 } else if ($item['rarity'] == "Unique") {
@@ -157,12 +156,55 @@ if ($userIsAdmin == 0) {
              <td>" . $item['id'] . "</td>
              <td><img class='adminPanelAvatar' src=" . $item['item_image'] . "><b><p style='color:$itemRarity; display:inline'>" . $item['product'] . "</p></b></td>
              <td>€" . $item['price'] . "</td>
-             <td><button type='button' class='btn btn-primary btn-sm'>Edit item</button> <button type='button' class='btn btn-danger btn-sm'>Delete item</button></td>
+             <td><form action='admin.php' method='post'><input type='hidden' name='item_id' value=" . $item['id'] . "><button data-bs-toggle='modal' data-bs-target='#editItemModal' type='button' class='btn btn-primary btn-sm'>Edit item</button> <input type='hidden' name='id_item' value=" . $item['id'] . "><button type='button' name='deleteItem' class='btn btn-danger btn-sm'>Delete item</button></td></form>
              </tr>
              ";
             }
             echo $table . "</table>";
             ?>
+                            <!-- Modal -->
+                            <div class="modal fade" id="editItemModal" tabindex="-1" aria-labelledby="editItemModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="editItemModal">Edit your item!</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="admin.php" id="editItem_form" method="POST">
+                                    <div class="mb-3">
+                                        <label for="item-name" class="col-form-label">Item Name</label>
+                                        <input type="text" class="form-control" id="item-name" name="item-name" value="">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="item-description" class="col-form-label">Description</label>
+                                        <textarea class="form-control" id="item-description" name="item-description"></textarea>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="price" class="col-form-label">Price</label>
+                                        <input type="text" class="form-control" id="item-price" name="item-price">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="formFileSm" class="form-label">Upload an image (360x360) for your item.</label>
+                                        <input class="form-control form-control-sm" id="formFileSm" type="file">
+                                    </div>
+                                    <div class="mb-3">
+                                        <select class="form-select form-select-sm" name="item-rarity" aria-label="Item rarity select">
+                                            <option value="Normal">Normal</option>
+                                            <option value="Unique">Unique</option>
+                                            <option value="Genuine">Genuine</option>
+                                            <option value="Unusual">Unusual</option>
+                                        </select>
+                                    </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <input name="updateItem_button" type="submit" class="btn btn-primary" value="Save changes">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

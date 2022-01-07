@@ -13,7 +13,7 @@
     $user_result = mysqli_query($db, $user_query);
     $shop_result = mysqli_query($db, $shop_query);
 
-    $user_array = mysqli_fetch_assoc($user_result);
+    $item_array = mysqli_fetch_assoc($shop_result);
 
     $itemName = "";
     $itemDesc = "";
@@ -76,6 +76,18 @@
                 header("Location: admin.php");
             }
         }  
+    }
+
+    if (isset($_POST['item_id'])) {
+        $item_id = $_POST['item_id'];
+        if (isset($_POST['updateItem_button'])) {
+            if (!editItem($db, $item_id, $itemName, $itemDesc, $itemRarity, $itemPrice)) {
+                die();
+            }
+            else {
+                header("Location: admin.php");
+            }
+        }
     }
     
     function updateAdminStatus($database, &$loggedInID, &$username, $id, &$alertText) 
@@ -190,7 +202,36 @@
             else {
                 return true;
             }
+        }   
+    }
+
+    function editItem($database, &$item_id, &$item_name, &$item_desc, &$item_rarity, &$item_price) 
+    {
+        $item_query = mysqli_query($database, "UPDATE shop SET (product, item_description, rarity, price) VALUES (?, ?, ?, ?) WHERE id = $item_id");
+
+        $statement = mysqli_prepare($database, $item_query);
+
+        if (!$statement) {
+            echo "Error preparing update item statement.";
+            die();
         }
-        
+
+        $result = mysqli_stmt_bind_param($statement, 'sssd', $item_name, $item_desc, $item_rarity, $item_price);
+
+        if (!$result) {
+            echo "Error binding parameters to prepared statement. Please try again later.";
+            die();
+        }
+
+        $result = mysqli_stmt_execute($statement);
+
+        if (!$result) {
+            echo "Result of prepared statement cannot be executed.";
+            die();
+        }
+
+        else {
+            return true;
+        }
     }
 ?>
