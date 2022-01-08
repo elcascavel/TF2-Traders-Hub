@@ -129,9 +129,11 @@ if (isset($message)) {
 			</div>
 			<div class="row">
 <div class="col">
-<input class="btn btn-success" name="wallet_button" type="submit" value="Validate">
 				<?php
-				echo "<span class='badge bg-primary'>$money €</span>";
+				echo "<div class='input-group justify-content-center'>
+				<input class='btn btn-primary' name='wallet_button' type='submit' value='Validate'>
+				<span class='input-group-text'>€ $money</span>
+			  </div>"
 				?>
 </div>
 				</div>
