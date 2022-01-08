@@ -62,7 +62,9 @@
 
             if(mysqli_num_rows($result)< 1)
             {
-                $nodata.= '<a class="errorMessage" style="text-align:center">' . "NO DATA FOUND!" . '</a>' . '<br><br>';
+                $nodata.= "<div class='alert alert-danger text-center' role='alert'>
+                No items found!
+              </div>";
             }
             else{
                 while($row = mysqli_fetch_assoc($result))
@@ -153,18 +155,6 @@
                     </a>
                     <a class="navLink" href="contact.php">
                         Contact
-                    </a>
-                    <a class="navLink" >
-                        <form method="post">
-                            <div class="row">
-                                <div class="col-md-9">
-                                    <input type="text" name="input" class="form-control" value="">
-                                </div>
-                                <div class="col-md-3">
-                                     <input type="submit" name="search" class="btn btn-success" value="Search">
-                                 </div>
-                            </div>
-                        </form>
                     </a>
                 </div>
                 <div class="navSide">
@@ -319,6 +309,16 @@
                 </div>
             </div>
            <div class="container" style="margin-top: 20px; margin-bottom: 20px; color:black;">
+           <form method="post">
+                            <div class="row mb-2">
+                                <div class="col-md-3">
+                                    <div class="input-group mb-3">
+                                        <input type="text" class="form-control" name="input" placeholder="Find your favorite item!" aria-label="Find your favorite item!" aria-describedby="button-addon2">
+                                        <input type="submit" name="search" class="btn btn-success" value="Search">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
   <div class="row">
   
   
