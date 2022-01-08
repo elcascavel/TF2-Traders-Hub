@@ -176,7 +176,7 @@
 						echo $_POST['name'];
 					}
 						?>"><br>
-						<label for="floatingInput">Name*</label>
+						<label for="floatingInput">Name</label>
 				 </div>
  				<div class="form-floating">
  				<input class="form-control" type="email" id="floatingInput" name="email" placeholder="E-mail" value="<?php
@@ -186,23 +186,19 @@
 					echo $_POST['email'];	
 				}
 					?>"><br>
-					<label for="floatingInput">Email*</label>
+					<label for="floatingInput">Email</label>
 				</div>
 				<div class="form-floating">
-               
-                <textarea rows="5" cols="40" name="message" class="form-control"  value="<?php 
+  <textarea class="form-control" placeholder="Leave a message here" id="floatingTextarea2" name="message" style="height: 100px" value="<?php 
                 if (!empty($errors) && !isset($errors['message'][0]) ) 
 				{
-					echo $_POST['message'];	
+					echo $_POST['message'];
 				}
-                
-                
-                
-                ?>"></textarea><br>
-                
+                ?>">
+</textarea>
+  <label for="floatingTextarea2">Send your message</label>
 			</div>
 
-				 <br>
 				 <div class="row">
 					 <div class="col-sm">
 					<div style="display:<?php if (empty($errors)) {$style = "none"; $alertStyle="alert-success"; } elseif(!empty($errors)) {$style = "block"; $alertStyle="alert-warning";} echo $style;?>" class="alert <?php echo "$alertStyle ";?>  align-items-center" role="alert">
@@ -233,7 +229,7 @@
 </div>		 
 					 </div>			 
 				 </div>		 
- 				<input class="btn btn-success" type="submit" name="send_button" value="Send">
+ 				<input class="btn btn-primary mt-2" type="submit" name="send_button" value="Send">
  				
  			</form>
 			</div>
