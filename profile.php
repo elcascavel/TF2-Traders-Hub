@@ -86,8 +86,6 @@ if (!isset($userLoggedIn)) {
 					</div>
 					</div>
 				</form>
-				
-            
                 </div>
               </div>
             </div>
@@ -95,6 +93,9 @@ if (!isset($userLoggedIn)) {
         </div>
       </div>
     </div>
+	<div class="row justify-content-center mt-5">
+		<h2>Items</h2>
+	</div>
   </div>
 					</div>
 		<?php
