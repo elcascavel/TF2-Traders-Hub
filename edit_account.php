@@ -47,14 +47,14 @@ if (!isset($userLoggedIn)) {
 			</div>
 			<div class="container">
 				<div class="row justify-content-center">
-					<div class="col-sm-2 text-center">
+					<div class="col-sm-2 col-md-2 col-xl-2 text-center">
 					<form method="post" action="upload.php" enctype="multipart/form-data">
 						<img src="<?php echo $user['user_pic']?>" alt="Generic placeholder image" class="img-fluid" style="width: 180px; border-radius: 10px;">
-  						<input class="form-control form-control-sm mt-2" id="formFileSm" type="file" name="myFile">
+  						<input class="form-control form-control-sm mt-2" id="formFileSm" type="file" name="profileAvatar">
 						<input class="btn btn-primary btn-sm mt-2" type="submit" value="Change Avatar">
 						</form>
 					</div>
-					<div class="col-md-6">
+					<div class="col-xs-4 col-md-3">
 			<form action="edit_account.php" method="POST">
   <div class="form-group">
   <input class="form-control" type="text" id="username" name="username" placeholder="Username" value="<?php
@@ -116,8 +116,11 @@ if (!isset($userLoggedIn)) {
 							}
 						}
 						?>
-  <input class="btn btn-primary" type="submit" name="saveAccount" id="saveAccount" value="Save">
+						<div class="d-flex justify-content-center">
+						<input class="btn btn-primary mx-2" type="submit" name="saveAccount" id="saveAccount" value="Save">
 	<input class="btn btn-danger" type="submit" name="cancelAccount" id="cancelAccount" value="Cancel">
+						</div>
+  
 </form>
 </div>
 					</div>
