@@ -24,22 +24,11 @@ if ($userIsAdmin == 0) {
 
 <body style="background-color:#282a36;">
     <div class="container-xl mt-2">
-        <h1 style='color: #f8f8f2';>Admin Panel</h1>
+        <h1 class="text-white">Admin Panel</h1>
         <form action="admin.php" method="POST">
             <input class="btn btn-outline-info btn-sm" type="submit" name="returnProfile" id="returnProfile" value="Return to your profile">
         </form>
         <?php echo "<h5 style='color: #f8f8f2'; class='mt-2'>Welcome, $userLoggedIn</h5>"; ?>
-        <?php
-            
-            echo "<div class='toast align-items-center text-white bg-primary border-0' role='alert' aria-live='assertive' aria-atomic='true'>
-            <div class='d-flex'>
-              <div class='toast-body'>
-                    $alertMessage
-              </div>
-              <button type='button' class='btn-close btn-close-white me-2 m-auto' data-bs-dismiss='toast' aria-label='Close'></button>
-            </div>
-          </div>";
-        ?>
         <div class="row">
             <?php
             $table = "";
@@ -163,7 +152,7 @@ if ($userIsAdmin == 0) {
              <td>" . $item['id'] . "</td>
              <td><img class='adminPanelAvatar' src=" . $item['item_image'] . "><b><p style='color:$itemRarity; display:inline'>" . $item['product'] . "</p></b></td>
              <td>€" . $item['price'] . "</td>
-             <td><form action='admin.php' method='post'><input type='hidden' name='item_id' value=" . $item['id'] . "><button data-bs-toggle='modal' type='button' data-bs-target='#editItemModal".$item['id']."' class='btn btn-primary btn-sm'>Edit item</button> <button type='submit' name='deleteItem_button' class='btn btn-danger btn-sm'>Delete item</button></td></form>
+             <td><form action='admin.php' id='editItem_form' method='post'><input type='hidden' name='item_id' value=" . $item['id'] . "><button data-bs-toggle='modal' type='button' data-bs-target='#editItemModal".$item['id']."' class='btn btn-primary btn-sm'>Edit item</button> <button type='submit' name='deleteItem_button' class='btn btn-danger btn-sm'>Delete item</button></td>
              </tr>
              ". "<div class='modal fade' id='editItemModal".$item['id']."'tabindex='-1' aria-labelledby='editItemModalLabel' aria-hidden='true'>
              <div class='modal-dialog'>
@@ -173,7 +162,6 @@ if ($userIsAdmin == 0) {
                          <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                      </div>
                      <div class='modal-body'>
-                         <form action='admin.php' id='editItem_form' method='POST'>
                              <div class='mb-3'>
                                  <label for='item-name' class='col-form-label'>Item Name</label>
                                  <input type='text' class='form-control' id='item-name' name='item-name' value='".htmlspecialchars($item['product'], ENT_QUOTES)."'>
@@ -209,8 +197,36 @@ if ($userIsAdmin == 0) {
          </div>";
             }
             echo $table . "</table>";
-            ?>
+            ?>   
         </div>
     </div>
+    <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div id="liveToast" class="toast bg-danger text-white border-0 <?php echo $toastClass ?>" role="alert" aria-live="assertive" aria-atomic="true">
+<div class="d-flex">
+    <div class="toast-body">
+      <?php
+      if (!empty($errors)) { # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
+            if (isset($errors['item_name']) && $errors['item_name'][0] == true)
+            {
+                echo $errors['item_name'][1] . '<br><br>';
+            }
+
+            if (isset($errors['item_description']) && $errors['item_description'][0] == true) {
+                echo $errors['item_description'][1] . '<br><br>';
+            }
+
+            if (isset($errors['item_price']) && $errors['item_price'][0] == true) {
+                echo $errors['item_price'][1];
+            }
+        }
+    else {
+        echo $toastMessage;
+    }
+      ?>
+    </div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+  </div>
+</div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>

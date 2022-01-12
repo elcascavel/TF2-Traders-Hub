@@ -1,8 +1,6 @@
 <?php
     require_once "cookies/configDb.php";
-
-    $alertMessage = "";
-    $alertType = "";
+    require_once "config/config.php";
 
     $db = connectDB();
 
@@ -20,6 +18,16 @@
     $itemPrice = "";
     $itemImage = "";
 
+    $toastClass = "hide";
+    $toastMessage = "";
+
+    $errors = array('item_name' => array(false, "Invalid item name: it must have between $minItemName and $maxItemName characters."),
+								    'item_description' => array(false, "Invalid item description: it must have between $minItemDesc and $maxItemDesc characters."),
+                                    'item_price' => array(false, "Invalid price tag. Make sure it's not empty.")
+								   );
+
+                                   $flag = false;
+
     if (isset($_POST['returnProfile'])) {
         header("Location: profile.php");
     }
@@ -28,7 +36,7 @@
         $user_id = $_POST['id'];
 
         if (isset($_POST['setAdmin'])) {
-            if(updateAdminStatus($db, $userLoggedInID, $userLoggedIn, $user_id, $alertMessage))
+            if(updateAdminStatus($db, $userLoggedInID, $userLoggedIn, $user_id))
             {
                 header("Location: admin.php");
             }
@@ -39,7 +47,7 @@
         }
         else if (isset($_POST['deleteUser'])) 
         {
-            if(deleteUser($db, $userLoggedInID, $userLoggedIn, $user_id, $alertMessage)) 
+            if(deleteUser($db, $userLoggedInID, $userLoggedIn, $user_id)) 
             {
                 header("Location: admin.php");
             }
@@ -56,16 +64,15 @@
         $itemName = strip_tags($_POST['item-name']);
 
         if (!validateItemName($itemName, $minItemName, $maxItemName)) {
-            $alertMessage = "Invalid item name!";
-            $alertType = "alert-danger";
+            $errors['item_name'][0] = true;
+            $flag = true;
         }
         else {
             $itemDesc = strip_tags($_POST['item-description']);
             $itemRarity = strip_tags($_POST['item-rarity']);
             $itemPrice = strip_tags($_POST['item-price']);
     
-            if(!addItem($db, $itemName, $itemDesc, $itemRarity, $itemPrice, $alertMessage)) {
-                $alertType = "alert-danger";
+            if(!addItem($db, $itemName, $itemDesc, $itemRarity, $itemPrice)) {
             }
             else {
                 header("Location: admin.php");
@@ -74,16 +81,50 @@
     }
 
     if (isset($_POST['item_id'])) {
+        require_once "validation.php";
+        require_once "config/config.php";
         $item_id = $_POST['item_id'];
         if (isset($_POST['updateItem_button'])) {
-            if (!editItem($db, $item_id, $itemName, $itemDesc, $itemRarity, $itemPrice)) {
-                die();
-            }
-            else {
-                header("Location: admin.php");
-            }
+
+        $itemName = strip_tags($_POST['item-name']);
+
+        if (!validateItemName($itemName, $minItemName, $maxItemName)) {
+            $errors['item_name'][0] = true;
+            $flag = true;
         }
 
+        $itemDesc = strip_tags($_POST['item-description']);
+
+        if (!validateItemDescription($itemDesc, $minItemDesc, $maxItemDesc)) {
+            $errors['item_description'][0] = true;
+            $flag = true;
+        }
+
+        $itemRarity = strip_tags($_POST['item-rarity']);
+
+        $itemPrice = strip_tags($_POST['item-price']);
+
+        if (!validateItemPrice($itemPrice)) {
+            $errors['item_price'][0] = true;
+            $flag = true;
+        }
+
+        if ($flag == true ){
+            $toastClass = "show";
+            return($errors);
+        }
+
+        if (!editItem($db, $item_id, $itemName, $itemDesc, $itemRarity, $itemPrice)) 
+        {
+            die();
+        }
+
+        else 
+        {
+            header("Location: admin.php");
+        }
+
+        }
         else if (isset($_POST['deleteItem_button'])) {
             if (!deleteItem($db, $item_id)) {
                 die();
@@ -94,13 +135,12 @@
         }
     }
     
-    function updateAdminStatus($database, &$loggedInID, &$username, $id, &$alertText) 
+    function updateAdminStatus($database, &$loggedInID, &$username, $id) 
     {
         $adminStatus_query = mysqli_query($database, "SELECT is_admin FROM users WHERE id_users = $id");
         $checkAdminStatus = mysqli_fetch_assoc($adminStatus_query);
 
         if ($loggedInID == $id) {
-            $alertText = "You can't remove your own admin status, ". $username."!";
             return false;
         }
 
@@ -117,15 +157,13 @@
             return true;
         }
         else {
-            $alertText = "Error updating admin status of user with ID $id.";
             return false;
         }
     }
 
-    function deleteUser($database, &$loggedInID, &$username, $id, &$alertText) 
+    function deleteUser($database, &$loggedInID, &$username, $id) 
     {
         if ($loggedInID == $id) {
-            $alertText = "You can't delete your own account, ". $username."! You can do that from your profile.";
             return false;
         }
 
@@ -136,12 +174,11 @@
             return true;
         }
         else {
-            $alertText = "Error deleting user with ID $id.";
             return false;
         }
     }
 
-    function addItem($database, &$item_name, &$item_desc, &$item_rarity, &$item_price, &$alertText) 
+    function addItem($database, &$item_name, &$item_desc, &$item_rarity, &$item_price) 
     {
         // Check if item already exists
         $query = "SELECT product FROM shop WHERE product = ?";
@@ -174,7 +211,7 @@
         }
 
         if (mysqli_num_rows($result) != 0) {
-            $alertText = "Item name is already in our records!";
+            //$alertText = "Item name is already in our records!";
             $result = closeDb($database);
             return false;
         }
@@ -210,14 +247,13 @@
         }   
     }
 
-    function editItem($database, &$item_id, &$item_name, &$item_desc, &$item_rarity, &$item_price) 
+    function editItem($database, $item_id, &$item_name, &$item_desc, &$item_rarity, &$item_price) 
     {
-        $item_query = mysqli_query($database, "UPDATE shop SET (product, item_description, rarity, price) VALUES (?, ?, ?, ?) WHERE id = $item_id");
-
+        $item_query = "UPDATE shop SET product = ?, item_description = ?, rarity = ?, price = ? WHERE id = $item_id";
         $statement = mysqli_prepare($database, $item_query);
 
         if (!$statement) {
-            echo "Error preparing update item statement.";
+            echo "Error preparing update item statement. " . mysqli_error($database);
             die();
         }
 
@@ -250,7 +286,6 @@
             return true;
         }
         else {
-            // $alertText = "Error deleting item with ID $id.";
             return false;
         }
     }

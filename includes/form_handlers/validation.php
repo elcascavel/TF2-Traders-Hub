@@ -102,4 +102,27 @@ function validateItemName($item_name, $minItemName, $maxItemName)
         return (true);
     }
 }
+
+function validateItemDescription($item_description, $minItemDesc, $maxItemDesc) 
+{
+    $exp = "/^[A-z0-9. ]{" . $minItemDesc . "," . $maxItemDesc . '}$/';
+
+    if (!preg_match($exp, $item_description)) {
+       return false;
+    }
+    else {
+        return true;
+    }
+}
+
+function validateItemPrice($item_price) {
+    $exp = "(^[0-9.]+$|" . '^$)';
+
+    if (!preg_match($exp, $item_price)) {
+        return false;
+    }
+    else {
+        return true;
+    }
+}
 ?>

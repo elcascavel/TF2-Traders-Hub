@@ -22,6 +22,9 @@ $timezone = date_default_timezone_set("Europe/London");
     $minItemName = 1;
     $maxItemName = 60;
 
+    $minItemDesc = 1;
+    $maxItemDesc = 290;
+
     // db config values
     $host = "localhost";
     $username = "root";
