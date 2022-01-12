@@ -10,16 +10,12 @@
     if(isset($_POST['add_to_cart']))
     {
       
-        $session_array = array('id' => $_POST['id'],
-        "product" => $_POST['product'],   
-        "item_description" => $_POST['item_description'],
-        "price" => $_POST['price']);
-        $_SESSION['cart'][] =  $session_array;
+     
            $teste = $_POST['id'];
            $db = connectDB();
                        
           
-               $sql = "INSERT INTO cart (name,price,id,id_users) SELECT shop.product,shop.price,shop.id,users.id_users FROM (shop INNER JOIN users ON users.id_users='{$userLoggedInID}') WHERE id='{$teste}' ";
+               $sql = "INSERT INTO cart (name,price,id,item_image,id_users) SELECT shop.product,shop.price,shop.id,shop.item_image,users.id_users FROM (shop INNER JOIN users ON users.id_users='{$userLoggedInID}') WHERE id='{$teste}' ";
                $statement = mysqli_prepare($db, $sql);
                    
                    

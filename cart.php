@@ -218,7 +218,8 @@
         }
         
         while($row = mysqli_fetch_assoc($result))
-          {           
+          {   
+                   
             $output.="
         <tr>
         <td style='display:none'>".$row['id']."</td>
@@ -227,12 +228,13 @@
         <td>".$row['quantity']."</td>
         <td>€".number_format($row['price']*$row['quantity'],2)."</td>
         <td>
-        <a href='cart.php?action=remove&id=".$row['id']."'>
-        <button class='btn btn-danger btn-block'>Remove</button>
-        </a>
+        
+        <form action='cart.php' method='post'><input type='hidden' name='cart_id' value=" . $row['id_cart'] . ">
+        <button type='submit' name='remove_button' class='btn btn-danger btn-block'>Remove</button></form></td>
         </tr>
         ";
         $total = $total + $row['quantity']* $row['price'];
+     
           }
         
 
@@ -243,36 +245,31 @@
           <td>Total Price</td>
           <td>€".number_format($total,2)."</td>
           <td>
-                <a href='cart.php?action=clearall'>
-                    <button class='btn btn-warning'>Clear</button>
-                </a>
-          </td>
+          <form action='cart.php' method='post'>
+          <button type='submit' name='clear_button' class='btn btn-warning btn-block'>Clear</button></form></td>
+    
           <tr>
           <td colspan='3'></td>
           <td>€".number_format($total,2)."</td>
           <td>
-          <a href='cart.php?action=pay'>
-          <button class='btn btn-success'>Pay</button>
-      </a>
-          </td>
-         
-               
-          
+          <form action='cart.php' method='post'>
+        <button type='submit' name='pay_button' class='btn btn-success btn-block'>Pay</button></form></td>
+    
+        
           
           </tr>
           
           
           ";
+          
       
   echo $output."</table>";
 
-      if(isset($_GET['action']))
-      {
-          if($_GET['action']=="clearall")
-          {
-            unset($_SESSION['cart']);
+  if(isset($_POST['clear_button']))
+  {
+            
             $db = connectDB();
-            $delete_query = "DELETE from cart";
+            $delete_query = "DELETE from cart WHERE id_users='{$userLoggedInID}'";
                $statement = mysqli_prepare($db, $delete_query);
            
                if (!$statement) {
@@ -290,40 +287,13 @@
         
 
           }
-          if($_GET['action']=="remove")
-          {
-            foreach($_SESSION['cart'] as $key => $value)
+      
+          if(isset($_POST['pay_button']))
             {
-          
-              if($value['id'] == $_GET['id'])
-          {
-            $x=$_GET['id'];
-            $db = connectDB();
-            $delete_query = "DELETE from cart WHERE id='{$x}'";
-               $statement = mysqli_prepare($db, $delete_query);
            
-               if (!$statement) {
-                   echo "Error preparing statement. Try again later";
-                   die();
-               }
-               //execute the prepared statement
-           $result = mysqli_stmt_execute($statement);
-                            
-           if( !$result) {
-               //again a fatal error when executing the prepared statement
-               echo "Something went very wrong. Please try again later.2";
-               die();
-           }
-            
-          }
-        }
-    }
-          if($_GET['action']=="pay")
-          {
-            $db = connectDB();
-                       
-          
-               $query = "INSERT INTO inventory (name,id_users) SELECT name,id_users FROM cart";
+                if ($money > $total)
+                {
+               $query = "INSERT INTO inventory (name,item_image,id_users) SELECT name,item_image,id_users FROM cart WHERE id_users='{$userLoggedInID}'";
                $statement = mysqli_prepare($db, $query);
                
                    
@@ -342,7 +312,7 @@
                die();
            }
         
-           $delete_query = "DELETE from cart";
+           $delete_query = "DELETE from cart WHERE id_users='{$userLoggedInID}'";
                $state = mysqli_prepare($db, $delete_query);
            
                if (!$state) {
@@ -359,6 +329,72 @@
            }
                    
           } 
+          else{
+              echo "ÉS POBRE POTA";
+          }
+        }
+if(isset($_POST['remove_button']))
+{
+    
+$query = "SELECT id_cart FROM cart WHERE id_users='{$userLoggedInID}'";
+
+//prepare the statement				
+$statement = mysqli_prepare($db, $query);
+    
+if (!$statement ){
+//error preparing the statement. This should be regarded as a fatal error.
+echo "Something went wrong. Please try again later.";
+die();				
+}				
+    
+//execute the prepared statement
+$result = mysqli_stmt_execute($statement);
+                
+if( !$result ) {
+//again a fatal error when executing the prepared statement
+echo "Something went very wrong. Please try again later.";
+die();
+}
+    
+//get the result set to further deal with it
+$result = mysqli_stmt_get_result($statement);
+    
+if (!$result){
+//again a fatal error: if the result cannot be stored there is no going forward
+echo "Something went wrong. Please try again later.";	
+die();
+}
+
+while($row = mysqli_fetch_assoc($result))
+{
+
+  foreach($row as $value)
+  {
+
+    if($value == $_POST['cart_id'])
+{
+  
+  $db = connectDB();
+  $delete_query = "DELETE from cart WHERE id_cart='{$value}'";
+     $statement = mysqli_prepare($db, $delete_query);
+ 
+     if (!$statement) {
+         echo "Error preparing statement. Try again later";
+         die();
+     }
+     //execute the prepared statement
+ $result = mysqli_stmt_execute($statement);
+                  
+ if( !$result) {
+     //again a fatal error when executing the prepared statement
+     echo "Something went very wrong. Please try again later.2";
+     die();
+ }
+  
+}
+}
+}
+  
 }
       ?>
      </div>
