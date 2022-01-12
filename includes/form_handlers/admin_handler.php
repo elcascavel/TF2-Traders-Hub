@@ -161,7 +161,7 @@
         }
     }
 
-    function deleteUser($database, &$loggedInID, &$username, $id) 
+    function deleteUser($database, &$loggedInID, $id) 
     {
         if ($loggedInID == $id) {
             return false;
@@ -180,43 +180,6 @@
 
     function addItem($database, &$item_name, &$item_desc, &$item_rarity, &$item_price) 
     {
-        // Check if item already exists
-        $query = "SELECT product FROM shop WHERE product = ?";
-        $statement = mysqli_prepare($database, $query);
-
-        if (!$statement) {
-            echo "Error preparing statement. Try again later";
-            die();
-        }
-    
-        $result = mysqli_stmt_bind_param($statement, 's', $item_name);
-
-        if (!$result) {
-            echo "Error binding parameters to prepared statement. Please try again later";
-            die();
-        }
-
-        $result = mysqli_stmt_execute($statement);
-
-        if (!$result) {
-            echo "Error executing prepared statement.";
-            die();
-        }
-    
-        $result = mysqli_stmt_get_result($statement);
-    
-        if (!$result) {
-            echo "Result of prepared statement cannot be stored.";
-            die();
-        }
-
-        if (mysqli_num_rows($result) != 0) {
-            //$alertText = "Item name is already in our records!";
-            $result = closeDb($database);
-            return false;
-        }
-        // If not add item
-        else {
             $insert_query = "INSERT INTO shop (product, item_description, rarity, price) VALUES (?, ?, ?, ?)";
             
             $statement = mysqli_prepare($database, $insert_query);
@@ -244,8 +207,7 @@
                 closeDb($database);
                 return true;
             }
-        }   
-    }
+        }
 
     function editItem($database, $item_id, &$item_name, &$item_desc, &$item_rarity, &$item_price) 
     {
