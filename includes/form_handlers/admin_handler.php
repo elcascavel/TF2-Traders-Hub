@@ -1,7 +1,6 @@
 <?php
     require_once "cookies/configDb.php";
 
-    $alertTrigger = false;
     $alertMessage = "";
     $alertType = "";
 
@@ -36,7 +35,6 @@
             else 
             {
                 $alertType = "alert-danger";
-                $alertTrigger = true;
             }
         }
         else if (isset($_POST['deleteUser'])) 
@@ -48,7 +46,6 @@
             else 
             {
                 $alertType = "alert-danger";
-                $alertTrigger = true;
             }
         }
     }
@@ -61,7 +58,6 @@
         if (!validateItemName($itemName, $minItemName, $maxItemName)) {
             $alertMessage = "Invalid item name!";
             $alertType = "alert-danger";
-            $alertTrigger = true;
         }
         else {
             $itemDesc = strip_tags($_POST['item-description']);
@@ -70,7 +66,6 @@
     
             if(!addItem($db, $itemName, $itemDesc, $itemRarity, $itemPrice, $alertMessage)) {
                 $alertType = "alert-danger";
-                $alertTrigger = true;
             }
             else {
                 header("Location: admin.php");
@@ -82,6 +77,15 @@
         $item_id = $_POST['item_id'];
         if (isset($_POST['updateItem_button'])) {
             if (!editItem($db, $item_id, $itemName, $itemDesc, $itemRarity, $itemPrice)) {
+                die();
+            }
+            else {
+                header("Location: admin.php");
+            }
+        }
+
+        else if (isset($_POST['deleteItem_button'])) {
+            if (!deleteItem($db, $item_id)) {
                 die();
             }
             else {
@@ -200,6 +204,7 @@
             }
 
             else {
+                closeDb($database);
                 return true;
             }
         }   
@@ -231,7 +236,22 @@
         }
 
         else {
+            closeDb($database);
             return true;
+        }
+    }
+
+    function deleteItem($database, $id)
+    {
+        $deleteItem = mysqli_query($database, "DELETE from shop WHERE id = $id");
+
+        if ($deleteItem) {
+            closeDb($database);
+            return true;
+        }
+        else {
+            // $alertText = "Error deleting item with ID $id.";
+            return false;
         }
     }
 ?>

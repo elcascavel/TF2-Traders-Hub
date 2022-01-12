@@ -22,22 +22,30 @@ if ($userIsAdmin == 0) {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 
-<body>
+<body style="background-color:#282a36;">
     <div class="container-xl mt-2">
-        <h1>Admin Panel</h1>
+        <h1 style='color: #f8f8f2';>Admin Panel</h1>
         <form action="admin.php" method="POST">
-            <input class="btn btn-outline-primary btn-sm" type="submit" name="returnProfile" id="returnProfile" value="Return to your profile">
+            <input class="btn btn-outline-info btn-sm" type="submit" name="returnProfile" id="returnProfile" value="Return to your profile">
         </form>
-        <?php echo "<h5 class='mt-2'>Welcome, $userLoggedIn</h5>"; ?>
-        <?php if ($alertTrigger) {
-            echo "<div class='alert $alertType alert-dismissible' role='alert'>$alertMessage</div>";
-        } ?>
+        <?php echo "<h5 style='color: #f8f8f2'; class='mt-2'>Welcome, $userLoggedIn</h5>"; ?>
+        <?php
+            
+            echo "<div class='toast align-items-center text-white bg-primary border-0' role='alert' aria-live='assertive' aria-atomic='true'>
+            <div class='d-flex'>
+              <div class='toast-body'>
+                    $alertMessage
+              </div>
+              <button type='button' class='btn-close btn-close-white me-2 m-auto' data-bs-dismiss='toast' aria-label='Close'></button>
+            </div>
+          </div>";
+        ?>
         <div class="row">
             <?php
             $table = "";
 
             $table .= "
-        <table class='table table-hover table-bordered align-middle text-center'>
+        <table class='table table-hover table-light table-striped table-bordered align-middle text-center'>
         <thead>
         <tr>
         <th scope='col'>#</th>
@@ -48,7 +56,6 @@ if ($userIsAdmin == 0) {
         </tr>
         </thead>
         ";
-
             foreach ($user_result as $user) {
                 $adminCheck = $user['is_admin'];
                 $is_adminString = "Make";
@@ -73,7 +80,7 @@ if ($userIsAdmin == 0) {
             ?>
         </div>
         <div class="row">
-            <h2 class="mt-5">Items</h2>
+            <h2 style='color: #f8f8f2'; class="mt-5">Items</h2>
             <div class="col">
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary float-start mb-2" data-bs-toggle="modal" data-bs-target="#addItemModal">
@@ -130,7 +137,7 @@ if ($userIsAdmin == 0) {
             $table = "";
 
             $table .= "
-         <table class='table table-hover table-bordered align-middle text-center'>
+         <table class='table table-hover table-light table-striped table-bordered align-middle text-center'>
          <thead>
          <tr>
          <th scope='col'>#</th>
@@ -145,7 +152,7 @@ if ($userIsAdmin == 0) {
                 if ($item['rarity'] == "Unusual") {
                     $itemRarity = "#8650AC";
                 } else if ($item['rarity'] == "Unique") {
-                    $itemRarity = "#FFD700";
+                    $itemRarity = "rgb(125, 109, 0)";
                 } else if ($item['rarity'] == "Genuine") {
                     $itemRarity = "#4D7455";
                 } else {
@@ -156,7 +163,7 @@ if ($userIsAdmin == 0) {
              <td>" . $item['id'] . "</td>
              <td><img class='adminPanelAvatar' src=" . $item['item_image'] . "><b><p style='color:$itemRarity; display:inline'>" . $item['product'] . "</p></b></td>
              <td>€" . $item['price'] . "</td>
-             <td><form action='admin.php' method='post'><input type='hidden' name='item_id' value=" . $item['id'] . "><button data-bs-toggle='modal' type='button' data-bs-target='#editItemModal".$item['id']."' class='btn btn-primary btn-sm'>Edit item</button> <input type='hidden' name='id_item' value=" . $item['id'] . "><button type='button' name='deleteItem' class='btn btn-danger btn-sm'>Delete item</button></td></form>
+             <td><form action='admin.php' method='post'><input type='hidden' name='item_id' value=" . $item['id'] . "><button data-bs-toggle='modal' type='button' data-bs-target='#editItemModal".$item['id']."' class='btn btn-primary btn-sm'>Edit item</button> <button type='submit' name='deleteItem_button' class='btn btn-danger btn-sm'>Delete item</button></td></form>
              </tr>
              ". "<div class='modal fade' id='editItemModal".$item['id']."'tabindex='-1' aria-labelledby='editItemModalLabel' aria-hidden='true'>
              <div class='modal-dialog'>
@@ -173,14 +180,14 @@ if ($userIsAdmin == 0) {
                              </div>
                              <div class='mb-3'>
                                  <label for='item-description' class='col-form-label'>Description</label>
-                                 <textarea class='form-control' id='item-description' name='item-description'>". $item['item_description']."</textarea>
+                                 <textarea class='form-control' id='item-description' name='item-description' style='height: 100px'>". $item['item_description']."</textarea>
                              </div>
                              <div class='mb-3'>
                                  <label for='price' class='col-form-label'>Price (€)</label>
                                  <input type='text' class='form-control' id='item-price' name='item-price' value='".$item['price']."'>
                              </div>
                              <div class='mb-3'>
-                                 <label for='formFileSm' class='form-label'>Upload an image (360x360) for your item.</label>
+                                 <label for='formFileSm' class='form-label'>Change your item's image if you like (360x360)</label>
                                  <input class='form-control form-control-sm' id='formFileSm' type='file'>
                              </div>
                              <div class='mb-3'>
