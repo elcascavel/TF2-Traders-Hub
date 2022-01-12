@@ -169,14 +169,14 @@ if ($userIsAdmin == 0) {
                          <form action='admin.php' id='editItem_form' method='POST'>
                              <div class='mb-3'>
                                  <label for='item-name' class='col-form-label'>Item Name</label>
-                                 <input type='text' class='form-control' id='item-name' name='item-name' value='".$item['product']."'>
+                                 <input type='text' class='form-control' id='item-name' name='item-name' value='".htmlspecialchars($item['product'], ENT_QUOTES)."'>
                              </div>
                              <div class='mb-3'>
                                  <label for='item-description' class='col-form-label'>Description</label>
                                  <textarea class='form-control' id='item-description' name='item-description'>". $item['item_description']."</textarea>
                              </div>
                              <div class='mb-3'>
-                                 <label for='price' class='col-form-label'>Price</label>
+                                 <label for='price' class='col-form-label'>Price (€)</label>
                                  <input type='text' class='form-control' id='item-price' name='item-price' value='".$item['price']."'>
                              </div>
                              <div class='mb-3'>
