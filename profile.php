@@ -1,5 +1,4 @@
 <?php
-require 'includes/form_handlers/inventory_handler.php';
 include("includes/header.php");
 
 if (!isset($userLoggedIn)) {
@@ -27,7 +26,7 @@ if (!isset($userLoggedIn)) {
 
 <body>
 
-	<body style="width:100%;margin:0;background-color:black">
+	<body style="width:100%;margin:0;background-color:#282a36">
 		<div class="homepage">
 			<div class="headerParentProfile">
 				<a class="headerLogo" href="index.php"></a>
@@ -101,7 +100,7 @@ if (!isset($userLoggedIn)) {
 			$db=connectDB();
 
 
-			$query = "SELECT * FROM inventory";
+			$query = "SELECT * FROM inventory WHERE id_users = $userLoggedInID";
 
 			$result = mysqli_query($db,$query);
 
@@ -112,10 +111,7 @@ if (!isset($userLoggedIn)) {
 			<div class='card' style='width: 18rem; background-color: #101822; padding-bottom:50px;'>
 			<img class='card-img-top' style='background-color: #071215' src='".$row["item_image"]."'>
 			<div class='card-body d-flex flex-column'>
-			<h6 class='card-subtitle text-white text-center'>". $row['id_inv']."</h6>
 			<h6 class='card-subtitle text-white text-center'>". $row['name']."</h6>
-			<div class='card-footer' style='position:absolute; bottom: 0;'>
-			</div>
 			</div>
 			</div>
 			</div>";
