@@ -74,7 +74,7 @@ if (!empty($errors) && !isset($errors['username'][0])) { #this is done to keep t
       </div>
       <div class="row">
         <div class="col">
-          <footer class="footerArea fixed-bottom">
+          <footer class="footerArea">
             <div class="footerLogos">
               <a href="https://www.valvesoftware.com/en/about"><img class="footerLogoImg" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/valve_logo.png" /></a>
               <a href="https://necm.utad.pt/"><img class="footerLogoImg" src="../TH/img/cmLogo.png" /></a>
