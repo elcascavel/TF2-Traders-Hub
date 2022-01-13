@@ -55,7 +55,7 @@ if (isset($_POST['send_button'])) {
     }
 
 
-        $query = "INSERT INTO contact (name, email, message, send_date,  id_users) VALUES (?, ?, ?, ?,?)";
+        $query = "INSERT INTO contact (name, email, message, send_date, id_users) VALUES (?, ?, ?, ?,?)";
 
         $statement = mysqli_prepare($db, $query);
 
@@ -82,12 +82,6 @@ if (isset($_POST['send_button'])) {
                 $result = closeDb($db);
                 $alertStyle = "alert-success";
                 $text = "Message Sent";
-                
-                
-            }
-
-           
-        }      
-    
-    
+            }  
+        }
 ?>

@@ -222,7 +222,7 @@ if ($userIsAdmin == 0) {
             <td>" . $contact['id_message'] . "</td>
             <td>". $contact['name'] ."</td>
             <td>". $contact['message'] ."</td>
-            <td>" . date("jS F, Y H:i:s", strtotime($contact['send_date'])) . "</td>
+            <td>" . date("jS F, Y", strtotime($contact['send_date'])) . "</td>
             <td><form action='admin.php' id='message_form' method='post'><input type='hidden' name='message_id' value=" . $contact['id_message'] . "><button type='submit' name='readMessage_button' class='btn btn-success btn-sm'>Read message</button></td>
             </tr>
             ";

@@ -73,7 +73,7 @@ function validateCVV($cvv, $mincvv, $maxcvv){
 function validateMessage($message, $minContact, $maxContact)
 {
 
-    $exp = "/^[A-z0-9_]{" . $minContact . "," . $maxContact . '}$/';
+    $exp = "/^[A-z0-9., ]{" . $minContact . "," . $maxContact . '}$/';
     if (!preg_match($exp, $message)) {
         return (false);
     } else {
@@ -83,7 +83,7 @@ function validateMessage($message, $minContact, $maxContact)
 
 function validateName($name, $minOwner, $maxOwner){
 				
-    $exp = "/^[A-z]{" . $minOwner . "," . $maxOwner .'}$/';			
+    $exp = "/^[A-z ]{" . $minOwner . "," . $maxOwner .'}$/';			
                             
     if( !preg_match($exp, $name )){
         return (false);				
@@ -105,7 +105,7 @@ function validateItemName($item_name, $minItemName, $maxItemName)
 
 function validateItemDescription($item_description, $minItemDesc, $maxItemDesc) 
 {
-    $exp = "/^[A-z0-9. ]{" . $minItemDesc . "," . $maxItemDesc . '}$/';
+    $exp = "/^[A-z0-9., ]{" . $minItemDesc . "," . $maxItemDesc . '}$/';
 
     if (!preg_match($exp, $item_description)) {
        return false;
