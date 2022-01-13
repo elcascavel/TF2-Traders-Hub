@@ -38,7 +38,7 @@
         $user_id = $_POST['id'];
 
         if (isset($_POST['setAdmin'])) {
-            if(updateAdminStatus($db, $userLoggedInID, $userLoggedIn, $user_id))
+            if(updateAdminStatus($db, $userLoggedInID, $user_id))
             {
                 header("Location: admin.php");
             }
@@ -49,7 +49,7 @@
         }
         else if (isset($_POST['deleteUser'])) 
         {
-            if(deleteUser($db, $userLoggedInID, $userLoggedIn, $user_id)) 
+            if(deleteUser($db, $userLoggedInID, $user_id)) 
             {
                 header("Location: admin.php");
             }
