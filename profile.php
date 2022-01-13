@@ -112,6 +112,9 @@ if (!isset($userLoggedIn)) {
 			<img class='card-img-top' style='background-color: #071215' src='".$row["item_image"]."'>
 			<div class='card-body d-flex flex-column'>
 			<h6 class='card-subtitle text-white text-center'>". $row['name']."</h6>
+			<div class='card-footer text-center' style='position:absolute; bottom:10px; margin-left: 0; margin-right: 0; left:0; right:0'>
+			<input type='submit' name='add_to_trade' class='btn btn-primary' value='Add to Trade'>
+			</div>
 			</div>
 			</div>
 			</div>";
