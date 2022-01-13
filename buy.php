@@ -91,15 +91,8 @@
                           <input type="hidden" name="price" value="'.$row['price'].'">
                           <input type="hidden" name="id" value="'.$row['id'].'">
                           <input type="hidden" name="item_description" value="'.$row['item_description'].'">
-                          
-                          
                 <div class="card-footer" style="position:absolute; bottom: 0;">
-                          <div class="input-group">
-                  <div class="input-group-prepend">
                   <input type="submit" name="add_to_cart" class="btn btn-success" value="Add to Cart">
-                  </div>
-             
-                </div>
                 </div>
                 </div>
                         
@@ -361,13 +354,8 @@
           <input type="hidden" name="item_description" value="<?= $row['item_description']  ?>">
           
           
-<div class="card-footer" style="position:absolute; bottom: 0;">
-          <div class="input-group">
-  <div class="input-group-prepend">
+<div class="card-footer text-center" style="position:absolute; bottom: 10px; margin-left: 0; margin-right:0; left:0; right: 0">
   <input type="submit" name="add_to_cart" class="btn btn-success" value="Add to Cart">
-  </div>
- 
-</div>
 </div>
         </div>
          
