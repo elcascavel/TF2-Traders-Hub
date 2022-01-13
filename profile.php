@@ -1,4 +1,5 @@
 <?php
+require 'includes/form_handlers/inventory_handler.php';
 include("includes/header.php");
 
 if (!isset($userLoggedIn)) {
@@ -95,10 +96,30 @@ if (!isset($userLoggedIn)) {
     </div>
 	<div class="row justify-content-center mt-5">
 		<h2>Items</h2>
-	</div>
-  </div>
-					</div>
-		<?php
+		<table class="table">
+			<?php
+			$db=connectDB();
+
+
+			$query = "SELECT * FROM inventory";
+
+			$result = mysqli_query($db,$query);
+
+			while($row = mysqli_fetch_array($result))
+			{
+			echo "
+			<div class='col-lg-3 mb-3 d-flex align-items-stretch'>
+			<div class='card' style='width: 18rem; background-color: #101822; padding-bottom:50px;'>
+			<img class='card-img-top' style='background-color: #071215' src='".$row["item_image"]."'>
+			<div class='card-body d-flex flex-column'>
+			<h6 class='card-subtitle text-white text-center'>". $row['id_inv']."</h6>
+			<h6 class='card-subtitle text-white text-center'>". $row['name']."</h6>
+			<div class='card-footer' style='position:absolute; bottom: 0;'>
+			</div>
+			</div>
+			</div>
+			</div>";
+			}
 		if (isset($_POST['closeAccount'])) {
 			header("Location: close_account.php");
 		}
