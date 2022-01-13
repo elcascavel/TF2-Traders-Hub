@@ -93,13 +93,20 @@ if (!isset($userLoggedIn)) {
         </div>
       </div>
     </div>
+	<?php
+		if (isset($_POST['closeAccount'])) {
+			header("Location: close_account.php");
+		}
+		else if (isset($_POST['editAccount'])) {
+			header("Location: edit_account.php");
+		}
+		else if (isset($_POST['adminPanel'])) {
+			header("Location: admin.php");
+		}
+		?>
 	<div class="row justify-content-center mt-5">
 		<h2>Items</h2>
-		<table class="table">
 			<?php
-			$db=connectDB();
-
-
 			$query = "SELECT * FROM inventory WHERE id_users = $userLoggedInID";
 
 			$result = mysqli_query($db,$query);
@@ -113,20 +120,12 @@ if (!isset($userLoggedIn)) {
 			<div class='card-body d-flex flex-column'>
 			<h6 class='card-subtitle text-white text-center'>". $row['name']."</h6>
 			<div class='card-footer text-center' style='position:absolute; bottom:10px; margin-left: 0; margin-right: 0; left:0; right:0'>
-			<input type='submit' name='add_to_trade' class='btn btn-primary' value='Add to Trade'>
+			<input type='submit' class='btn btn-primary' value='Add to Trade'>
 			</div>
 			</div>
 			</div>
 			</div>";
 			}
-		if (isset($_POST['closeAccount'])) {
-			header("Location: close_account.php");
-		}
-		else if (isset($_POST['editAccount'])) {
-			header("Location: edit_account.php");
-		}
-		else if (isset($_POST['adminPanel'])) {
-			header("Location: admin.php");
-		}
 		?>
+		</div>
 	</body>
