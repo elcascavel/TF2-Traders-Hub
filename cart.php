@@ -24,8 +24,7 @@
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     </head>
 
-    <body style="width:100%;margin:0;background: linear-gradient(165deg, #262f3e, #1a2129);
-  background-attachment: fixed;">
+    <body style="width:100%;margin:0;background-color:#282a36;">
         <div class="homepage">
             <div class="headerParentNonIndex">
                 <a class ="headerLogo" href="index.php"></a>
@@ -336,7 +335,7 @@
 if(isset($_POST['remove_button']))
 {
     
-$query = "SELECT id_cart FROM cart WHERE id_users='{$userLoggedInID}'";
+$query = "SELECT id_cart FROM cart WHERE id_users = $userLoggedInID";
 
 //prepare the statement				
 $statement = mysqli_prepare($db, $query);
@@ -367,7 +366,6 @@ die();
 
 while($row = mysqli_fetch_assoc($result))
 {
-
   foreach($row as $value)
   {
 
