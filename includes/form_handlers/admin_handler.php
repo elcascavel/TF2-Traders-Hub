@@ -6,9 +6,11 @@
 
     $user_query = "SELECT * FROM users";
     $shop_query = "SELECT * FROM shop";
+    $contact_query = "SELECT * FROM contact";
 
     $user_result = mysqli_query($db, $user_query);
     $shop_result = mysqli_query($db, $shop_query);
+    $contact_result = mysqli_query($db, $contact_query);
 
     $item_array = mysqli_fetch_assoc($shop_result);
 
@@ -134,8 +136,22 @@
             }
         }
     }
+
+    if (isset($_POST['message_id'])) {
+        $message_id = $_POST['message_id'];
+
+        if (isset($_POST['readMessage_button'])) {
+            if (!readMessage($db, $message_id)) {
+                echo $db->error;
+                die();
+            }
+            else {
+                header("Location: admin.php");
+            }
+        }
+    }
     
-    function updateAdminStatus($database, &$loggedInID, &$username, $id) 
+    function updateAdminStatus($database, &$loggedInID, $id) 
     {
         $adminStatus_query = mysqli_query($database, "SELECT is_admin FROM users WHERE id_users = $id");
         $checkAdminStatus = mysqli_fetch_assoc($adminStatus_query);
@@ -244,6 +260,19 @@
         $deleteItem = mysqli_query($database, "DELETE from shop WHERE id = $id");
 
         if ($deleteItem) {
+            closeDb($database);
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    function readMessage($database, $message_id) 
+    {
+        $readMessage = mysqli_query($database, "DELETE from contact WHERE id_message = $message_id");
+
+        if ($readMessage) {
             closeDb($database);
             return true;
         }

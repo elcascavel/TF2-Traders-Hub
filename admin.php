@@ -28,7 +28,7 @@ if ($userIsAdmin == 0) {
         <form action="admin.php" method="POST">
             <input class="btn btn-outline-info btn-sm" type="submit" name="returnProfile" id="returnProfile" value="Return to your profile">
         </form>
-        <?php echo "<h5 style='color: #f8f8f2'; class='mt-2'>Welcome, $userLoggedIn</h5>"; ?>
+        <?php echo "<h5 class='text-white'; class='mt-2'>Welcome, $userLoggedIn</h5>"; ?>
         <div class="row">
             <?php
             $table = "";
@@ -69,7 +69,7 @@ if ($userIsAdmin == 0) {
             ?>
         </div>
         <div class="row">
-            <h2 style='color: #f8f8f2'; class="mt-5">Items</h2>
+            <h2 class="text-white"; class="mt-5">Items</h2>
             <div class="col">
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary float-start mb-2" data-bs-toggle="modal" data-bs-target="#addItemModal">
@@ -198,6 +198,37 @@ if ($userIsAdmin == 0) {
             }
             echo $table . "</table>";
             ?>   
+        </div>
+        <div class="row">
+        <h2 class="text-white"; class="mt-5">Messages</h2>
+        <?php
+            $table = "";
+
+            $table .= "
+        <table class='table table-hover table-light table-striped table-bordered align-middle text-center'>
+        <thead>
+        <tr>
+        <th scope='col'>#</th>
+        <th scope='col'>Name</th>
+        <th scope='col'>Message</th>
+        <th scope='col'>Date Sent</th>
+        <th scope='col'>Action</th>
+        </tr>
+        </thead>
+        ";
+            foreach ($contact_result as $contact) {
+                $table .= "
+            <tr>
+            <td>" . $contact['id_message'] . "</td>
+            <td>". $contact['name'] ."</td>
+            <td>". $contact['message'] ."</td>
+            <td>" . date("jS F, Y H:i:s", strtotime($contact['send_date'])) . "</td>
+            <td><form action='admin.php' id='message_form' method='post'><input type='hidden' name='message_id' value=" . $contact['id_message'] . "><button type='submit' name='readMessage_button' class='btn btn-success btn-sm'>Read message</button></td>
+            </tr>
+            ";
+            }
+            echo $table . "</table>";
+            ?>
         </div>
     </div>
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
