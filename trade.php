@@ -3,7 +3,7 @@
     <?php
      
         include("includes/header.php");
-        
+
         if (!isset($_SESSION['username'])) {
          header("Location: index.php");
         }
@@ -152,11 +152,11 @@
             </div>
         </div>
         
-        <div class="row">
+        <div class="container">
             <?php 
   if(isset($_POST['add_offer']))
   {
-      header("Location:inventory.php");
+    header("Location: inventory.php");
   }
             if(isset($_POST['remove_trade']))
             {
@@ -412,14 +412,13 @@
 
             
             echo "
-            <div class='row'>
-            <div class='col'>
-			<div style='padding:20px'>
+            <div class='row pb-4'>
+            <div class='col-md-4 d-flex justify-content-center'>
 			<div class='card' style='width: 18rem; background-color: #101822; padding-bottom:50px;'>
 			<form action='trade.php' method='POST'>
 			<img class='card-img-top' style='background-color: #071215' src='".$row["trade_itemImage"]."'>
 			<div class='card-body d-flex flex-column'>
-			<h6 class='card-subtitle text-white text-center'>". $row['trade_itemName']."</h6><br>
+			<h6 class='card-subtitle text-white text-center mb-2'>". $row['trade_itemName']."</h6><br>
             <h6 class='card-subtitle text-white text-center'>User: ". $row['username1']."</h6>
 			<div class='card-footer text-center' style='position:absolute; bottom:10px; margin-left: 0; margin-right: 0; left:0; right:0'>
 			<input type='hidden' name='id_trade' value=" . $row['id_trade'] . ">
@@ -444,19 +443,17 @@
 			</div>
 			</div> 
 			</div>
-			</div>
             
-            <div class='col'>
-            <img style='width:30%,position:absolute' src='".$row["arrows"]."'>
+            <div class='col-md-4 d-flex justify-content-center align-items-center'>
+            <i class='fas fa-people-arrows fa-8x' style='color:#6272a4'></i>
             </div>
             
-            <div class='col'>
-			<div style='padding:20px'>
+            <div class='col-md-4 d-flex justify-content-center'>
 			<div class='card' style='width: 18rem; background-color: #101822; padding-bottom:50px;'>
 			<form action='trade.php' method='POST'>
 			<img class='card-img-top' style='background-color: #071215' src='".$row["offer_itemImage"]."'>
 			<div class='card-body d-flex flex-column'>
-			<h6 class='card-subtitle text-white text-center'>". $row['offer_itemName']."</h6><br>
+			<h6 class='card-subtitle text-white text-center mb-2'>". $row['offer_itemName']."</h6><br>
             <input type='hidden' name='id_trade' value=" . $row['id_trade'] . ">
             <h6 class='card-subtitle text-white text-center'>User: ". $row['username2']."</h6>
 			<div class='card-footer text-center' style='position:absolute; bottom:10px; margin-left: 0; margin-right: 0; left:0; right:0'>
@@ -481,7 +478,6 @@
 			</form>
             </div>
             </div>
-			</div>
 			</div> 
 			</div>
 			</div>" 

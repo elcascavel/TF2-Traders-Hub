@@ -51,10 +51,10 @@ if (!isset($userLoggedIn)) {
     	}
       
 		?>
+					<div class='container'>
 	<div class="row justify-content-center mt-5">
 		<h2>Items</h2>
 			<?php
-           
            $id=$_SESSION['id_trade'];
            
 			if(isset($_POST['trade_button']))
@@ -128,6 +128,7 @@ if (!isset($userLoggedIn)) {
 			{
 			echo "
 			<div class='col-lg-3 mb-3 d-flex align-items-stretch'>
+			<div class='col'>
 			<div class='card' style='width: 18rem; background-color: #101822; padding-bottom:50px;'>
 			<form action='inventory.php' method='POST'>
 			<img class='card-img-top' style='background-color: #071215' src='".$row["item_image"]."'>
@@ -140,8 +141,10 @@ if (!isset($userLoggedIn)) {
 			</div>
 			</div>
 			</div>
+			</div>
 			</div>";
 			}
 		?>
+		</div>
 		</div>
 	</body>
