@@ -354,43 +354,8 @@
         }
 if(isset($_POST['remove_button']))
 {
-    
-$query = "SELECT id_cart FROM cart WHERE id_users = $userLoggedInID";
-
-//prepare the statement				
-$statement = mysqli_prepare($db, $query);
-    
-if (!$statement ){
-//error preparing the statement. This should be regarded as a fatal error.
-echo "Something went wrong. Please try again later.";
-die();				
-}				
-    
-//execute the prepared statement
-$result = mysqli_stmt_execute($statement);
-                
-if( !$result ) {
-//again a fatal error when executing the prepared statement
-echo "Something went very wrong. Please try again later.";
-die();
-}
-    
-//get the result set to further deal with it
-$result = mysqli_stmt_get_result($statement);
-    
-if (!$result){
-//again a fatal error: if the result cannot be stored there is no going forward
-echo "Something went wrong. Please try again later.";	
-die();
-}
-
-while($row = mysqli_fetch_assoc($result))
-{
-  foreach($row as $value)
-  {
-
-    if($value == $_POST['cart_id'])
-{
+     
+    $value = $_POST['cart_id'];
   
   $db = connectDB();
   $delete_query = "DELETE from cart WHERE id_cart='{$value}'";
@@ -410,10 +375,7 @@ while($row = mysqli_fetch_assoc($result))
  }
   
 }
-}
-}
-  
-}
+
       ?>
      </div>
           </div>
