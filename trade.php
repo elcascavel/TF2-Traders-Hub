@@ -26,7 +26,7 @@
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     </head>
     
-    <body style="width:100%;margin:0;background-color:black">
+    <body style="width:100%;margin:0;background-color:#282a36">
         <div class="homepage">
             <div class="headerParentNonIndex">
                 <a class ="headerLogo" href="index.php"></a>
@@ -39,18 +39,6 @@
                     </a>
                     <a class="navLink" href="contact.php">
                         Contact
-                    </a>
-                    <a class="navLink" >
-                        <form method="post">
-                            <div class="row">
-                                <div class="col-md-9">
-                                    <input type="text" name="input" class="form-control" value="">
-                                </div>
-                                <div class="col-md-3">
-                                     <input type="submit" name="search" class="btn btn-success" value="Search">
-                                 </div>
-                            </div>
-                        </form>
                     </a>
                 </div>
                 <div class="navSide">
@@ -164,10 +152,166 @@
             </div>
         </div>
         
-            <form method="post" action="upload.php" enctype="multipart/form-data">
-        <input type="file" name="myFile" />
-        <input type="submit" value="Upload">
-            </form>
+        <div class="row">
+            <?php 
+  if(isset($_POST['add_offer']))
+  {
+      header("Location:inventory.php");
+  }
+            if(isset($_POST['remove_trade']))
+            {
+                $value = $_POST['id_trade'];
+                $query = "INSERT INTO inventory (name,item_image,id_users,username) SELECT trade_itemName,trade_itemImage,id_user1,username1 FROM trades  WHERE id_trade ='{$value}'";
+           		$statement = mysqli_prepare($db, $query);
+          
+               
+      			 if (!$statement ){
+          
+         		  echo "Something went wrong. Please try again later.1";
+          		 die();				
+      			 }		
+	
+     
+       			$result = mysqli_stmt_execute($statement);
+                           
+      				 if( !$result ) {
+           
+         				echo "Something went very wrong. Please try again later.26";
+          				die();
+      				 }
+                $delete_query = "DELETE from trades WHERE id_trade=?";
+					   $statement = mysqli_prepare($db, $delete_query);
+         
+             if (!$statement) {
+                 echo "Error preparing statement. Try again later";
+                 die();
+             }
+             $result = mysqli_stmt_bind_param($statement, 'i', $value);
+        
+            if (!$result) {
+                echo 'Error binding prepared login statement.';
+                die();
+            }
+            
+         $result = mysqli_stmt_execute($statement);
+                          
+         if( !$result) {
+             
+             echo "Something went very wrong. Please try again later.21";
+             die();
+         }
+        }
+            $query = "SELECT * FROM trades ";
+          
+       				
+            $statement = mysqli_prepare($db, $query);
+                    
+            if (!$statement ){
+                
+                echo "Something went wrong. Please try again later.";
+                die();				
+            }				
+                    
+            
+            $result = mysqli_stmt_execute($statement);
+                                
+            if( !$result ) {
+               
+                echo "Something went very wrong. Please try again later.";
+                die();
+            }
+                    
+            
+            $result = mysqli_stmt_get_result($statement);
+                    
+            if (!$result){
+                
+                echo "Something went wrong. Please try again later.";	
+                die();
+            }
+            
+            while($row = mysqli_fetch_assoc($result))
+              {   
+            
+
+            
+            echo "
+            <div class='row'>
+            <div class='col'>
+			<div style='padding:20px'>
+			<div class='card' style='width: 18rem; background-color: #101822; padding-bottom:50px;'>
+			<form action='trade.php' method='POST'>
+			<img class='card-img-top' style='background-color: #071215' src='".$row["trade_itemImage"]."'>
+			<div class='card-body d-flex flex-column'>
+			<h6 class='card-subtitle text-white text-center'>". $row['trade_itemName']."</h6><br>
+            <h6 class='card-subtitle text-white text-center'>User: ". $row['username1']."</h6>
+			<div class='card-footer text-center' style='position:absolute; bottom:10px; margin-left: 0; margin-right: 0; left:0; right:0'>
+			<input type='hidden' name='id_trade' value=" . $row['id_trade'] . ">
+            <input type='hidden' name='id_user1' value=" . $row['id_user1'] . ">";
+            if($userLoggedInID== $row['id_user1'] && $row['id_user2']== '0' )
+            {
+
+           echo "<input type='submit' class='btn btn-danger' name='remove_trade' value='Send to inventory'>";
+        }
+           elseif($row['id_user2']!= '0' && $userLoggedInID== $row['id_user1'])
+            {
+
+           echo "<input type='submit' class='btn btn-primary' name='accept_button' value='Accept Offer'>";
+           echo "<input type='submit' class='btn btn-danger' name='refuse_button' value='Refuse Offer'>";
+
+            }
+             
+          echo  "
+			</form>
+            
+            </div>
+			</div>
+			</div> 
+			</div>
+			</div>
+            
+            <div class='col'>
+            <img style='width:30%,position:absolute' src='".$row["arrows"]."'>
+            </div>
+            
+            <div class='col'>
+			<div style='padding:20px'>
+			<div class='card' style='width: 18rem; background-color: #101822; padding-bottom:50px;'>
+			<form action='trade.php' method='POST'>
+			<img class='card-img-top' style='background-color: #071215' src='".$row["offer_itemImage"]."'>
+			<div class='card-body d-flex flex-column'>
+			<h6 class='card-subtitle text-white text-center'>". $row['offer_itemName']."</h6><br>
+            <h6 class='card-subtitle text-white text-center'>User: ". $row['username2']."</h6>
+			<div class='card-footer text-center' style='position:absolute; bottom:10px; margin-left: 0; margin-right: 0; left:0; right:0'>
+			<input type='hidden' name='id_user2' value=" . $row['id_user2'] . ">";
+            if($userLoggedInID!= $row['id_user1'] && $row['offer_itemName'] == 'none')
+            {
+                $_SESSION['id_trade']=$row['id_trade'];
+              
+           echo '<form action="inventory.php" method="POST">
+           <input type="hidden" name="id_trade" value="'.$row['id_trade'].'" />
+           <input type="submit" class="btn btn-primary" name="add_offer" value="Add Offer">
+       </form>';
+            }
+            if( $row['username2']==$userLoggedIn)
+            {
+                echo "<input type='submit' class='btn btn-danger' name='remove_button' value='Remove Offer'>";
+            }
+           
+          echo  "
+			</form>
+			
+			</form>
+            </div>
+            </div>
+			</div>
+			</div> 
+			</div>
+			</div>" 
+           ;
+              }
+  ?>
+</div>
         
         <div class="footerArea">
                 <div class="footerLogos">

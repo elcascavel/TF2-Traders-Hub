@@ -30,14 +30,14 @@
             <div class="headerParentNonIndex">
                 <a class ="headerLogo" href="index.php"></a>
                 <div class="headerNavItems">
-                    <a class="navLink" href="index.php">
+                    <a class="navLink" href="trade.php">
                         Trade
                     </a>
                     <a class="navLink" href="buy.php">
                         Buy
                     </a>
-                    <a class="navLink" href="index.php">
-                        Sell
+                    <a class="navLink" href="contact.php">
+                        Contact
                     </a>
                 </div>
                 <div class="navSide">
@@ -311,7 +311,8 @@
        
             if ($money > $total)
             {
-           $query = "INSERT INTO inventory (name,item_image,id_users) SELECT name,item_image,id_users FROM cart WHERE id_users='{$userLoggedInID}'";
+   
+           $query = "INSERT INTO inventory (name,item_image,id_users,username) SELECT cart.name,cart.item_image,cart.id_users,users.username FROM (cart  INNER JOIN users ON users.username='{$userLoggedIn}')";
            $statement = mysqli_prepare($db, $query);
           
                

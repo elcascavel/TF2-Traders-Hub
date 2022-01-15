@@ -49,70 +49,34 @@ if (!isset($userLoggedIn)) {
         	echo ("Error connecting to database!");
         	die();
     	}
-        ?>
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col col-md-9 col-lg-7 col-xl-5">
-        <div class="card" style="border-radius: 15px;">
-          <div class="card-body p-4">
-            <div class="d-flex text-black">
-              <div class="flex-shrink-0">
-                <img src="<?php echo $user['user_pic']?>" alt="Generic placeholder image" class="img-fluid" style="width: 180px; border-radius: 10px;">
-              </div>
-              <div class="flex-grow-1 ms-3">
-			  <?php if ($user['team'] == "RED") {
-					$teamColor = "#B8383B";
-				}
-				else if ($user['team'] == "BLU") {
-					$teamColor = "#5885A2";
-				}
-					echo "<h5 class='mb-1'>$userLoggedIn <span class='badge badge-pill' style='background:$teamColor; padding: .25em .45em;'>". $user['team'] ."</span></h5>";
-				?>
-                <p class="mb-2 pb-1" style="color: #2b2a2a;">Member since <?php echo date("jS F, Y", strtotime($user['signup_date'])); ?></p>
-                <div class="d-flex justify-content-start rounded-3 p-2 mb-2" style="background-color: #efefef;">
-					<?php echo $user['email'] . "<br>"; ?>
-                </div>
-                <div class="d-flex pt-1">
-				<form action="profile.php" method="POST">
-					<input class="btn btn-primary me-1 flex-grow-1" type="submit" name="editAccount" id="editAccount" value="Edit Account">
-					<input class="btn btn-danger flex-grow-1" type="submit" name="closeAccount" id="closeAccount" value="Delete Account">
-					<div class="row mt-2">
-						<div class="col text-center">
-					<?php
-						if ($userIsAdmin == 1) {
-							echo "<input class='btn btn-outline-primary flex-grow-1' type='submit' name='adminPanel' id='adminPanel' value='Admin Panel'>";
-						}
-					 ?>
-					</div>
-					</div>
-				</form>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-	<?php
-		if (isset($_POST['closeAccount'])) {
-			header("Location: close_account.php");
-		}
-		else if (isset($_POST['editAccount'])) {
-			header("Location: edit_account.php");
-		}
-		else if (isset($_POST['adminPanel'])) {
-			header("Location: admin.php");
-		}
+      
 		?>
 	<div class="row justify-content-center mt-5">
 		<h2>Items</h2>
 			<?php
-
+           
+           $id=$_SESSION['id_trade'];
+           
 			if(isset($_POST['trade_button']))
 			{
 				$value = $_POST['id_inv'];
 
-				$query = "INSERT INTO trades (trade_itemName,trade_itemImage,id_user1,username1) SELECT inventory.name,inventory.item_image,inventory.id_users,users.username FROM (inventory INNER JOIN users ON users.username='{$userLoggedIn}') WHERE id_inv ='{$value}'";
+
+				$query = "UPDATE trades SET offer_itemName=(SELECT name FROM inventory
+
+                WHERE id_inv = '{$value}'),
+                                offer_itemImage = (SELECT item_image FROM inventory
+                
+                WHERE id_inv = '{$value}'),
+                               id_user2 = (SELECT id_users FROM inventory
+                
+                WHERE id_inv = '{$value}'),
+                                username2 = (SELECT username FROM inventory
+                
+                WHERE id_inv = '{$value}')
+                
+                WHERE
+                id_trade='{$id}'";
            		$statement = mysqli_prepare($db, $query);
           
                
@@ -153,7 +117,7 @@ if (!isset($userLoggedIn)) {
              echo "Something went very wrong. Please try again later.21";
              die();
          }
-       
+         header("Location:trade.php");
 
 			}
 			$query = "SELECT * FROM inventory WHERE id_users = $userLoggedInID";
@@ -165,7 +129,7 @@ if (!isset($userLoggedIn)) {
 			echo "
 			<div class='col-lg-3 mb-3 d-flex align-items-stretch'>
 			<div class='card' style='width: 18rem; background-color: #101822; padding-bottom:50px;'>
-			<form action='profile.php' method='POST'>
+			<form action='inventory.php' method='POST'>
 			<img class='card-img-top' style='background-color: #071215' src='".$row["item_image"]."'>
 			<div class='card-body d-flex flex-column'>
 			<h6 class='card-subtitle text-white text-center'>". $row['name']."</h6>
