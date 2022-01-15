@@ -3,6 +3,7 @@
 <?php
   
    include("includes/header.php");
+   require 'includes/form_handlers/shopfilter_handler.php';
     if (!isset($_SESSION['username'])) {
         header("Location: index.php");
     }
@@ -11,11 +12,11 @@
     {
       
      
-           $teste = $_POST['id'];
+           $save = $_POST['id'];
            $db = connectDB();
                        
           
-               $sql = "INSERT INTO cart (name,price,id,item_image,id_users) SELECT shop.product,shop.price,shop.id,shop.item_image,users.id_users FROM (shop INNER JOIN users ON users.id_users='{$userLoggedInID}') WHERE id='{$teste}' ";
+               $sql = "INSERT INTO cart (name,price,id,item_image,id_users) SELECT shop.product,shop.price,shop.id,shop.item_image,users.id_users FROM (shop INNER JOIN users ON users.id_users='{$userLoggedInID}') WHERE id='{$save}' ";
                $statement = mysqli_prepare($db, $sql);
                    
                    
@@ -129,6 +130,7 @@
         <script src="https://kit.fontawesome.com/6d446694b5.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../TH/css/main.css">
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+        <script src="js/main.js"></script>
     </head>
 
     <body style="width:100%;margin:0;background-color:black">
@@ -308,8 +310,34 @@
                                 </div>
                             </div>
                         </form>
+                        
   <div class="row">
-  
+    <div class="container-filter">
+            <div class="tab_container">
+                 <ul>
+                     <li>
+                            <form action="buy.php" method="POST" >
+                            <input  type="submit" value="All"></form></li>
+                            <li>
+                            <form action="buy.php" method="POST" >
+                            <input type='hidden' name="data-id" value="Normal"> 
+                            <input  type="submit" name="rare" value="Normal"></form></li>
+                            <li>
+                            <form action="buy.php" method="POST" >
+                            <input type='hidden' name="data-id" value="Genuine"> 
+                            <input  type="submit" name="rare" value="Genuine"></form></li>
+                            <li>
+                            <form action="buy.php" method="POST" >
+                            <input type='hidden' name="data-id" value="Unique"> 
+                            <input  type="submit" name="rare" value="Unique"></form></li>
+                            <li>
+                            <form action="buy.php" method="POST" >
+                            <input type='hidden' name="data-id" value="Unusual"> 
+                            <input  type="submit" name="rare" value="Unusual"></form></li>
+                </ul>
+
+            </div>
+     </div>
   
     <?php  
       require 'config/config.php';
@@ -321,7 +349,7 @@
       
         $query = "SELECT * FROM shop";
         $result = mysqli_query($db,$query);
-        if(empty($_POST['input'] ))
+        if(empty($_POST['input'] ) && !isset($_POST['rare']))
     {
      
         while($row = mysqli_fetch_assoc($result))
@@ -367,9 +395,32 @@
        
     
    
-    }else{
-       
+    }elseif (!empty($_POST['input'])){
+     
         echo $output;
+        
+    }elseif (isset($_POST['rare'])){
+        if($_POST['data-id'] == "Normal")
+        {
+            $postdata="Normal";
+            rarity($postdata);
+        }
+        elseif($_POST['data-id'] == "Genuine")
+        {
+            $postdata="Genuine";
+            rarity($postdata);
+        }
+        elseif($_POST['data-id'] == "Unique")
+        {
+            $postdata="Unique";
+            rarity($postdata);
+        }
+        elseif($_POST['data-id'] == "Unusual")
+        {
+            $postdata="Unusual";
+            rarity($postdata);
+        }
+        
         
     }
        echo $nodata;

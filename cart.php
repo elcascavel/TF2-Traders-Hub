@@ -329,7 +329,7 @@
                    
           } 
           else{
-              echo "ÉS POBRE POTA";
+              echo "Insufficient funds";
           }
         }
 if(isset($_POST['remove_button']))
