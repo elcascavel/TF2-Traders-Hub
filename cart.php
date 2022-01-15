@@ -6,7 +6,8 @@
     if (!isset($_SESSION['username'])) {
         header("Location: index.php");
     }
-
+     
+    
     ?>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -178,6 +179,41 @@
                           
         //connected to the database
         $db = connectDB();
+        if(array_key_exists('remove_button',$_POST))
+        {
+            
+            $value = $_POST['cart_id'];
+          
+          
+          $delete_query = "DELETE from cart WHERE id_cart=?";
+          
+             $statement = mysqli_prepare($db, $delete_query);
+         
+             if (!$statement) {
+                 echo "Error preparing statement. Try again later";
+                 die();
+             }
+             $result = mysqli_stmt_bind_param($statement, 'i', $value);
+        
+            if (!$result) {
+                echo 'Error binding prepared login statement.';
+                die();
+            }
+             //execute the prepared statement
+         $result = mysqli_stmt_execute($statement);
+                          
+         if( !$result) {
+             //again a fatal error when executing the prepared statement
+             echo "Something went very wrong. Please try again later.2";
+             die();
+         }
+         header("Location:cart.php");
+         die();
+        }
+        if(isset($_POST['clear_button']))
+        {
+                  
+                  $db = connectDB();
                 
         //success?				
         if ( is_string($db) ){
@@ -186,6 +222,89 @@
             die();
         }
         
+                  $delete_query = "DELETE from cart WHERE id_users='{$userLoggedInID}'";
+                     $statement = mysqli_prepare($db, $delete_query);
+                 
+                     if (!$statement) {
+                         echo "Error preparing statement. Try again later";
+                         die();
+                     }
+                     //execute the prepared statement
+                 $result = mysqli_stmt_execute($statement);
+                                     
+                 if( !$result) {
+                     //again a fatal error when executing the prepared statement
+                     echo "Something went very wrong. Please try again later.2";
+                     die();
+                 }
+                }
+            
+                if(isset($_POST['pay_button']))
+                  {
+                 
+                      if ($money > $total)
+                      {
+                     $query = "INSERT INTO inventory (name,item_image,id_users) SELECT name,item_image,id_users FROM cart WHERE id_users='{$userLoggedInID}'";
+                     $statement = mysqli_prepare($db, $query);
+                    
+                         
+                 if (!$statement ){
+                     //error preparing the statement. This should be regarded as a fatal error.
+                     echo "Something went wrong. Please try again later.1";
+                     die();				
+                 }				
+                         
+                 //execute the prepared statement
+                 $result = mysqli_stmt_execute($statement);
+                                     
+                 if( !$result ) {
+                     //again a fatal error when executing the prepared statement
+                     echo "Something went very wrong. Please try again later.2";
+                     die();
+                 }
+              
+                 $delete_query = "DELETE from cart WHERE id_users='{$userLoggedInID}'";
+                     $state = mysqli_prepare($db, $delete_query);
+                 
+                     if (!$state) {
+                         echo "Error preparing statement. Try again later";
+                         die();
+                     }
+                     //execute the prepared statement
+                 $res = mysqli_stmt_execute($state);
+                                     
+                 if( !$res) {
+                     //again a fatal error when executing the prepared statement
+                     echo "Something went very wrong. Please try again later.2";
+                     die();
+                 }
+                
+                 $query = "UPDATE users SET money = money -'{$total}' WHERE id_users='{$userLoggedInID}'" ;
+                 
+                $statement = mysqli_prepare($db, $query);
+                         
+                         
+                 if (!$statement ){
+                     //error preparing the statement. This should be regarded as a fatal error.
+                     echo "Something went wrong. Please try again later.1";
+                     die();				
+                 }				
+                         
+                 //execute the prepared statement
+                 $result = mysqli_stmt_execute($statement);
+                                     
+                 if( !$result ) {
+                     //again a fatal error when executing the prepared statement
+                     echo "Something went very wrong. Please try again later.2";
+                     die();
+                 }
+                         
+                } 
+                else{
+                    echo "Insufficient funds";
+                }
+              }
+
         //select all columns from all users in the table
         $query = "SELECT * FROM cart WHERE id_users='{$userLoggedInID}'";
           
@@ -263,118 +382,6 @@
           
       
   echo $output."</table>";
-
-  if(isset($_POST['clear_button']))
-  {
-            
-            $db = connectDB();
-            $delete_query = "DELETE from cart WHERE id_users='{$userLoggedInID}'";
-               $statement = mysqli_prepare($db, $delete_query);
-           
-               if (!$statement) {
-                   echo "Error preparing statement. Try again later";
-                   die();
-               }
-               //execute the prepared statement
-           $result = mysqli_stmt_execute($statement);
-                               
-           if( !$result) {
-               //again a fatal error when executing the prepared statement
-               echo "Something went very wrong. Please try again later.2";
-               die();
-           }
-        
-
-          }
-      
-          if(isset($_POST['pay_button']))
-            {
-           
-                if ($money > $total)
-                {
-               $query = "INSERT INTO inventory (name,item_image,id_users) SELECT name,item_image,id_users FROM cart WHERE id_users='{$userLoggedInID}'";
-               $statement = mysqli_prepare($db, $query);
-              
-                   
-           if (!$statement ){
-               //error preparing the statement. This should be regarded as a fatal error.
-               echo "Something went wrong. Please try again later.1";
-               die();				
-           }				
-                   
-           //execute the prepared statement
-           $result = mysqli_stmt_execute($statement);
-                               
-           if( !$result ) {
-               //again a fatal error when executing the prepared statement
-               echo "Something went very wrong. Please try again later.2";
-               die();
-           }
-        
-           $delete_query = "DELETE from cart WHERE id_users='{$userLoggedInID}'";
-               $state = mysqli_prepare($db, $delete_query);
-           
-               if (!$state) {
-                   echo "Error preparing statement. Try again later";
-                   die();
-               }
-               //execute the prepared statement
-           $res = mysqli_stmt_execute($state);
-                               
-           if( !$res) {
-               //again a fatal error when executing the prepared statement
-               echo "Something went very wrong. Please try again later.2";
-               die();
-           }
-          
-           $query = "UPDATE users SET money = money -'{$total}' WHERE id_users='{$userLoggedInID}'" ;
-           
-    $statement = mysqli_prepare($db, $query);
-                   
-                   
-           if (!$statement ){
-               //error preparing the statement. This should be regarded as a fatal error.
-               echo "Something went wrong. Please try again later.1";
-               die();				
-           }				
-                   
-           //execute the prepared statement
-           $result = mysqli_stmt_execute($statement);
-                               
-           if( !$result ) {
-               //again a fatal error when executing the prepared statement
-               echo "Something went very wrong. Please try again later.2";
-               die();
-           }
-                   
-          } 
-          else{
-              echo "Insufficient funds";
-          }
-        }
-if(isset($_POST['remove_button']))
-{
-     
-    $value = $_POST['cart_id'];
-  
-  $db = connectDB();
-  $delete_query = "DELETE from cart WHERE id_cart='{$value}'";
-     $statement = mysqli_prepare($db, $delete_query);
- 
-     if (!$statement) {
-         echo "Error preparing statement. Try again later";
-         die();
-     }
-     //execute the prepared statement
- $result = mysqli_stmt_execute($statement);
-                  
- if( !$result) {
-     //again a fatal error when executing the prepared statement
-     echo "Something went very wrong. Please try again later.2";
-     die();
- }
-  
-}
 
       ?>
      </div>
