@@ -76,42 +76,42 @@
                         
                         require_once('cookies/configDb.php');
                           
-                      //connected to the database
+                    
                       $db = connectDB();
                               
-                      //success?				
+                      				
                       if ( is_string($db) ){
-                          //error connecting to the database
+                          
                           echo ("Fatal error! Please return later.");
                           die();
                       }
                       
-                      //select all columns from all users in the table
+                     
                       $query = "SELECT id_users,username,email,team FROM users";
                         
-                        //prepare the statement				
+                        			
                       $statement = mysqli_prepare($db, $query);
                               
                       if (!$statement ){
-                          //error preparing the statement. This should be regarded as a fatal error.
+                          
                           echo "Something went wrong. Please try again later.";
                           die();				
                       }				
                               
-                      //execute the prepared statement
+                      
                       $result = mysqli_stmt_execute($statement);
                                           
                       if( !$result ) {
-                          //again a fatal error when executing the prepared statement
+                          
                           echo "Something went very wrong. Please try again later.";
                           die();
                       }
                               
-                      //get the result set to further deal with it
+                      
                       $result = mysqli_stmt_get_result($statement);
                               
                       if (!$result){
-                          //again a fatal error: if the result cannot be stored there is no going forward
+                          
                           echo "Something went wrong. Please try again later.";	
                           die();
                       }
@@ -207,21 +207,11 @@
              echo "Something went very wrong. Please try again later.2";
              die();
          }
-         header("Location:cart.php");
-         die();
+       
         }
         if(isset($_POST['clear_button']))
         {
-                  
-                  $db = connectDB();
-                
-        //success?				
-        if ( is_string($db) ){
-            //error connecting to the database
-            echo ("Fatal error! Please return later.");
-            die();
-        }
-        
+
                   $delete_query = "DELETE from cart WHERE id_users='{$userLoggedInID}'";
                      $statement = mysqli_prepare($db, $delete_query);
                  
@@ -305,32 +295,31 @@
                 }
               }
 
-        //select all columns from all users in the table
         $query = "SELECT * FROM cart WHERE id_users='{$userLoggedInID}'";
           
-          //prepare the statement				
+       				
         $statement = mysqli_prepare($db, $query);
                 
         if (!$statement ){
-            //error preparing the statement. This should be regarded as a fatal error.
+            
             echo "Something went wrong. Please try again later.";
             die();				
         }				
                 
-        //execute the prepared statement
+        
         $result = mysqli_stmt_execute($statement);
                             
         if( !$result ) {
-            //again a fatal error when executing the prepared statement
+           
             echo "Something went very wrong. Please try again later.";
             die();
         }
                 
-        //get the result set to further deal with it
+        
         $result = mysqli_stmt_get_result($statement);
                 
         if (!$result){
-            //again a fatal error: if the result cannot be stored there is no going forward
+            
             echo "Something went wrong. Please try again later.";	
             die();
         }
@@ -354,7 +343,6 @@
         $total = $total + $row['quantity']* $row['price'];
      
           }
-        
 
           $output .="
           
@@ -372,20 +360,17 @@
           <td>
           <form action='cart.php' method='post'>
         <button type='submit' name='pay_button' class='btn btn-success btn-block'>Pay</button></form></td>
-    
-        
-          
+
           </tr>
-          
-          
+   
           ";
           
       
-  echo $output."</table>";
+        echo $output."</table>";
 
       ?>
+         </div>
      </div>
-          </div>
   </a>
 </div>
 <div class="footerArea">
