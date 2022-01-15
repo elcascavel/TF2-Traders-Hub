@@ -86,8 +86,8 @@ if (isset($_POST['wallet_button'])) {
 
         else {
             $result = closeDb($db);
-            header("Location: index.php");
-            exit();
+            header("Location: wallet.php");
+            
         }
     
 }

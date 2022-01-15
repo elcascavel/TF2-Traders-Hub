@@ -294,7 +294,7 @@
                 {
                $query = "INSERT INTO inventory (name,item_image,id_users) SELECT name,item_image,id_users FROM cart WHERE id_users='{$userLoggedInID}'";
                $statement = mysqli_prepare($db, $query);
-               
+              
                    
            if (!$statement ){
                //error preparing the statement. This should be regarded as a fatal error.
@@ -322,6 +322,26 @@
            $res = mysqli_stmt_execute($state);
                                
            if( !$res) {
+               //again a fatal error when executing the prepared statement
+               echo "Something went very wrong. Please try again later.2";
+               die();
+           }
+          
+           $query = "UPDATE users SET money = money -'{$total}' WHERE id_users='{$userLoggedInID}'" ;
+           
+    $statement = mysqli_prepare($db, $query);
+                   
+                   
+           if (!$statement ){
+               //error preparing the statement. This should be regarded as a fatal error.
+               echo "Something went wrong. Please try again later.1";
+               die();				
+           }				
+                   
+           //execute the prepared statement
+           $result = mysqli_stmt_execute($statement);
+                               
+           if( !$result ) {
                //again a fatal error when executing the prepared statement
                echo "Something went very wrong. Please try again later.2";
                die();

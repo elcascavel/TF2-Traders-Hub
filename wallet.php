@@ -140,6 +140,65 @@ if (isset($message)) {
 			</form>
 			</div>
 
+			<?php
+
+
+if(isset($_POST['wallet_button']))
+{
+	if($_POST['amount']=="5")
+	{
+		$amount = "5";
+	$query = "UPDATE users SET money = money +'{$amount}' WHERE id_users='{$userLoggedInID}'";
+	$statement = mysqli_prepare($db, $query);
+				   
+				   
+		   if (!$statement ){
+			   //error preparing the statement. This should be regarded as a fatal error.
+			   echo "Something went wrong. Please try again later.1";
+			   die();				
+		   }				
+				   
+		   //execute the prepared statement
+		   $result = mysqli_stmt_execute($statement);
+							   
+		   if( !$result ) {
+			   //again a fatal error when executing the prepared statement
+			   echo "Something went very wrong. Please try again later.2";
+			   die();
+		   }
+	}
+	if($_POST['amount']=="10")
+	{
+		$amount = "10";
+	$query = "UPDATE users SET money = money +'{$amount}' WHERE id_users='{$userLoggedInID}'";
+	$statement = mysqli_prepare($db, $query);
+				   
+				   
+		   if (!$statement ){
+			   //error preparing the statement. This should be regarded as a fatal error.
+			   echo "Something went wrong. Please try again later.1";
+			   die();				
+		   }				
+				   
+		   //execute the prepared statement
+		   $result = mysqli_stmt_execute($statement);
+							   
+		   if( !$result ) {
+			   //again a fatal error when executing the prepared statement
+			   echo "Something went very wrong. Please try again later.2";
+			   die();
+		   }
+	}
+	
+	
+		}
+
+ 
+
+
+
+?>
+
 			<img style="width:300px" src="../TH/img/soldierRegister.png" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1500" />
 		</div>
 <div class="row">
