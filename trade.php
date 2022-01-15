@@ -201,6 +201,182 @@
              die();
          }
         }
+
+        if(isset($_POST['remove_button']))
+        {
+            $value = $_POST['id_trade'];
+            $query = "INSERT INTO inventory (name,item_image,id_users,username) SELECT offer_itemName,offer_itemImage,id_user2,username2 FROM trades  WHERE id_trade ='{$value}'";
+               $statement = mysqli_prepare($db, $query);
+      
+           
+               if (!$statement ){
+      
+               echo "Something went wrong. Please try again later.1";
+               die();				
+               }		
+
+ 
+               $result = mysqli_stmt_execute($statement);
+                       
+                   if( !$result ) {
+       
+                     echo "Something went very wrong. Please try again later.26";
+                      die();
+                   }
+                   $query = "UPDATE trades SET offer_itemName= 'none',
+                                    offer_itemImage='uploads/default_item_image',
+                                    id_user2 = '0',
+                                    username2 = 'none'
+                   WHERE id_trade =?";
+
+                   $statement = mysqli_prepare($db, $query);
+     
+         if (!$statement) {
+             echo "Error preparing statement. Try again later";
+             die();
+         }
+         $result = mysqli_stmt_bind_param($statement, 'i', $value);
+    
+        if (!$result) {
+            echo 'Error binding prepared login statement.';
+            die();
+        }
+        
+     $result = mysqli_stmt_execute($statement);
+                      
+     if( !$result) {
+         
+         echo "Something went very wrong. Please try again later.21";
+         die();
+     }
+    }
+
+    if(isset($_POST['refuse_button']))
+        {
+            $value = $_POST['id_trade'];
+            $query = "INSERT INTO inventory (name,item_image,id_users,username) SELECT offer_itemName,offer_itemImage,id_user2,username2 FROM trades  WHERE id_trade ='{$value}'";
+               $statement = mysqli_prepare($db, $query);
+      
+           
+               if (!$statement ){
+      
+               echo "Something went wrong. Please try again later.1";
+               die();				
+               }		
+
+ 
+               $result = mysqli_stmt_execute($statement);
+                       
+                   if( !$result ) {
+       
+                     echo "Something went very wrong. Please try again later.26";
+                      die();
+                   }
+                   $query = "UPDATE trades SET offer_itemName= 'none',
+                                    offer_itemImage='uploads/default_item_image',
+                                    id_user2 = '0',
+                                    username2 = 'none'
+                   WHERE id_trade =?";
+                   
+                   $statement = mysqli_prepare($db, $query);
+     
+         if (!$statement) {
+             echo "Error preparing statement. Try again later";
+             die();
+         }
+         $result = mysqli_stmt_bind_param($statement, 'i', $value);
+    
+        if (!$result) {
+            echo 'Error binding prepared login statement.';
+            die();
+        }
+        
+     $result = mysqli_stmt_execute($statement);
+                      
+     if( !$result) {
+         
+         echo "Something went very wrong. Please try again later.21";
+         die();
+     }
+    }
+
+    if(isset($_POST['accept_button']))
+        {
+            $value = $_POST['id_trade'];
+            $query = "INSERT INTO inventory (name,item_image,id_users,username) SELECT offer_itemName,offer_itemImage,id_user1,username1 FROM trades  WHERE id_trade ='{$value}'";
+               $statement = mysqli_prepare($db, $query);
+      
+           
+               if (!$statement ){
+      
+               echo "Something went wrong. Please try again later.1";
+               die();				
+               }		
+
+ 
+               $result = mysqli_stmt_execute($statement);
+                       
+                   if( !$result ) {
+       
+                     echo "Something went very wrong. Please try again later.26";
+                      die();
+                   }
+                   $query = "DELETE from trades WHERE id_trade=?";
+                   
+                   $statement = mysqli_prepare($db, $query);
+     
+         if (!$statement) {
+             echo "Error preparing statement. Try again later";
+             die();
+         }
+         $result = mysqli_stmt_bind_param($statement, 'i', $value);
+    
+        if (!$result) {
+            echo 'Error binding prepared login statement.';
+            die();
+        }
+
+        $query = "INSERT INTO inventory (name,item_image,id_users,username) SELECT trade_itemName,trade_itemImage,id_user2,username2 FROM trades  WHERE id_trade ='{$value}'";
+               $statement = mysqli_prepare($db, $query);
+      
+           
+               if (!$statement ){
+      
+               echo "Something went wrong. Please try again later.1";
+               die();				
+               }		
+
+ 
+               $result = mysqli_stmt_execute($statement);
+                       
+                   if( !$result ) {
+       
+                     echo "Something went very wrong. Please try again later.26";
+                      die();
+                   }
+                   $query = "DELETE from trades WHERE id_trade=?";
+                   
+                   $statement = mysqli_prepare($db, $query);
+     
+         if (!$statement) {
+             echo "Error preparing statement. Try again later";
+             die();
+         }
+         $result = mysqli_stmt_bind_param($statement, 'i', $value);
+    
+        if (!$result) {
+            echo 'Error binding prepared login statement.';
+            die();
+        }
+        
+     $result = mysqli_stmt_execute($statement);
+                      
+     if( !$result) {
+         
+         echo "Something went very wrong. Please try again later.21";
+         die();
+     }
+    }
             $query = "SELECT * FROM trades ";
           
        				
@@ -281,6 +457,7 @@
 			<img class='card-img-top' style='background-color: #071215' src='".$row["offer_itemImage"]."'>
 			<div class='card-body d-flex flex-column'>
 			<h6 class='card-subtitle text-white text-center'>". $row['offer_itemName']."</h6><br>
+            <input type='hidden' name='id_trade' value=" . $row['id_trade'] . ">
             <h6 class='card-subtitle text-white text-center'>User: ". $row['username2']."</h6>
 			<div class='card-footer text-center' style='position:absolute; bottom:10px; margin-left: 0; margin-right: 0; left:0; right:0'>
 			<input type='hidden' name='id_user2' value=" . $row['id_user2'] . ">";
