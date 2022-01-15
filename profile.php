@@ -178,6 +178,11 @@ if (!isset($userLoggedIn)) {
 			</div>
 			</div>";
 			}
+			if(mysqli_num_rows($result) == 0) {
+				echo "<div class='container w-50 text-center'><div class='alert alert-info' role='alert'>
+				You have no items! Feel free to purchase some at our store!
+			  </div></div>";
+			}
 		?>
 		</div>
 	</body>
