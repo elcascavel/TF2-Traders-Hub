@@ -151,7 +151,6 @@
                 </div>
             </div>
         </div>
-        
         <div class="container">
             <?php 
   if(isset($_POST['add_offer']))
@@ -430,8 +429,32 @@
         }
            elseif($row['id_user2']!= '0' && $userLoggedInID== $row['id_user1'])
             {
-
-           echo "<input type='submit' class='btn btn-primary' name='accept_button' value='Accept Offer'>";
+                echo "<div class='modal fade' id='ratingModal' tabindex='-1' aria-labelledby='ratingModalLabel' aria-hidden='true'>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <h5 class='modal-title'>Rate this transaction</h5>
+        <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+      </div>
+      <div class='modal-body text-center'>
+            <div class='stars'>
+                <form action='trade.php' method='POST'> <input class='star star-5' id='star-5' type='radio' name='star' /> <label class='star star-5' for='star-5'></label> <input class='star star-4' id='star-4' type='radio' name='star' /> <label class='star star-4' for='star-4'></label> <input class='star star-3' id='star-3' type='radio' name='star' /> <label class='star star-3' for='star-3'></label> <input class='star star-2' id='star-2' type='radio' name='star' /> <label class='star star-2' for='star-2'></label> <input class='star star-1' id='star-1' type='radio' name='star' /> <label class='star star-1' for='star-1'></label>
+            </div>
+            <div class='mb-3'>
+  <label for='ratingTextArea' class='form-label'>Let us know what you think...</label>
+  <textarea class='form-control' id='ratingTextArea' rows='2'></textarea>
+</div>
+      </div>
+      <div class='modal-footer'>
+        <input type='submit' class='btn btn-primary' name='accept_button' value='Submit'>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+           <button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#ratingModal'>
+           Accept Offer
+         </button> ";
            echo "<input type='submit' class='btn btn-danger' name='refuse_button' value='Refuse Offer'>";
 
             }
@@ -497,6 +520,7 @@ Team Fortress is a trademark of Valve Corporation, TF2 Trader's Hub is a fan cre
                 </div>
             </div> 
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>
     AOS.init();

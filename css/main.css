@@ -473,3 +473,38 @@ height: 50px;
       transform: translateX(calc(-250px * 9));
   }
 }
+
+.stars {
+  display: inline-block
+}
+
+input.star {
+  display: none
+}
+
+label.star {
+  float: right;
+  padding: 10px;
+  font-size: 28px;
+  color: #282a36;
+  transition: all .2s
+}
+
+input.star:checked~label.star:before {
+  content: '\f005';
+  color: #ff79c6;
+  transition: all .25s
+}
+
+input.star-5:checked~label.star:before {
+  color: #ff5555;
+}
+
+input.star-1:checked~label.star:before {
+  color: #8be9fd;
+}
+
+label.star:before {
+  content: '\f006';
+  font-family: FontAwesome
+}

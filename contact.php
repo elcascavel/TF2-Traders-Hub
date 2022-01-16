@@ -234,7 +234,7 @@
  			</form>
 			</div>
 			<div class="col-md-auto">
- 			<img style="width:300px" src="../TH/img/soldierRegister.png" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1500" />
+ 			<img style="width:200px" src="../TH/img/spyContact.webp" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1500" />
 			</div>
 			 </div>
 			 <div class="row">
