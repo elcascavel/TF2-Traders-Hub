@@ -57,24 +57,8 @@ if (!isset($userLoggedIn)) {
 					<div class="col-xs-4 col-md-3">
 			<form action="edit_account.php" method="POST">
   <div class="form-group">
-  <input class="form-control" type="text" id="username" name="username" placeholder="Username" value="<?php
-					
-					if (!empty($errors) && isset($errors['username'][0])) { 
-						echo $_POST['username'];
-					}
-					elseif( !empty($user) ){
-						echo $user['username'];
-					}
-						?>"><br>
-    <input class="form-control" type="text" id="email" name="email" placeholder="E-mail" value="<?php
-  		
-		  if (!empty($errors) && isset($errors['email'][0])){ 
-			  echo $_POST['email'];
-		  }
-		  elseif( !empty($user) ){
-			  echo $user['email'];
-		  }
-	  ?>"><br>
+  <input class="form-control" type="text" id="username" name="username" placeholder="Username"><br>
+    <input class="form-control" type="text" id="email" name="email" placeholder="E-mail"><br>
   </div>
   <div class="form-group">
     <input type="password" class="form-control" type="password" id="password" name="password" placeholder="Password"><br>
@@ -118,6 +102,7 @@ if (!isset($userLoggedIn)) {
 						?>
 						<div class="d-flex justify-content-center">
 						<input class="btn btn-primary mx-2" type="submit" name="saveAccount" id="saveAccount" value="Save">
+						<input class="btn btn-info mx-2" type="submit" name="change_password" id="change_password" value="Change Password">
 	<input class="btn btn-danger" type="submit" name="cancelAccount" id="cancelAccount" value="Cancel">
 						</div>
   

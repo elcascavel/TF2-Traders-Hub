@@ -112,6 +112,7 @@
             </div>
             
 </div>
+<div class="container-fluid">
 <div class="slider">
     <div class="slide-track">
         <?php
@@ -121,6 +122,7 @@
             }
         ?>
     </div>
+</div>
 </div>
             <div class="footerArea">
                 <div class="footerLogos">
