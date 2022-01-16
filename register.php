@@ -45,9 +45,8 @@
 				 <div class="form-floating">
 				 <input class="form-control" type="text" id="floatingInput" name="username" placeholder="Username" value="<?php
 					
-					if (!empty($errors) && !isset($errors['username'][0])) 
+					if (!empty($errors) && isset($errors['username'][0])) 
 					{ #this is done to keep the value inputted by the user if this field is valid but others are not	
-						
 						echo $_POST['username'];
 					}
 						?>"><br>
@@ -56,7 +55,7 @@
  				<div class="form-floating">
  				<input class="form-control" type="email" id="floatingInput" name="email" placeholder="E-mail" value="<?php
 
-				if (!empty($errors) && !isset($errors['email'][0]) ) 
+				if (!empty($errors) && isset($errors['email'][0]) ) 
 				{
 					echo $_POST['email'];	
 				}
