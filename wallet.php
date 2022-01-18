@@ -143,7 +143,7 @@ if (isset($message)) {
 			<?php
 
 
-if(isset($_POST['wallet_button']))
+if(isset($_POST['wallet_button']) && !empty($_POST['owner']))
 {
 	if($_POST['amount']=="5")
 	{
