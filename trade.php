@@ -7,7 +7,7 @@
         if (!isset($_SESSION['username'])) {
          header("Location: index.php");
         }
-
+     
     ?>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -182,7 +182,7 @@
 					   $statement = mysqli_prepare($db, $delete_query);
          
              if (!$statement) {
-                 echo "Error preparing statement. Try again later";
+                 echo "Error preparing statement0. Try again later";
                  die();
              }
              $result = mysqli_stmt_bind_param($statement, 'i', $value);
@@ -231,7 +231,7 @@
                    $statement = mysqli_prepare($db, $query);
      
          if (!$statement) {
-             echo "Error preparing statement. Try again later";
+             echo "Error preparing statement7. Try again later";
              die();
          }
          $result = mysqli_stmt_bind_param($statement, 'i', $value);
@@ -280,7 +280,7 @@
                    $statement = mysqli_prepare($db, $query);
      
          if (!$statement) {
-             echo "Error preparing statement. Try again later";
+             echo "Error preparing statement4. Try again later";
              die();
          }
          $result = mysqli_stmt_bind_param($statement, 'i', $value);
@@ -301,6 +301,10 @@
 
     if(isset($_POST['accept_button']))
         {
+
+            $rate = $_POST['star']; // Remove html tags
+            $feedback = strip_tags($_POST['feedback']); // Remove html tags
+            $feedback = trim($feedback);
             $value = $_POST['id_trade'];
             $query = "INSERT INTO inventory (name,item_image,id_users,username) SELECT offer_itemName,offer_itemImage,id_user1,username1 FROM trades  WHERE id_trade ='{$value}'";
                $statement = mysqli_prepare($db, $query);
@@ -317,23 +321,10 @@
                        
                    if( !$result ) {
        
-                     echo "Something went very wrong. Please try again later.26";
+                     echo "Something went very wrong. Please try again later.265";
                       die();
                    }
-                   $query = "DELETE from trades WHERE id_trade=?";
                    
-                   $statement = mysqli_prepare($db, $query);
-     
-         if (!$statement) {
-             echo "Error preparing statement. Try again later";
-             die();
-         }
-         $result = mysqli_stmt_bind_param($statement, 'i', $value);
-    
-        if (!$result) {
-            echo 'Error binding prepared login statement.';
-            die();
-        }
 
         $query = "INSERT INTO inventory (name,item_image,id_users,username) SELECT trade_itemName,trade_itemImage,id_user2,username2 FROM trades  WHERE id_trade ='{$value}'";
                $statement = mysqli_prepare($db, $query);
@@ -350,15 +341,58 @@
                        
                    if( !$result ) {
        
-                     echo "Something went very wrong. Please try again later.26";
+                     echo "Something went very wrong. Please try again later.262";
                       die();
                    }
-                   $query = "DELETE from trades WHERE id_trade=?";
+
+                   $query = "INSERT INTO rating (username1,id_users,id_trade) SELECT username1,id_user2,id_trade FROM trades  WHERE id_trade ='{$value}'";
+               $statement = mysqli_prepare($db, $query);
+      
+           
+               if (!$statement ){
+      
+               echo "Something went wrong. Please try again later.1";
+               die();				
+               }		
+
+ 
+               $result = mysqli_stmt_execute($statement);
+                       
+                   if( !$result ) {
+       
+                     echo "Something went very wrong. Please try again later.261";
+                      die();
+                   }
+
+                 
+     $query = "UPDATE rating SET rate= ?, feedback=? WHERE id_trade ='{$value}'";
+                   $statement = mysqli_prepare($db, $query);
+
+                   if (!$statement) {
+                       echo "Error preparing statement. Try again later.1";
+                       die();
+                   }
+           
+                   $result = mysqli_stmt_bind_param($statement, 'ss', $rate, $feedback);
+           
+                   if (!$result) {
+                       echo "Error binding parameters to prepared statement. Please try again later.";
+                       die();
+                   }
+           
+                   $result = mysqli_stmt_execute($statement);
+           
+                   if (!$result) {
+                       echo "Result of prepared statement cannot be executed.";
+                       die();
+                   }
+
+                    $query = "DELETE from trades WHERE id_trade=?";
                    
                    $statement = mysqli_prepare($db, $query);
      
          if (!$statement) {
-             echo "Error preparing statement. Try again later";
+             echo "Error preparing statement2. Try again later";
              die();
          }
          $result = mysqli_stmt_bind_param($statement, 'i', $value);
@@ -374,11 +408,12 @@
          
          echo "Something went very wrong. Please try again later.21";
          die();
-     }
+     }                                    
+                   
     }
+
             $query = "SELECT * FROM trades ";
-          
-       				
+	
             $statement = mysqli_prepare($db, $query);
                     
             if (!$statement ){
@@ -438,11 +473,11 @@
       </div>
       <div class='modal-body text-center'>
             <div class='stars'>
-                <form action='trade.php' method='POST'> <input class='star star-5' id='star-5' type='radio' name='star' /> <label class='star star-5' for='star-5'></label> <input class='star star-4' id='star-4' type='radio' name='star' /> <label class='star star-4' for='star-4'></label> <input class='star star-3' id='star-3' type='radio' name='star' /> <label class='star star-3' for='star-3'></label> <input class='star star-2' id='star-2' type='radio' name='star' /> <label class='star star-2' for='star-2'></label> <input class='star star-1' id='star-1' type='radio' name='star' /> <label class='star star-1' for='star-1'></label>
+                <form action='trade.php' method='POST'> <input class='star star-5' id='star-5' type='radio' name='star' value='5' /> <label class='star star-5' for='star-5'></label> <input class='star star-4' id='star-4' type='radio' name='star' value='4' /> <label class='star star-4' for='star-4'></label> <input class='star star-3' id='star-3' type='radio' name='star' value='3'/> <label class='star star-3' for='star-3'></label> <input class='star star-2' id='star-2' type='radio' name='star'value='2' /> <label class='star star-2' for='star-2'></label> <input class='star star-1' id='star-1' type='radio' name='star' value='1'/> <label class='star star-1' for='star-1'></label>
             </div>
             <div class='mb-3'>
-  <label for='ratingTextArea' class='form-label'>Let us know what you think...</label>
-  <textarea class='form-control' id='ratingTextArea' rows='2'></textarea>
+  <label for='ratingTextArea' class='form-label' >Let us know what you think...</label>
+  <textarea class='form-control' id='ratingTextArea' name='feedback' rows='2'></textarea>
 </div>
       </div>
       <div class='modal-footer'>
