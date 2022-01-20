@@ -155,6 +155,7 @@
             <?php 
   if(isset($_POST['add_offer']))
   {
+    $_SESSION['id_trade']=$_POST['id_trade'];
     header("Location: inventory.php");
   }
             if(isset($_POST['remove_trade']))
@@ -518,9 +519,9 @@
 			<input type='hidden' name='id_user2' value=" . $row['id_user2'] . ">";
             if($userLoggedInID!= $row['id_user1'] && $row['offer_itemName'] == 'none')
             {
-                $_SESSION['id_trade']=$row['id_trade'];
+               
               
-           echo '<form action="inventory.php" method="POST">
+           echo '<form action="" method="POST">
            <input type="hidden" name="id_trade" value="'.$row['id_trade'].'" />
            <input type="submit" class="btn btn-primary" name="add_offer" value="Add Offer">
        </form>';
