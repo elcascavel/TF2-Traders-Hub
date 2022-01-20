@@ -345,7 +345,7 @@ while ($row = mysqli_fetch_assoc($result)) {
         <button type='submit' name='remove_button' class='btn btn-danger btn-block'>Remove</button></form></td>
         </tr>
         ";
-
+        $total = $total + $row['quantity'] * $row['price'];
 }
 
 $output .= "
