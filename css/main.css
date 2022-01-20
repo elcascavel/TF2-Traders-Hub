@@ -329,9 +329,8 @@ a:hover {
 .profileActionAccountImg {
   background: url("../img/accountIcon.png") no-repeat;
   opacity: 60%;
-  border:none;
+  border: none;
   cursor: pointer;
-  
 }
 
 .profileActionWalletImg {
@@ -406,7 +405,6 @@ a:hover {
   padding: 5px;
 }
 
-
 .editProfileButton:hover {
   color: #eae6cd;
   background-color: #87443b;
@@ -414,16 +412,16 @@ a:hover {
 
 .buyBody {
   display: flex;
-    justify-content: center; /* alinha horizontalmente */
-    align-items: center; /* alinha verticalmente */
-    margin-top: 120px;
+  justify-content: center; /* alinha horizontalmente */
+  align-items: center; /* alinha verticalmente */
+  margin-top: 120px;
 }
 
 .adminPanelAvatar {
   border-radius: 50%;
-vertical-align: middle;
-margin-right: 10px;
-height: 50px;
+  vertical-align: middle;
+  margin-right: 10px;
+  height: 50px;
 }
 
 .slider {
@@ -434,7 +432,8 @@ height: 50px;
   position: relative;
 }
 
-.slider::before, .slider::after {
+.slider::before,
+.slider::after {
   background: linear-gradient(to right, black 0%, rgba(255, 255, 255, 0) 100%);
   height: 100%;
   position: absolute;
@@ -467,19 +466,19 @@ height: 50px;
 
 @keyframes scroll {
   0% {
-      transform: translateX(0);
+    transform: translateX(0);
   }
   100% {
-      transform: translateX(calc(-250px * 9));
+    transform: translateX(calc(-250px * 9));
   }
 }
 
 .stars {
-  display: inline-block
+  display: inline-block;
 }
 
 input.star {
-  display: none
+  display: none;
 }
 
 label.star {
@@ -487,24 +486,24 @@ label.star {
   padding: 10px;
   font-size: 28px;
   color: #282a36;
-  transition: all .2s
+  transition: all 0.2s;
 }
 
-input.star:checked~label.star:before {
-  content: '\f005';
+input.star:checked ~ label.star:before {
+  content: "\f005";
   color: #ff79c6;
-  transition: all .25s
+  transition: all 0.25s;
 }
 
-input.star-5:checked~label.star:before {
+input.star-5:checked ~ label.star:before {
   color: #ff5555;
 }
 
-input.star-1:checked~label.star:before {
+input.star-1:checked ~ label.star:before {
   color: #8be9fd;
 }
 
 label.star:before {
-  content: '\f006';
-  font-family: FontAwesome
+  content: "\f006";
+  font-family: FontAwesome;
 }

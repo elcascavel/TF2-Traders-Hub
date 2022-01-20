@@ -1,5 +1,5 @@
 <?php
-require_once "cookies/configDb.php";
+require_once "config/configDb.php";
 $username = "";
 $email = "";
 $password = "";
@@ -12,19 +12,19 @@ $message = "";
 $db = connectDB();
 
 if (isset($_POST['register_button'])) {
-    include("includes/header.php");
+    include "includes/header.php";
     require_once "config/config.php";
     require_once "validation.php";
-    
+
     $errors = array('username' => array(false, "Invalid username: it must have between $minUsername and $maxUsername chars."),
-								    'password' => array(false, "Invalid password: it must have between $minPassword and $maxPassword chars and special chars."),
-								    'rpassword' => array(false, "Passwords mismatch."),
-								    'email' => array(false,'Invalid email.'),
-								    'team' => array(false,'Please select a team.')
-								   );
+        'password' => array(false, "Invalid password: it must have between $minPassword and $maxPassword chars and special chars."),
+        'rpassword' => array(false, "Passwords mismatch."),
+        'email' => array(false, 'Invalid email.'),
+        'team' => array(false, 'Please select a team.'),
+    );
     $flag = false;
     $existingRecord = false;
-    
+
     //Registration form values
 
     //validate username
@@ -40,22 +40,22 @@ if (isset($_POST['register_button'])) {
     $email = strip_tags($_POST['email']);
     $email = trim($email);
 
-    if(!validateEmail($email)){
+    if (!validateEmail($email)) {
         $errors['email'][0] = true;
-        $flag = true;				
+        $flag = true;
     }
-    
+
     $password = strip_tags($_POST['password']);
     $password = trim($password);
     $rpassword = strip_tags($_POST['rpassword']);
     $rpassword = trim($rpassword);
 
-    if(!validatePassword($password, $minPassword, $maxPassword) ){
+    if (!validatePassword($password, $minPassword, $maxPassword)) {
         $errors['password'][0] = true;
-        $flag = true;				
+        $flag = true;
     }
-    
-    if($rpassword != $password){
+
+    if ($rpassword != $password) {
         $errors['rpassword'][0] = true;
         $flag = true;
     }
@@ -67,12 +67,12 @@ if (isset($_POST['register_button'])) {
     $date = date("Y-m-d");
 
     //deal with the validation results
-    if ( $flag == true ){
+    if ($flag == true) {
         //there are fields with invalid contents: return the errors array
-        return($errors);
+        return ($errors);
     }
 
-    if(!checkField($db, $username, $email, "users", "username", "email")) {
+    if (!checkField($db, $username, $email, "users", "username", "email")) {
         $query = "INSERT INTO users (username, email, password, team, signup_date) VALUES (?, ?, ?, ?, ?)";
 
         $statement = mysqli_prepare($db, $query);
@@ -94,12 +94,11 @@ if (isset($_POST['register_button'])) {
         if (!$result) {
             echo "Result of prepared statement cannot be executed.";
             die();
-        }
-        else {
+        } else {
             $query = "SELECT id_users FROM users";
-            $id_result=mysqli_query($db,$query);
-            $user_array=mysqli_fetch_assoc($id_result);
-            $_SESSION['id_users']=$user_array['id_users'];
+            $id_result = mysqli_query($db, $query);
+            $user_array = mysqli_fetch_assoc($id_result);
+            $_SESSION['id_users'] = $user_array['id_users'];
             $result = closeDb($db);
 
             $_SESSION['username'] = $username;
@@ -112,8 +111,8 @@ if (isset($_POST['register_button'])) {
     }
 }
 
-
-function checkField($database, $field, $field2, $table, $column1, $column2) {
+function checkField($database, $field, $field2, $table, $column1, $column2)
+{
     $query = "SELECT username, email FROM $table WHERE $column1=? OR $column2=?";
 
     $statement = mysqli_prepare($database, $query);
@@ -139,7 +138,7 @@ function checkField($database, $field, $field2, $table, $column1, $column2) {
 
     $result = mysqli_stmt_get_result($statement);
 
-    if (!$result){
+    if (!$result) {
         echo 'Prepared statement result cannot be stored.';
         die();
     }
@@ -149,9 +148,7 @@ function checkField($database, $field, $field2, $table, $column1, $column2) {
         $message = "<a class='errorMessage'>Username or email is already in our records!</a><br><br>";
         $result = closeDb($database);
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
-?>

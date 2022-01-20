@@ -37,36 +37,39 @@ function validatePassword($data, $min, $max)
     }
 }
 
-function validateOwner($owner, $minUsername, $maxUsername){
-				
-    $exp = "/^[A-z]{" . $minUsername . "," . $maxUsername .'}$/';			
-                            
-    if( !preg_match($exp, $owner )){
-        return (false);				
-    }else {
-        return(true);
+function validateOwner($owner, $minUsername, $maxUsername)
+{
+
+    $exp = "/^[A-z]{" . $minUsername . "," . $maxUsername . '}$/';
+
+    if (!preg_match($exp, $owner)) {
+        return (false);
+    } else {
+        return (true);
     }
 }
 
-function validateCardnum($cardnum, $minNum, $maxNum){
-    
-    $exp = "/^[0-9]{" . $minNum . "," . $maxNum .'}$/';			
-        
-    if( !preg_match($exp, $cardnum)){
-        return (false);				
-    }else {
-        return(true);
+function validateCardnum($cardnum, $minNum, $maxNum)
+{
+
+    $exp = "/^[0-9]{" . $minNum . "," . $maxNum . '}$/';
+
+    if (!preg_match($exp, $cardnum)) {
+        return (false);
+    } else {
+        return (true);
     }
 }
 
-function validateCVV($cvv, $mincvv, $maxcvv){
-    
-    $exp = "/^[0-9]{" . $mincvv . "," . $maxcvv .'}$/';			
-        
-    if( !preg_match($exp, $cvv)){
-        return (false);				
-    }else {
-        return(true);
+function validateCVV($cvv, $mincvv, $maxcvv)
+{
+
+    $exp = "/^[0-9]{" . $mincvv . "," . $maxcvv . '}$/';
+
+    if (!preg_match($exp, $cvv)) {
+        return (false);
+    } else {
+        return (true);
     }
 }
 
@@ -81,14 +84,15 @@ function validateMessage($message, $minContact, $maxContact)
     }
 }
 
-function validateName($name, $minOwner, $maxOwner){
-				
-    $exp = "/^[A-z ]{" . $minOwner . "," . $maxOwner .'}$/';			
-                            
-    if( !preg_match($exp, $name )){
-        return (false);				
-    }else {
-        return(true);
+function validateName($name, $minOwner, $maxOwner)
+{
+
+    $exp = "/^[A-z ]{" . $minOwner . "," . $maxOwner . '}$/';
+
+    if (!preg_match($exp, $name)) {
+        return (false);
+    } else {
+        return (true);
     }
 }
 
@@ -103,26 +107,24 @@ function validateItemName($item_name, $minItemName, $maxItemName)
     }
 }
 
-function validateItemDescription($item_description, $minItemDesc, $maxItemDesc) 
+function validateItemDescription($item_description, $minItemDesc, $maxItemDesc)
 {
     $exp = "/^[A-z0-9., ]{" . $minItemDesc . "," . $maxItemDesc . '}$/';
 
     if (!preg_match($exp, $item_description)) {
-       return false;
-    }
-    else {
+        return false;
+    } else {
         return true;
     }
 }
 
-function validateItemPrice($item_price) {
+function validateItemPrice($item_price)
+{
     $exp = "(^[0-9.]+$|" . '^$)';
 
     if (!preg_match($exp, $item_price)) {
         return false;
-    }
-    else {
+    } else {
         return true;
     }
 }
-?>

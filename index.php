@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
     <?php
-        include("includes/header.php");
-        include("includes/form_handlers/index_handler.php");
-    ?>
+include "includes/header.php";
+include "includes/form_handlers/index_handler.php";
+?>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=9">
@@ -38,56 +38,50 @@
                 <div class="navSide">
                     <div class="navSideContent">
                         <a class="accountActions" href="login.php" >
-                        
-                        <?php 
-                                if(!isset($userLoggedIn))
-                                {      
-                                        echo "Login";
-                                }   
-                        ?>
+
+                        <?php
+if (!isset($userLoggedIn)) {
+    echo "Login";
+}
+?>
                          </a>
 
                          <a class="accountActionsLogin">
-                       <?php 
-                       
-                    
-                        if(isset($userLoggedIn))
-                        {       
-                                if($money == 0)
-                                {
-                                    echo "<h5>$userLoggedIn <span class='badge bg-success'>0€</span></h5>";
-                                }else
-                                {
-                                    echo "<h5>$userLoggedIn <span class='badge bg-success'>$money €</span></h5>"; 
-                                }
-                                            
-                        }
-                            ?>
+                       <?php
+
+if (isset($userLoggedIn)) {
+    if ($money == 0) {
+        echo "<h5>$userLoggedIn <span class='badge bg-success'>0€</span></h5>";
+    } else {
+        echo "<h5>$userLoggedIn <span class='badge bg-success'>$money €</span></h5>";
+    }
+
+}
+?>
                         </a>
-                        
-                        
-                           
+
+
+
                         <?php
-                            if(isset($userLoggedIn) && $userLoggedIn == $_SESSION['username'])
-                            {   
-                                echo '<div class="accountActionsButtonContainer">
+if (isset($userLoggedIn) && $userLoggedIn == $_SESSION['username']) {
+    echo '<div class="accountActionsButtonContainer">
                                 <form action="profile.php" method="POST" name="formModifica">
                                 <input class="profileActionButton profileActionAccountImg" type="submit" name="modificar" value="">
                             </form>
                                 <a class="profileActionButton profileActionWalletImg" href="wallet.php"> </a>
                                 <a class="profileActionButton profileActionLogoutImg" href="logout.php"> </a>
                                 </div>';
-                            }
-                        ?>
-                        
+}
+?>
+
 
                         <a class="accountActions" href="register.php">
                         <?php
-                        if (!isset($userLoggedIn)) {
-                            echo "Sign Up";
-                        } 
-                                
-                         ?>
+if (!isset($userLoggedIn)) {
+    echo "Sign Up";
+}
+
+?>
                          </a>
                     </div>
                 </div>
@@ -110,17 +104,17 @@
                 </div>
                 <div class="headerFade"></div>
             </div>
-            
+
 </div>
 <div class="container-fluid">
 <div class="slider">
     <div class="slide-track">
         <?php
-            foreach($shop_result as $item) {
-                echo "<div class='slide'><img style='width: 200px' src=".$item['item_image'] .">
+foreach ($shop_result as $item) {
+    echo "<div class='slide'><img style='width: 200px' src=" . $item['item_image'] . ">
                 </div>";
-            }
-        ?>
+}
+?>
     </div>
 </div>
 </div>
@@ -129,11 +123,11 @@
                     <a href="https://www.valvesoftware.com/en/about"><img class="footerLogoImg" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/valve_logo.png"></a>
                     <a href="https://necm.utad.pt/"><img class="footerLogoImg" src="../TH/img/cmLogo.png"></a>
                 </div>
-                
+
                 <div class="footerLegal">
 Team Fortress is a trademark of Valve Corporation, TF2 Trader's Hub is a fan creation and is not affiliated with Valve or Steam.
                 </div>
-            </div> 
+            </div>
     </div>
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>

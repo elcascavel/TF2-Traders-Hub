@@ -5,7 +5,7 @@ $message = "";
 
 if (isset($_POST['login_button'])) {
     require_once "config/config.php";
-    require_once('cookies/configDb.php');
+    require_once 'config/configDb.php';
 
     $db = connectDB();
 
@@ -39,12 +39,10 @@ if (isset($_POST['login_button'])) {
 
     $result = mysqli_stmt_get_result($statement);
 
-    if (!$result){
-          echo 'Prepared statement result cannot be stored.';
+    if (!$result) {
+        echo 'Prepared statement result cannot be stored.';
         die();
-    }
-
-    else if (mysqli_num_rows($result) == 1) {
+    } else if (mysqli_num_rows($result) == 1) {
         $user = mysqli_fetch_assoc($result);
 
         $_SESSION['username'] = $user['username'];
@@ -55,15 +53,11 @@ if (isset($_POST['login_button'])) {
 
         header('Location:index.php');
         exit();
-    }
-
-    else {
+    } else {
         $message = 'The username or password was incorrect.<br>Please try again (make sure your caps lock is off).';
         $result = closeDb($db);
-    } 
-}
-else if (is_string($errors)){
+    }
+} else if (is_string($errors)) {
     echo $errors;
     unset($errors);
 }
-?>

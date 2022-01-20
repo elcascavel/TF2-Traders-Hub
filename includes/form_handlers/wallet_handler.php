@@ -1,6 +1,6 @@
 <?php
-require_once "cookies/configDb.php";
-include("includes/header.php");
+require_once "config/configDb.php";
+include "includes/header.php";
 $owner = "";
 $cardNumber = "";
 $cvv = "";
@@ -13,7 +13,7 @@ $errors = array();
 $message = "";
 
 if (isset($_POST['wallet_button'])) {
-    include("includes/header.php");
+    include "includes/header.php";
     require_once "config/config.php";
     require_once "validation.php";
 
@@ -22,7 +22,7 @@ if (isset($_POST['wallet_button'])) {
         'cardnum' => array(false, "Invalid card number: it must have $minNum numbers and no special chars."),
         'cvv' => array(false, "Invalid CVV."),
         'cardname' => array(false, 'Please select a card.'),
-        'amount' => array(false, 'Please select an amount.')
+        'amount' => array(false, 'Please select an amount.'),
     );
 
     $flag = false;
@@ -57,40 +57,34 @@ if (isset($_POST['wallet_button'])) {
     $cardBrand = $_POST['cardname'];
     $amount = $_POST['amount'];
 
-    if ( $flag == true ){
-        return($errors);
+    if ($flag == true) {
+        return ($errors);
     }
-    
-    
-        $query = "INSERT INTO wallet (owner, cardnum, cvv, cardname, amount, id_users) VALUES (?,?,?,?,?,?)";
 
-        $statement = mysqli_prepare($db, $query);
+    $query = "INSERT INTO wallet (owner, cardnum, cvv, cardname, amount, id_users) VALUES (?,?,?,?,?,?)";
 
-        if (!$statement) {
-            echo "Error preparing card number statement.";
-            die();
-        }
+    $statement = mysqli_prepare($db, $query);
 
-        $result = mysqli_stmt_bind_param($statement, 'ssssdi', $owner, $cardNumber, $cvv, $cardBrand, $amount, $user['id_users']);
-        if (!$result) {
-            echo "Error binding prepared card number statement.";
-            die();
-        }
+    if (!$statement) {
+        echo "Error preparing card number statement.";
+        die();
+    }
 
-        $result = mysqli_stmt_execute($statement);
+    $result = mysqli_stmt_bind_param($statement, 'ssssdi', $owner, $cardNumber, $cvv, $cardBrand, $amount, $user['id_users']);
+    if (!$result) {
+        echo "Error binding prepared card number statement.";
+        die();
+    }
 
-        if (!$result) {
-            echo 'Prepared statement insert result cannot be executed.';
-            die();
-        }
+    $result = mysqli_stmt_execute($statement);
 
-        else {
-            $result = closeDb($db);
-            header("Location: wallet.php");
-            
-        }
-    
+    if (!$result) {
+        echo 'Prepared statement insert result cannot be executed.';
+        die();
+    } else {
+        $result = closeDb($db);
+        header("Location: wallet.php");
+
+    }
+
 }
-
-
-?>

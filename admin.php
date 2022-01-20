@@ -1,5 +1,5 @@
 <?php
-include("includes/header.php");
+include "includes/header.php";
 require 'includes/form_handlers/admin_handler.php';
 
 if ($userIsAdmin == 0) {
@@ -31,9 +31,9 @@ if ($userIsAdmin == 0) {
         <?php echo "<h5 class='text-white'; class='mt-2'>Welcome, $userLoggedIn</h5>"; ?>
         <div class="row">
             <?php
-            $table = "";
+$table = "";
 
-            $table .= "
+$table .= "
         <table class='table table-hover table-light table-striped table-bordered align-middle text-center'>
         <thead>
         <tr>
@@ -45,17 +45,17 @@ if ($userIsAdmin == 0) {
         </tr>
         </thead>
         ";
-            foreach ($user_result as $user) {
-                $adminCheck = $user['is_admin'];
-                $is_adminString = "Make";
-                if ($adminCheck) {
-                    $adminCheck = "Admin";
-                    $is_adminString = "Remove";
-                } else {
-                    $adminCheck = "User";
-                    $is_adminString = "Make";
-                }
-                $table .= "
+foreach ($user_result as $user) {
+    $adminCheck = $user['is_admin'];
+    $is_adminString = "Make";
+    if ($adminCheck) {
+        $adminCheck = "Admin";
+        $is_adminString = "Remove";
+    } else {
+        $adminCheck = "User";
+        $is_adminString = "Make";
+    }
+    $table .= "
             <tr>
             <td>" . $user['id_users'] . "</td>
             <td><img class='adminPanelAvatar' src=" . $user['user_pic'] . "><b>" . $user['username'] . "</b></td>
@@ -64,9 +64,9 @@ if ($userIsAdmin == 0) {
             <td><form action='admin.php' method='post'><input type='hidden' name='id' value=" . $user['id_users'] . "><button type='submit' name='setAdmin' class='btn btn-primary btn-sm'>" . $is_adminString . " admin</button> <input type='hidden' name='id' value=" . $user['id_users'] . "><button type='submit' name='deleteUser' class='btn btn-danger btn-sm'>Delete user</button></td></form>
             </tr>
             ";
-            }
-            echo $table . "</table>";
-            ?>
+}
+echo $table . "</table>";
+?>
         </div>
         <div class="row">
             <h2 class="text-white"; class="mt-5">Items</h2>
@@ -123,9 +123,9 @@ if ($userIsAdmin == 0) {
 
 
             <?php
-            $table = "";
+$table = "";
 
-            $table .= "
+$table .= "
          <table class='table table-hover table-light table-striped table-bordered align-middle text-center'>
          <thead>
          <tr>
@@ -137,24 +137,24 @@ if ($userIsAdmin == 0) {
          </thead>
          ";
 
-            foreach ($shop_result as $item) {
-                if ($item['rarity'] == "Unusual") {
-                    $itemRarity = "#8650AC";
-                } else if ($item['rarity'] == "Unique") {
-                    $itemRarity = "rgb(125, 109, 0)";
-                } else if ($item['rarity'] == "Genuine") {
-                    $itemRarity = "#4D7455";
-                } else {
-                    $itemRarity = "#B2B2B2";
-                }
-                $table .= "
+foreach ($shop_result as $item) {
+    if ($item['rarity'] == "Unusual") {
+        $itemRarity = "#8650AC";
+    } else if ($item['rarity'] == "Unique") {
+        $itemRarity = "rgb(125, 109, 0)";
+    } else if ($item['rarity'] == "Genuine") {
+        $itemRarity = "#4D7455";
+    } else {
+        $itemRarity = "#B2B2B2";
+    }
+    $table .= "
              <tr>
              <td>" . $item['id'] . "</td>
              <td><img class='adminPanelAvatar' src=" . $item['item_image'] . "><b><p style='color:$itemRarity; display:inline'>" . $item['product'] . "</p></b></td>
              <td>€" . $item['price'] . "</td>
-             <td><form action='admin.php' id='editItem_form' method='post'><input type='hidden' name='item_id' value=" . $item['id'] . "><button data-bs-toggle='modal' type='button' data-bs-target='#editItemModal".$item['id']."' class='btn btn-primary btn-sm'>Edit item</button> <button type='submit' name='deleteItem_button' class='btn btn-danger btn-sm'>Delete item</button></td>
+             <td><form action='admin.php' id='editItem_form' method='post'><input type='hidden' name='item_id' value=" . $item['id'] . "><button data-bs-toggle='modal' type='button' data-bs-target='#editItemModal" . $item['id'] . "' class='btn btn-primary btn-sm'>Edit item</button> <button type='submit' name='deleteItem_button' class='btn btn-danger btn-sm'>Delete item</button></td>
              </tr>
-             ". "<div class='modal fade' id='editItemModal".$item['id']."'tabindex='-1' aria-labelledby='editItemModalLabel' aria-hidden='true'>
+             " . "<div class='modal fade' id='editItemModal" . $item['id'] . "'tabindex='-1' aria-labelledby='editItemModalLabel' aria-hidden='true'>
              <div class='modal-dialog'>
                  <div class='modal-content'>
                      <div class='modal-header'>
@@ -164,15 +164,15 @@ if ($userIsAdmin == 0) {
                      <div class='modal-body'>
                              <div class='mb-3'>
                                  <label for='item-name' class='col-form-label'>Item Name</label>
-                                 <input type='text' class='form-control' id='item-name' name='item-name' value='".htmlspecialchars($item['product'], ENT_QUOTES)."'>
+                                 <input type='text' class='form-control' id='item-name' name='item-name' value='" . htmlspecialchars($item['product'], ENT_QUOTES) . "'>
                              </div>
                              <div class='mb-3'>
                                  <label for='item-description' class='col-form-label'>Description</label>
-                                 <textarea class='form-control' id='item-description' name='item-description' style='height: 100px'>". $item['item_description']."</textarea>
+                                 <textarea class='form-control' id='item-description' name='item-description' style='height: 100px'>" . $item['item_description'] . "</textarea>
                              </div>
                              <div class='mb-3'>
                                  <label for='price' class='col-form-label'>Price (€)</label>
-                                 <input type='text' class='form-control' id='item-price' name='item-price' value='".$item['price']."'>
+                                 <input type='text' class='form-control' id='item-price' name='item-price' value='" . $item['price'] . "'>
                              </div>
                              <div class='mb-3'>
                                  <label for='formFileSm' class='form-label'>Change your item's image if you like (360x360)</label>
@@ -195,16 +195,16 @@ if ($userIsAdmin == 0) {
                  </div>
              </div>
          </div>";
-            }
-            echo $table . "</table>";
-            ?>   
+}
+echo $table . "</table>";
+?>
         </div>
         <div class="row">
         <h2 class="text-white"; class="mt-5">Messages</h2>
         <?php
-            $table = "";
+$table = "";
 
-            $table .= "
+$table .= "
         <table class='table table-hover table-light table-striped table-bordered align-middle text-center'>
         <thead>
         <tr>
@@ -216,19 +216,19 @@ if ($userIsAdmin == 0) {
         </tr>
         </thead>
         ";
-            foreach ($contact_result as $contact) {
-                $table .= "
+foreach ($contact_result as $contact) {
+    $table .= "
             <tr>
             <td>" . $contact['id_message'] . "</td>
-            <td>". $contact['name'] ."</td>
-            <td>". $contact['message'] ."</td>
+            <td>" . $contact['name'] . "</td>
+            <td>" . $contact['message'] . "</td>
             <td>" . date("jS F, Y", strtotime($contact['send_date'])) . "</td>
             <td><form action='admin.php' id='message_form' method='post'><input type='hidden' name='message_id' value=" . $contact['id_message'] . "><button type='submit' name='readMessage_button' class='btn btn-success btn-sm'>Read message</button></td>
             </tr>
             ";
-            }
-            echo $table . "</table>";
-            ?>
+}
+echo $table . "</table>";
+?>
         </div>
     </div>
     <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
@@ -236,24 +236,22 @@ if ($userIsAdmin == 0) {
 <div class="d-flex">
     <div class="toast-body">
       <?php
-      if (!empty($errors)) { # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
-            if (isset($errors['item_name']) && $errors['item_name'][0] == true)
-            {
-                echo $errors['item_name'][1] . '<br><br>';
-            }
+if (!empty($errors)) { # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
+if (isset($errors['item_name']) && $errors['item_name'][0] == true) {
+    echo $errors['item_name'][1] . '<br><br>';
+}
 
-            if (isset($errors['item_description']) && $errors['item_description'][0] == true) {
-                echo $errors['item_description'][1] . '<br><br>';
-            }
-
-            if (isset($errors['item_price']) && $errors['item_price'][0] == true) {
-                echo $errors['item_price'][1];
-            }
-        }
-    else {
-        echo $toastMessage;
+    if (isset($errors['item_description']) && $errors['item_description'][0] == true) {
+        echo $errors['item_description'][1] . '<br><br>';
     }
-      ?>
+
+    if (isset($errors['item_price']) && $errors['item_price'][0] == true) {
+        echo $errors['item_price'][1];
+    }
+} else {
+    echo $toastMessage;
+}
+?>
     </div>
     <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
   </div>

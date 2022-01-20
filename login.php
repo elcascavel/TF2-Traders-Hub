@@ -4,7 +4,7 @@ require 'includes/form_handlers/login_handler.php';
 require 'includes/header.php';
 
 if (isset($userLoggedIn)) {
-  header("Location: index.php");
+    header("Location: index.php");
 }
 ?>
 <!DOCTYPE html>
@@ -48,7 +48,7 @@ if (isset($userLoggedIn)) {
             <input class="form-control" type="text" name="log_username" placeholder="Username" id="floatingInput" value="<?php
 
 if (!empty($errors) && !isset($errors['username'][0])) { #this is done to keep the value inputted by the user if this field is valid but others are not
-  echo $_POST['username'];
+echo $_POST['username'];
 }
 ?>"><br>
   <label for="floatingInput">Username</label>
@@ -57,10 +57,11 @@ if (!empty($errors) && !isset($errors['username'][0])) { #this is done to keep t
               <input class="form-control" type="password" id="floatingInput" name="log_password" placeholder="Password"><br>
               <label for="floatingInput">Password</label>
               </div>
-              <div style="display:<?php if ($message == null) {$style = "none"; } else {$style = "block";} echo $style;?>" class="alert alert-warning align-items-center" role="alert">
+              <div style="display:<?php if ($message == null) {$style = "none";} else { $style = "block";}
+echo $style;?>" class="alert alert-warning align-items-center" role="alert">
               <?php if (isset($message)) {
-                echo $message;
-              } ?>
+    echo $message;
+}?>
               </div>
               <input class="btn btn-success" name="login_button" type="submit" value="Login">
               <div class="logSignUp">
@@ -70,7 +71,7 @@ if (!empty($errors) && !isset($errors['username'][0])) { #this is done to keep t
             </div>
             <div class="col-md-auto">
             <img style="width:300px" src="../TH/img/demomanLogin.webp" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1500" />
-            </div>   
+            </div>
       </div>
       <div class="row">
         <div class="col">

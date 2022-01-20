@@ -4,7 +4,7 @@ require 'includes/form_handlers/wallet_handler.php';
 require 'includes/header.php';
 
 if (!isset($userLoggedIn)) {
-	header("Location: index.php");
+    header("Location: index.php");
 }
 ?>
 <!DOCTYPE html>
@@ -48,17 +48,17 @@ if (!isset($userLoggedIn)) {
 				<input class="form-control" type="text" id="owner" name="owner" placeholder="Card Holder Name" value="<?php
 
 if (!empty($errors) && !isset($errors['owner'][0])) { #this is done to keep the value inputted by the user if this field is valid but others are not
-	echo $_POST['owner'];
+echo $_POST['owner'];
 }
 
-?>"><br> 
+?>"><br>
 <label for="owner">Card Holder Name</label>
 </div>
 <div class="form-floating">
 				<input class="form-control" type="text" id="cardnum" name="cardnum" placeholder="Card Number" value="<?php
 
 if (!empty($errors) && isset($errors['cardnum'][0])) {
-	echo $_POST['cardnum'];
+    echo $_POST['cardnum'];
 }
 
 ?>"><br>
@@ -68,7 +68,7 @@ if (!empty($errors) && isset($errors['cardnum'][0])) {
 				<input class="form-control" type="text" id="cvv" name="cvv" placeholder="cvv" value="<?php
 
 if (!empty($errors) && isset($errors['cvv'][0])) {
-	echo $_POST['cvv'];
+    echo $_POST['cvv'];
 }
 
 ?>"><br>
@@ -91,50 +91,46 @@ if (!empty($errors) && isset($errors['cvv'][0])) {
 <br>
 <div class="row">
 					 <div class="col-sm">
-					<div style="display:<?php if (empty($errors)) {$style = "none"; } else {$style = "block";} echo $style;?>" class="alert alert-warning align-items-center" role="alert">
+					<div style="display:<?php if (empty($errors)) {$style = "none";} else { $style = "block";}
+echo $style;?>" class="alert alert-warning align-items-center" role="alert">
   <?php
 
 if (isset($message)) {
-	echo $message;
+    echo $message;
 }
-				 if (!empty($errors)) { # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
-					if (isset($errors['owner']) && $errors['owner'][0]==true)
-					{
-						echo $errors['owner'][1] . '<br>';
-					}
+if (!empty($errors)) { # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
+if (isset($errors['owner']) && $errors['owner'][0] == true) {
+    echo $errors['owner'][1] . '<br>';
+}
 
-					if (isset($errors['cardnum']) && $errors['cardnum'][0]==true)
-					{
-						echo $errors['cardnum'][1] . '<br>';
-					}
+    if (isset($errors['cardnum']) && $errors['cardnum'][0] == true) {
+        echo $errors['cardnum'][1] . '<br>';
+    }
 
-					if (isset($errors['cvv']) && $errors['cvv'][0]==true)
-					{
-						echo $errors['cvv'][1] . '<br>';
-					}
+    if (isset($errors['cvv']) && $errors['cvv'][0] == true) {
+        echo $errors['cvv'][1] . '<br>';
+    }
 
-					if(isset($errors['cardname']) && $errors['cardname'][0]==true)
-					{
-						echo $errors['cardname'][1] . '<br>';
-					}
+    if (isset($errors['cardname']) && $errors['cardname'][0] == true) {
+        echo $errors['cardname'][1] . '<br>';
+    }
 
-					if(isset($errors['amount']) && $errors['amount'][0]==true)
-					{
-						echo $errors['amount'][1] . '<br>';
-					}
-				}
-				 ?>
+    if (isset($errors['amount']) && $errors['amount'][0] == true) {
+        echo $errors['amount'][1] . '<br>';
+    }
+}
+?>
 </div>
 			</div>
 			</div>
 			<div class="row">
 <div class="col">
 				<?php
-				echo "<div class='input-group justify-content-center'>
+echo "<div class='input-group justify-content-center'>
 				<input class='btn btn-primary' name='wallet_button' type='submit' value='Validate'>
 				<span class='input-group-text'>€ $money</span>
 			  </div>"
-				?>
+?>
 </div>
 				</div>
 			</form>
@@ -142,60 +138,49 @@ if (isset($message)) {
 
 			<?php
 
+if (isset($_POST['wallet_button']) && !empty($_POST['owner'])) {
+    if ($_POST['amount'] == "5") {
+        $amount = "5";
+        $query = "UPDATE users SET money = money +'{$amount}' WHERE id_users='{$userLoggedInID}'";
+        $statement = mysqli_prepare($db, $query);
 
-if(isset($_POST['wallet_button']) && !empty($_POST['owner']))
-{
-	if($_POST['amount']=="5")
-	{
-		$amount = "5";
-	$query = "UPDATE users SET money = money +'{$amount}' WHERE id_users='{$userLoggedInID}'";
-	$statement = mysqli_prepare($db, $query);
-				   
-				   
-		   if (!$statement ){
-			   //error preparing the statement. This should be regarded as a fatal error.
-			   echo "Something went wrong. Please try again later.1";
-			   die();				
-		   }				
-				   
-		   //execute the prepared statement
-		   $result = mysqli_stmt_execute($statement);
-							   
-		   if( !$result ) {
-			   //again a fatal error when executing the prepared statement
-			   echo "Something went very wrong. Please try again later.2";
-			   die();
-		   }
-	}
-	if($_POST['amount']=="10")
-	{
-		$amount = "10";
-	$query = "UPDATE users SET money = money +'{$amount}' WHERE id_users='{$userLoggedInID}'";
-	$statement = mysqli_prepare($db, $query);
-				   
-				   
-		   if (!$statement ){
-			   //error preparing the statement. This should be regarded as a fatal error.
-			   echo "Something went wrong. Please try again later.1";
-			   die();				
-		   }				
-				   
-		   //execute the prepared statement
-		   $result = mysqli_stmt_execute($statement);
-							   
-		   if( !$result ) {
-			   //again a fatal error when executing the prepared statement
-			   echo "Something went very wrong. Please try again later.2";
-			   die();
-		   }
-	}
-	
-	
-		}
+        if (!$statement) {
+            //error preparing the statement. This should be regarded as a fatal error.
+            echo "Something went wrong. Please try again later.1";
+            die();
+        }
 
- 
+        //execute the prepared statement
+        $result = mysqli_stmt_execute($statement);
 
+        if (!$result) {
+            //again a fatal error when executing the prepared statement
+            echo "Something went very wrong. Please try again later.2";
+            die();
+        }
+    }
+    if ($_POST['amount'] == "10") {
+        $amount = "10";
+        $query = "UPDATE users SET money = money +'{$amount}' WHERE id_users='{$userLoggedInID}'";
+        $statement = mysqli_prepare($db, $query);
 
+        if (!$statement) {
+            //error preparing the statement. This should be regarded as a fatal error.
+            echo "Something went wrong. Please try again later.1";
+            die();
+        }
+
+        //execute the prepared statement
+        $result = mysqli_stmt_execute($statement);
+
+        if (!$result) {
+            //again a fatal error when executing the prepared statement
+            echo "Something went very wrong. Please try again later.2";
+            die();
+        }
+    }
+
+}
 
 ?>
 
@@ -212,7 +197,7 @@ if(isset($_POST['wallet_button']) && !empty($_POST['owner']))
 				a fan creation and is not affiliated with Valve or Steam.
 			</div>
 		</div>
-</div>	
+</div>
 	</div>
 	<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 	<script>

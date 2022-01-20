@@ -1,8 +1,8 @@
 <?php
-include("includes/header.php");
+include "includes/header.php";
 
-if(!isset($userLoggedIn)) {
-	header("Location: index.php");
+if (!isset($userLoggedIn)) {
+    header("Location: index.php");
 }
 
 if (isset($_POST['cancel'])) {
@@ -10,7 +10,7 @@ if (isset($_POST['cancel'])) {
 }
 
 if (isset($_POST['closeAccount'])) {
-    require_once('cookies/configDb.php');
+    require_once 'config/configDb.php';
     $db = connectDB();
 
     $close_query = "DELETE from users WHERE username = ?";
@@ -23,20 +23,20 @@ if (isset($_POST['closeAccount'])) {
 
     $result = mysqli_stmt_bind_param($statement, 's', $userLoggedIn);
 
-        if (!$result) {
-            echo "Error binding parameters to prepared statement. Please try again later";
-            die();
-        }
+    if (!$result) {
+        echo "Error binding parameters to prepared statement. Please try again later";
+        die();
+    }
 
-        $result = mysqli_stmt_execute($statement);
+    $result = mysqli_stmt_execute($statement);
 
-        if (!$result) {
-            echo "Error executing prepared statement.";
-            die();
-        }
-        $result = closeDb($db);
-        session_destroy();
-        header("Location: index.php");
+    if (!$result) {
+        echo "Error executing prepared statement.";
+        die();
+    }
+    $result = closeDb($db);
+    session_destroy();
+    header("Location: index.php");
 }
 
 ?>
@@ -58,8 +58,8 @@ if (isset($_POST['closeAccount'])) {
         </div>
         <div class="row mt-4">
         <span class="text-danger h4">Warning!</span>
-        <p class="text-white">Are you sure you want to close your account, <?php echo $userLoggedIn;?>?</p>
-        </div>  
+        <p class="text-white">Are you sure you want to close your account, <?php echo $userLoggedIn; ?>?</p>
+        </div>
     </div>
     <div class="row align-items-center">
     <form class="text-center" action="close_account.php" method="POST">
@@ -68,10 +68,10 @@ if (isset($_POST['closeAccount'])) {
 </form>
     </div>
     </div>
-    </div> 
-    
+    </div>
 
-    
+
+
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>

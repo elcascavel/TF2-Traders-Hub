@@ -1,9 +1,9 @@
 <?php
-include("includes/header.php");
-include("includes/form_handlers/settings_handler.php");
+include "includes/header.php";
+include "includes/form_handlers/settings_handler.php";
 
 if (!isset($userLoggedIn)) {
-	header("Location: index.php");
+    header("Location: index.php");
 }
 
 ?>
@@ -49,7 +49,7 @@ if (!isset($userLoggedIn)) {
 				<div class="row justify-content-center">
 					<div class="col-sm-2 col-md-2 col-xl-2 text-center">
 					<form method="post" action="upload.php" enctype="multipart/form-data">
-						<img src="<?php echo $user['user_pic']?>" alt="Generic placeholder image" class="img-fluid" style="width: 180px; border-radius: 10px;">
+						<img src="<?php echo $user['user_pic'] ?>" alt="Generic placeholder image" class="img-fluid" style="width: 180px; border-radius: 10px;">
   						<input class="form-control form-control-sm mt-2" id="formFileSm" type="file" name="profileAvatar">
 						<input class="btn btn-primary btn-sm mt-2" type="submit" value="Change Avatar">
 						</form>
@@ -70,42 +70,37 @@ if (!isset($userLoggedIn)) {
       <option id="bluTeam" value="BLU">BLU</option>
     </select>
   </div>
-  <?php if (isset($message)) { echo $message; } ?><br>
+  <?php if (isset($message)) {echo $message;}?><br>
   <?php
-						if (!empty($errors)) { # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
-					
-							if (isset($errors['username']) && $errors['username'][0]==true)
-							{
-								echo '<a class="errorMessage">' . $errors['username'][1] . '</a>' . '<br><br>';
-							}
-		
-							if (isset($errors['email']) && $errors['email'][0]==true)
-							{
-								echo '<a class="errorMessage">' . $errors['email'][1] . '</a>' . '<br><br>';
-							}
-		
-							if (isset($errors['password']) && $errors['password'][0]==true)
-							{
-								echo '<a class="errorMessage">' . $errors['password'][1] . '</a>' . '<br><br>';
-							}
-		
-							if(isset($errors['rpassword']) && $errors['rpassword'][0]==true)
-							{
-								echo '<a class="errorMessage">' . $errors['rpassword'][1] . '</a>' . '<br><br>';
-							}
-		
-							if(isset($errors['team']) && $errors['team'][0]==true)
-							{
-								echo '<a class="errorMessage">' . $errors['team'][1] . '</a>' . '<br><br>';
-							}
-						}
-						?>
+if (!empty($errors)) { # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
+
+    if (isset($errors['username']) && $errors['username'][0] == true) {
+        echo '<a class="errorMessage">' . $errors['username'][1] . '</a>' . '<br><br>';
+    }
+
+    if (isset($errors['email']) && $errors['email'][0] == true) {
+        echo '<a class="errorMessage">' . $errors['email'][1] . '</a>' . '<br><br>';
+    }
+
+    if (isset($errors['password']) && $errors['password'][0] == true) {
+        echo '<a class="errorMessage">' . $errors['password'][1] . '</a>' . '<br><br>';
+    }
+
+    if (isset($errors['rpassword']) && $errors['rpassword'][0] == true) {
+        echo '<a class="errorMessage">' . $errors['rpassword'][1] . '</a>' . '<br><br>';
+    }
+
+    if (isset($errors['team']) && $errors['team'][0] == true) {
+        echo '<a class="errorMessage">' . $errors['team'][1] . '</a>' . '<br><br>';
+    }
+}
+?>
 						<div class="d-flex justify-content-center">
 						<input class="btn btn-primary mx-2" type="submit" name="saveAccount" id="saveAccount" value="Save">
 						<input class="btn btn-info mx-2" type="submit" name="change_password" id="change_password" value="Change Password">
 	<input class="btn btn-danger" type="submit" name="cancelAccount" id="cancelAccount" value="Cancel">
 						</div>
-  
+
 </form>
 </div>
 					</div>
@@ -116,8 +111,8 @@ if (!isset($userLoggedIn)) {
 		</div>
 
 		<?php
-		if (isset($_POST['cancelAccount'])) {
-			header("Location: profile.php");
-		}
-		?>
+if (isset($_POST['cancelAccount'])) {
+    header("Location: profile.php");
+}
+?>
 	</body>

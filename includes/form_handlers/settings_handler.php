@@ -1,23 +1,23 @@
 <?php
-include("includes/header.php");
+include "includes/header.php";
 require_once "config/config.php";
 require_once "validation.php";
 
-    $errors = array('username' => array(false, "Invalid username: it must have between $minUsername and $maxUsername chars."),
-								    'password' => array(false, "Invalid password: it must have between $minPassword and $maxPassword chars and special chars."),
-								    'rpassword' => array(false, "Passwords mismatch."),
-								    'email' => array(false,'Invalid email.'),
-								    'team' => array(false,'Please select a team.')
-								   );
-    $flag = false;
-    $existingRecords['username'] = false;
-    $existingRecords['email'] = false;
+$errors = array('username' => array(false, "Invalid username: it must have between $minUsername and $maxUsername chars."),
+    'password' => array(false, "Invalid password: it must have between $minPassword and $maxPassword chars and special chars."),
+    'rpassword' => array(false, "Passwords mismatch."),
+    'email' => array(false, 'Invalid email.'),
+    'team' => array(false, 'Please select a team.'),
+);
+$flag = false;
+$existingRecords['username'] = false;
+$existingRecords['email'] = false;
 
-    $db = connectDB();
-    $message = "";
+$db = connectDB();
+$message = "";
 
 if (isset($_POST['saveAccount'])) {
-    include("includes/header.php");
+    include "includes/header.php";
     require_once "config/config.php";
     require_once "validation.php";
 
@@ -33,9 +33,9 @@ if (isset($_POST['saveAccount'])) {
         $existingRecord['username'] = true;
     }
 
-    if(!validateEmail($email)){
+    if (!validateEmail($email)) {
         $errors['email'][0] = true;
-        $flag = true;				
+        $flag = true;
     }
 
     if ($email == $user['email']) {
@@ -45,7 +45,7 @@ if (isset($_POST['saveAccount'])) {
     $team = $_POST['team'];
 
     if ($flag == true) {
-        return($errors);
+        return ($errors);
     }
 
     if (!isset($existingRecord['username'])) {
@@ -83,32 +83,30 @@ if (isset($_POST['saveAccount'])) {
         if (!checkField($db, $email, "users", "email")) {
             $query = "UPDATE users SET email = ? WHERE email = ?";
             $statement = mysqli_prepare($db, $query);
-    
+
             if (!$statement) {
                 echo 'Error preparing email statement.';
                 die();
             }
-    
+
             $result = mysqli_stmt_bind_param($statement, 'ss', $email, $user['email']);
-    
+
             if (!$result) {
                 echo 'Error binding prepared email statement.';
                 die();
             }
-    
+
             $result = mysqli_stmt_execute($statement);
-    
+
             if (!$result) {
                 echo 'Prepared statement result cannot be executed.';
                 die();
-            }
-
-            else {
+            } else {
                 $user['email'] = $email;
                 $_SESSION['email'] = $email;
-        
+
                 $message = "";
-            }   
+            }
         }
     }
 
@@ -121,22 +119,18 @@ if (isset($_POST['saveAccount'])) {
     }
 
     $result = mysqli_stmt_bind_param($statement, 'ss', $team, $user['username']);
-    
-    if (!$result) 
-    {
+
+    if (!$result) {
         echo 'Error binding prepared team statement.';
         die();
     }
 
     $result = mysqli_stmt_execute($statement);
-    
-    if (!$result) 
-    {
+
+    if (!$result) {
         echo 'Prepared statement result cannot be executed.';
         die();
-    }
-
-    else {
+    } else {
         $message = "";
     }
 }
@@ -147,18 +141,18 @@ if (isset($_POST['change_password'])) {
     $rpassword = strip_tags($_POST['rpassword']);
     $rpassword = trim($rpassword);
 
-    if(!validatePassword($password, $minPassword, $maxPassword) ){
+    if (!validatePassword($password, $minPassword, $maxPassword)) {
         $errors['password'][0] = true;
-        $flag = true;				
+        $flag = true;
     }
 
-    if($rpassword != $password){
+    if ($rpassword != $password) {
         $errors['rpassword'][0] = true;
         $flag = true;
     }
 
     if ($flag == true) {
-        return($errors);
+        return ($errors);
     }
 
     $password = md5($password);
@@ -188,7 +182,8 @@ if (isset($_POST['change_password'])) {
     }
 }
 
-function checkField($database, $field, $table, $column) {
+function checkField($database, $field, $table, $column)
+{
     $query = "SELECT * FROM $table WHERE $column = ?";
 
     $statement = mysqli_prepare($database, $query);
@@ -214,7 +209,7 @@ function checkField($database, $field, $table, $column) {
 
     $result = mysqli_stmt_get_result($statement);
 
-    if (!$result){
+    if (!$result) {
         echo 'Prepared statement result cannot be stored.';
         die();
     }
@@ -224,9 +219,7 @@ function checkField($database, $field, $table, $column) {
         $message = "<a class='errorMessage'>$column already in use!</a>";
         $result = closeDb($database);
         return true;
-    }
-    else {
+    } else {
         return false;
     }
 }
-?>

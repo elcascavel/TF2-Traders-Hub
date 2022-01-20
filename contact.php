@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 <html>
     <?php
-     
-     require 'config/config.php';
-     require 'includes/form_handlers/contact_handler.php';
-     require 'includes/header.php';
-        
-        if (!isset($_SESSION['username'])) {
-         header("Location: index.php");
-        }
 
-    ?>
+require 'config/config.php';
+require 'includes/form_handlers/contact_handler.php';
+require 'includes/header.php';
+
+if (!isset($_SESSION['username'])) {
+    header("Location: index.php");
+}
+
+?>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=9">
@@ -27,7 +27,7 @@
         <link rel="stylesheet" href="../TH/css/main.css">
         <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     </head>
-    
+
     <body style="width:100%;margin:0;background-color:black">
         <div class="homepage">
             <div class="headerParentNonIndex">
@@ -46,107 +46,101 @@
                 <div class="navSide">
                     <div class="navSideContent">
                         <a class="accountActions" href="login.php" >
-                        
-                        <?php 
-                                if(!isset($_SESSION['username']))
-                                {      
-                                        echo "Login";
-                                }
-                                                    
-                        ?>
+
+                        <?php
+if (!isset($_SESSION['username'])) {
+    echo "Login";
+}
+
+?>
                          </a>
 
                          <a class="accountActionsLogin">
-                       <?php 
-                       
-                    
-                       if(isset($userLoggedIn))
-                       {
-                               
-                        if($money == 0)
-                        {
-                            echo "<h5>$userLoggedIn <span class='badge bg-success'>0€</span></h5>";
-                        }else
-                        {
-                            echo "<h5>$userLoggedIn <span class='badge bg-success'>$money €</span></h5>"; 
-                        }
-                       }
-                           ?>
-                        </a>
-                        
-                        
-                           
-                        <?php
-                        
-                        require_once('cookies/configDb.php');
-                          
-                      //connected to the database
-                      $db = connectDB();
-                              
-                      //success?				
-                      if ( is_string($db) ){
-                          //error connecting to the database
-                          echo ("Fatal error! Please return later.");
-                          die();
-                      }
-                      
-                      //select all columns from all users in the table
-                      $query = "SELECT id_users,username,email,team FROM users";
-                        
-                        //prepare the statement				
-                      $statement = mysqli_prepare($db, $query);
-                              
-                      if (!$statement ){
-                          //error preparing the statement. This should be regarded as a fatal error.
-                          echo "Something went wrong. Please try again later.";
-                          die();				
-                      }
-                              
-                      //execute the prepared statement
-                      $result = mysqli_stmt_execute($statement);
-                                          
-                      if( !$result ) {
-                          //again a fatal error when executing the prepared statement
-                          echo "Something went very wrong. Please try again later.";
-                          die();
-                      }
-                              
-                      //get the result set to further deal with it
-                      $result = mysqli_stmt_get_result($statement);
-                              
-                      if (!$result){
-                          //again a fatal error: if the result cannot be stored there is no going forward
-                          echo "Something went wrong. Please try again later.";	
-                          die();
-                      }
-                            if( !empty ($_SESSION) && array_key_exists("username", $_SESSION))
-                            {   
-                                
-                                while( $row = mysqli_fetch_assoc($result) ){
-                                    if($row['username'] == $_SESSION['username']){
-                                        echo '<div class="accountActionsButtonContainer">';
+                       <?php
 
-                                echo '<form action="profile.php" method="POST" name="formModifica">
+if (isset($userLoggedIn)) {
+
+    if ($money == 0) {
+        echo "<h5>$userLoggedIn <span class='badge bg-success'>0€</span></h5>";
+    } else {
+        echo "<h5>$userLoggedIn <span class='badge bg-success'>$money €</span></h5>";
+    }
+}
+?>
+                        </a>
+
+
+
+                        <?php
+
+require_once 'config/configDb.php';
+
+//connected to the database
+$db = connectDB();
+
+//success?
+if (is_string($db)) {
+    //error connecting to the database
+    echo ("Fatal error! Please return later.");
+    die();
+}
+
+//select all columns from all users in the table
+$query = "SELECT id_users,username,email,team FROM users";
+
+//prepare the statement
+$statement = mysqli_prepare($db, $query);
+
+if (!$statement) {
+    //error preparing the statement. This should be regarded as a fatal error.
+    echo "Something went wrong. Please try again later.";
+    die();
+}
+
+//execute the prepared statement
+$result = mysqli_stmt_execute($statement);
+
+if (!$result) {
+    //again a fatal error when executing the prepared statement
+    echo "Something went very wrong. Please try again later.";
+    die();
+}
+
+//get the result set to further deal with it
+$result = mysqli_stmt_get_result($statement);
+
+if (!$result) {
+    //again a fatal error: if the result cannot be stored there is no going forward
+    echo "Something went wrong. Please try again later.";
+    die();
+}
+if (!empty($_SESSION) && array_key_exists("username", $_SESSION)) {
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        if ($row['username'] == $_SESSION['username']) {
+            echo '<div class="accountActionsButtonContainer">';
+
+            echo '<form action="profile.php" method="POST" name="formModifica">
                                 <input type="hidden" value="' . $row['id_users'] . '" name="id">
                                 <input class="profileActionButton profileActionAccountImg" type="submit" name="modificar" value="">
                             </form>
                                 <a class="profileActionButton profileActionWalletImg" href="wallet.php"> </a>
                                 <a class="profileActionButton profileActionLogoutImg" href="logout.php"> </a>
                                 </div>';
-                                    
-                                    }  
-                                }
-                            }
-                        ?>
-                        
+
+        }
+    }
+}
+?>
+
 
                         <a class="accountActions" href="register.php">
                         <?php
-                        if (!isset($_SESSION['username'])) {
-                            echo "Sign Up";
-                        }
-                                
-                         ?>
+if (!isset($_SESSION['username'])) {
+    echo "Sign Up";
+}
+
+?>
                          </a>
 
                     </div>
@@ -169,68 +163,65 @@
  			<form action="contact.php" method="POST">
 				 <div class="form-floating">
 				 <input class="form-control" type="text" id="floatingInput" name="name" placeholder="Name" value="<?php
-					
-					if (!empty($errors) && !isset($errors['name'][0])) 
-					{ #this is done to keep the value inputted by the user if this field is valid but others are not	
-						
-						echo $_POST['name'];
-					}
-						?>"><br>
+
+if (!empty($errors) && !isset($errors['name'][0])) { #this is done to keep the value inputted by the user if this field is valid but others are not
+
+    echo $_POST['name'];
+}
+?>"><br>
 						<label for="floatingInput">Name</label>
 				 </div>
  				<div class="form-floating">
  				<input class="form-control" type="email" id="floatingInput" name="email" placeholder="E-mail" value="<?php
 
-				if (!empty($errors) && !isset($errors['email'][0]) ) 
-				{
-					echo $_POST['email'];	
-				}
-					?>"><br>
+if (!empty($errors) && !isset($errors['email'][0])) {
+    echo $_POST['email'];
+}
+?>"><br>
 					<label for="floatingInput">Email</label>
 				</div>
 				<div class="form-floating">
-  <textarea class="form-control" placeholder="Leave a message here" id="floatingTextarea2" name="message" style="height: 100px" value="<?php 
-                if (!empty($errors) && !isset($errors['message'][0]) ) 
-				{
-					echo $_POST['message'];
-				}
-                ?>">
+  <textarea class="form-control" placeholder="Leave a message here" id="floatingTextarea2" name="message" style="height: 100px" value="<?php
+if (!empty($errors) && !isset($errors['message'][0])) {
+    echo $_POST['message'];
+}
+?>">
 </textarea>
   <label for="floatingTextarea2">Send your message</label>
 			</div>
 
 				 <div class="row">
 					 <div class="col-sm">
-					<div style="display:<?php if (empty($errors)) {$style = "none"; $alertStyle="alert-success"; } elseif(!empty($errors)) {$style = "block"; $alertStyle="alert-warning";} echo $style;?>" class="alert <?php echo "$alertStyle ";?>  align-items-center" role="alert">
+					<div style="display:<?php if (empty($errors)) {$style = "none";
+    $alertStyle = "alert-success";} elseif (!empty($errors)) {$style = "block";
+    $alertStyle = "alert-warning";}
+echo $style;?>" class="alert <?php echo "$alertStyle "; ?>  align-items-center" role="alert">
   <?php
-  if (isset($text)) {
-	echo $text;
+if (isset($text)) {
+    echo $text;
 }
 
-				 if (!empty($errors)) {
-                      # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
-					if (isset($errors['name']) && $errors['name'][0]==true)
-					{
-						echo $errors['name'][1] . '<br>';
-					}
+if (!empty($errors)) {
+    # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
+    if (isset($errors['name']) && $errors['name'][0] == true) {
+        echo $errors['name'][1] . '<br>';
+    }
 
-					if (isset($errors['email']) && $errors['email'][0]==true)
-					{
-						echo $errors['email'][1] . '<br>';
-					}
+    if (isset($errors['email']) && $errors['email'][0] == true) {
+        echo $errors['email'][1] . '<br>';
+    }
 
-					if (isset($errors['message']) && $errors['message'][0]==true)
-					{
-						echo $errors['message'][1] . '<br>';
-					}
+    if (isset($errors['message']) && $errors['message'][0] == true) {
+        echo $errors['message'][1] . '<br>';
+    }
 
-				}
-				 ?>
-</div>		 
-					 </div>			 
-				 </div>		 
+}
+?>
+</div>
+					 </div>
+				 </div>
  				<input class="btn btn-primary mt-2" type="submit" name="send_button" value="Send">
- 				
+
  			</form>
 			</div>
 			<div class="col-md-auto">

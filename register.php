@@ -1,12 +1,12 @@
- <?php 
-	require 'config/config.php';
-	require 'includes/form_handlers/register_handler.php';
-	require 'includes/header.php';
+ <?php
+require 'config/config.php';
+require 'includes/form_handlers/register_handler.php';
+require 'includes/header.php';
 
-	if(isset($userLoggedIn)) {
-		header("Location: index.php");
-	}
- ?>
+if (isset($userLoggedIn)) {
+    header("Location: index.php");
+}
+?>
  <!DOCTYPE html>
  <html>
  <head>
@@ -44,22 +44,20 @@
  			<form action="register.php" method="POST">
 				 <div class="form-floating">
 				 <input class="form-control" type="text" id="floatingInput" name="username" placeholder="Username" value="<?php
-					
-					if (!empty($errors) && isset($errors['username'][0])) 
-					{ #this is done to keep the value inputted by the user if this field is valid but others are not	
-						echo $_POST['username'];
-					}
-						?>"><br>
+
+if (!empty($errors) && isset($errors['username'][0])) { #this is done to keep the value inputted by the user if this field is valid but others are not
+echo $_POST['username'];
+}
+?>"><br>
 						<label for="floatingInput">Username</label>
 				 </div>
  				<div class="form-floating">
  				<input class="form-control" type="email" id="floatingInput" name="email" placeholder="E-mail" value="<?php
 
-				if (!empty($errors) && isset($errors['email'][0]) ) 
-				{
-					echo $_POST['email'];	
-				}
-					?>"><br>
+if (!empty($errors) && isset($errors['email'][0])) {
+    echo $_POST['email'];
+}
+?>"><br>
 					<label for="floatingInput">E-mail</label>
 				</div>
 				<div class="form-floating">
@@ -75,7 +73,7 @@
 					 <div class="logSignUp">
                 <p style="font-size: 16px">Pick a team, soldier!</p>
               </div>
-					 
+
 				 <select class="form-select form-select-sm" name="team" id="team">
   					<option id="redTeam" value="RED">RED</option>
   					<option id="bluTeam" value="BLU">BLU</option>
@@ -85,42 +83,38 @@
 				 <br>
 				 <div class="row">
 					 <div class="col-sm">
-					<div style="display:<?php if (empty($errors)) {$style = "none"; } else {$style = "block";} echo $style;?>" class="alert alert-warning align-items-center" role="alert">
+					<div style="display:<?php if (empty($errors)) {$style = "none";} else { $style = "block";}
+echo $style;?>" class="alert alert-warning align-items-center" role="alert">
   <?php
 
 if (isset($message)) {
-	echo $message;
+    echo $message;
 }
-				 if (!empty($errors)) { # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
-					if (isset($errors['username']) && $errors['username'][0]==true)
-					{
-						echo $errors['username'][1] . '<br>';
-					}
+if (!empty($errors)) { # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
+if (isset($errors['username']) && $errors['username'][0] == true) {
+    echo $errors['username'][1] . '<br>';
+}
 
-					if (isset($errors['email']) && $errors['email'][0]==true)
-					{
-						echo $errors['email'][1] . '<br>';
-					}
+    if (isset($errors['email']) && $errors['email'][0] == true) {
+        echo $errors['email'][1] . '<br>';
+    }
 
-					if (isset($errors['password']) && $errors['password'][0]==true)
-					{
-						echo $errors['password'][1] . '<br>';
-					}
+    if (isset($errors['password']) && $errors['password'][0] == true) {
+        echo $errors['password'][1] . '<br>';
+    }
 
-					if(isset($errors['rpassword']) && $errors['rpassword'][0]==true)
-					{
-						echo $errors['rpassword'][1] . '<br>';
-					}
+    if (isset($errors['rpassword']) && $errors['rpassword'][0] == true) {
+        echo $errors['rpassword'][1] . '<br>';
+    }
 
-					if(isset($errors['team']) && $errors['team'][0]==true)
-					{
-						echo $errors['team'][1] . '<br>';
-					}
-				}
-				 ?>
-</div>		 
-					 </div>			 
-				 </div>		 
+    if (isset($errors['team']) && $errors['team'][0] == true) {
+        echo $errors['team'][1] . '<br>';
+    }
+}
+?>
+</div>
+					 </div>
+				 </div>
  				<input class="btn btn-success" type="submit" name="register_button" value="Register">
  				<div class="logSignUp">
  					Do you have an account? <a class="loginLink" href="login.php">Login</a>
