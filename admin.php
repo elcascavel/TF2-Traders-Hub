@@ -29,7 +29,7 @@ if ($userIsAdmin == 0) {
             <input class="btn btn-outline-info btn-sm" type="submit" name="returnProfile" id="returnProfile" value="Return to your profile">
         </form>
         <?php echo "<h5 class='text-white'; class='mt-2'>Welcome, $userLoggedIn</h5>"; ?>
-        <div class="row">
+        <div class="row-md-2">
             <?php
             $table = "";
 
@@ -68,8 +68,8 @@ if ($userIsAdmin == 0) {
             echo $table . "</table>";
             ?>
         </div>
-        <div class="row">
-            <h2 class="text-white"; class="mt-5">Items</h2>
+        <div class="row-md-2">
+            <h2 class="text-white mt-5">Items</h2>
             <div class="col">
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-primary float-start mb-2" data-bs-toggle="modal" data-bs-target="#addItemModal">
@@ -205,8 +205,8 @@ if ($userIsAdmin == 0) {
             echo $table . "</table>";
             ?>   
         </div>
-        <div class="row">
-        <h2 class="text-white"; class="mt-5">Messages</h2>
+        <div class="row-md-2 mt-5">
+        <h2 class="text-white">Messages</h2>
         <?php
             $table = "";
 
@@ -265,5 +265,8 @@ if ($userIsAdmin == 0) {
   </div>
   </div>
 </div>
+<?php
+include "footer.php";
+?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>

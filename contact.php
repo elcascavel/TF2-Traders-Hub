@@ -228,22 +228,9 @@ if (!empty($errors)) {
  			<img style="width:200px" src="../TH/img/spyContact.webp" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1500" />
 			</div>
 			 </div>
-			 <div class="row">
-	<div class="col">
-	<div class="footerArea">
- 			<div class="footerLogos">
- 				<a href="https://www.valvesoftware.com/en/about"><img class="footerLogoImg" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/valve_logo.png" /></a>
- 				<a href="https://necm.utad.pt/"><img class="footerLogoImg" src="../TH/img/cmLogo.png" /></a>
- 			</div>
-
- 			<div class="footerLegal">
- 				Team Fortress is a trademark of Valve Corporation, TF2 Trader's Hub is
- 				a fan creation and is not affiliated with Valve or Steam.
- 			</div>
- 		</div>
-	</div>
-</div>
- 		</div>
+             <?php
+include "footer.php";
+?>
  	<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
  	<script>
  		AOS.init();

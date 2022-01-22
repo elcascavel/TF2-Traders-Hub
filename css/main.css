@@ -216,19 +216,6 @@ a:hover {
   text-transform: uppercase;
 }
 
-.footerArea {
-  padding: 30px 100px;
-  background-color: #000;
-}
-
-.footerLogos {
-  width: 500px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
 .footerLogoImg {
   margin: 0px 15px 20px 15px;
   max-height: 60px;
@@ -237,9 +224,8 @@ a:hover {
 .footerLegal {
   text-align: center;
   font-size: 14px;
-  color: #777;
+  color: #fff;
   padding: 0 20px;
-  width: 500px;
   margin: 0 auto;
 }
 
