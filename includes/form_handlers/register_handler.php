@@ -95,17 +95,12 @@ if (isset($_POST['register_button'])) {
             echo "Result of prepared statement cannot be executed.";
             die();
         } else {
-            $query = "SELECT id_users FROM users";
+            $query = "SELECT * FROM users";
             $id_result = mysqli_query($db, $query);
             $user_array = mysqli_fetch_assoc($id_result);
-            $_SESSION['id_users'] = $user_array['id_users'];
             $result = closeDb($db);
 
-            $_SESSION['username'] = $username;
-            $_SESSION['email'] = $email;
-            $_SESSION['is_admin'] = 0;
-
-            header("Location: index.php");
+            header("Location: login.php");
             exit();
         }
     }
