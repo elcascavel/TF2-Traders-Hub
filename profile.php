@@ -175,5 +175,35 @@ if (mysqli_num_rows($result) == 0) {
 			  </div></div>";
 }
 ?>
+
+<div class="row">
+        <h2 class="text-white"; class="mt-5">Trade Ratings</h2>
+        <?php
+$table = "";
+$rating_query = "SELECT * FROM rating WHERE id_users='{$userLoggedInID}'";
+$rating_result = mysqli_query($db, $rating_query);
+$table .= "
+        <table class='table table-hover table-light table-striped table-bordered align-middle text-center'>
+        <thead>
+        <tr>
+        <th scope='col'>#Trade</th>
+        <th scope='col'>Rater Name</th>
+        <th scope='col'>Rate</th>
+        <th scope='col'>Feedback</th>
+        </tr>
+        </thead>
+        ";
+foreach ($rating_result as $rating) {
+    $table .= "
+            <tr>
+            <td>" . $rating['id_trade'] . "</td>
+            <td>" . $rating['username1'] . "</td>
+            <td>" . $rating['rate'] . "★</td>
+            <td>" . $rating['feedback'] . "</td>
+            </tr>
+            ";
+}
+echo $table . "</table>";
+?>
 		</div>
 	</body>
