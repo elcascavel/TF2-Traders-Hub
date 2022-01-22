@@ -39,10 +39,10 @@ if (isset($userLoggedIn)) {
         </div>
       </div>
       <div class="row justify-content-md-center">
-          <div class="col-lg-2">
+          <div class="col-md-2">
           <img class="loginLogo" src="../TH/img/logo.png" />
           </div>
-            <div class="col-md-auto text-center">
+            <div class="col-md-3 text-center">
             <form action="" method="POST">
             <div class="form-floating">
             <input class="form-control" type="text" name="log_username" placeholder="Username" id="floatingInput" value="<?php
@@ -69,10 +69,11 @@ echo $style;?>" class="alert alert-warning align-items-center" role="alert">
               </div>
             </form>
             </div>
-            <div class="col-md-auto">
+            <div class="col-md-2">
             <img style="width:300px" src="../TH/img/demomanLogin.webp" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1500" />
             </div>
       </div>
+      <div class="container-fluid">
       <div class="row">
         <div class="col">
           <footer class="footerArea">
@@ -87,6 +88,7 @@ echo $style;?>" class="alert alert-warning align-items-center" role="alert">
           </div>
         </div>
       </div>
+</div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>
