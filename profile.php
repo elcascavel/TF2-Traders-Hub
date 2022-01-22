@@ -13,6 +13,19 @@ if (isset($_POST['closeAccount'])) {
     header("Location: admin.php");
 }
 
+$rating_total = 0;
+$rating_count = 0;
+$rating_query = "SELECT * FROM rating WHERE id_users='{$userLoggedInID}'";
+$rating_result = mysqli_query($db, $rating_query);
+
+foreach($rating_result as $rating) {
+    $rating_count++;
+    $rating_total = $rating_total + $rating['rate'];
+}
+if ($rating_count > 0) {
+    $rating_total = $rating_total / $rating_count;
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -79,9 +92,16 @@ echo "<h5 class='mb-1'>$userLoggedIn <span class='badge badge-pill' style='backg
 ?>
                                         <p class="mb-2 pb-1" style="color: #2b2a2a;">Member since
                                             <?php echo date("jS F, Y", strtotime($user['signup_date'])); ?></p>
-                                        <div class="d-flex justify-content-start rounded-3 p-2 mb-2"
+                                        <div class="d-flex rounded-3 p-2 mb-2"
                                             style="background-color: #efefef;">
-                                            <?php echo $user['email'] . "<br>"; ?>
+                                            <?php echo $user['email'] . "<br>";
+                                            if ($rating_total == 0 || $rating_total < 0) {
+                                                echo "This user has not traded yet.";
+                                            }
+                                            else {
+                                                echo "Average Rating: ". $rating_total . "★";
+                                            }
+                                             ?>
                                         </div>
                                         <div class="d-flex pt-1">
                                             <form action="profile.php" method="POST">
@@ -185,8 +205,6 @@ if (mysqli_num_rows($result) == 0) {
                         <h2 class="text-white" ; class="mt-5">User Ratings</h2>
                         <?php
 $table = "";
-$rating_query = "SELECT * FROM rating WHERE id_users='{$userLoggedInID}'";
-$rating_result = mysqli_query($db, $rating_query);
 $table .= "
         <table class='table table-hover table-light table-striped table-bordered align-middle text-center'>
         <thead>
