@@ -154,7 +154,7 @@ $result = mysqli_query($db, $query);
 
 while ($row = mysqli_fetch_array($result)) {
     echo "
-			<div class='col-lg-3 mb-3 d-flex align-items-stretch'>
+			<div class='col-md-2 mb-3 d-flex align-items-stretch'>
 			<div class='card' style='width: 18rem; background-color: #101822; padding-bottom:50px;'>
 			<form action='profile.php' method='POST'>
 			<img class='card-img-top' style='background-color: #071215' src='" . $row["item_image"] . "'>
@@ -187,8 +187,8 @@ $table .= "
         <thead>
         <tr>
         <th scope='col'>#Trade</th>
-        <th scope='col'>Rater Name</th>
-        <th scope='col'>Rate</th>
+        <th scope='col'>Issued By</th>
+        <th scope='col'>Rating</th>
         <th scope='col'>Feedback</th>
         </tr>
         </thead>

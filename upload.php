@@ -1,25 +1,33 @@
 <?php
 
-require_once "config/config.php";
-require_once 'config/configDb.php';
-
-$db = connectDB();
-
-if (isset($_FILES['profileAvatar'])) {
-    include "includes/header.php";
     require_once "config/config.php";
+    require_once('config/configDb.php');
+    include("includes/header.php");
+        
+    $db = connectDB();
 
-    $filepath = $_FILES['profileAvatar']['tmp_name'];
+    if (isset($_FILES['profileAvatar'])) {
+        uploadPicture($db, "profileAvatar", "UPDATE users SET user_pic = ? WHERE id_users = $userLoggedInID", "edit_account.php", false);
+    }
+
+    if (isset($_FILES['itemPicture'])) {
+        uploadPicture($db, "itemPicture", "UPDATE shop SET item_image = ? WHERE id = {$_POST['product_id']}", "admin.php", true);
+    }
+
+function uploadPicture($database, $fileName, $query, $location, $filePixelCheck) {
+    $filepath = $_FILES[$fileName]['tmp_name'];
     $fileSize = filesize($filepath);
     $fileinfo = finfo_open(FILEINFO_MIME_TYPE);
-
+    list($width, $height) = getimagesize($filepath);
+    
     try {
         $filetype = finfo_file($fileinfo, $filepath);
         if (!$filetype) {
             throw new Exception('No file selected.');
         }
-    } catch (Exception $e) {
-        header("Location: edit_account.php");
+    }
+    catch (Exception $e) {
+        header("Location: $location");
     }
 
     if ($fileSize === 0) {
@@ -30,6 +38,12 @@ if (isset($_FILES['profileAvatar'])) {
         die("The file is too large");
     }
 
+    if($filePixelCheck == true) {
+        if ($width != 360 || $height != 360) {
+            die("The file provided has different pixel dimensions than 360px");
+        }
+    }
+    
     $allowedTypes = [
         'image/png' => 'png',
         'image/jpeg' => 'jpg',
@@ -53,11 +67,7 @@ if (isset($_FILES['profileAvatar'])) {
     }
     unlink($filepath); // Delete the temp file
 
-    echo "File uploaded successfully :)";
-
-    $query = "UPDATE users SET user_pic = ? WHERE id_users = $userLoggedInID";
-
-    $statement = mysqli_prepare($db, $query);
+    $statement = mysqli_prepare($database, $query);
 
     if (!$statement) {
         echo "Error preparing statement.";
@@ -75,9 +85,12 @@ if (isset($_FILES['profileAvatar'])) {
     if (!$result) {
         echo 'Prepared statement insert result cannot be executed.';
         die();
-    } else {
-        $result = closeDb($db);
-        header("Location: edit_account.php");
+    }
+
+    else {
+        $result = closeDb($database);
+        header("Location: $location");
         exit();
     }
 }
+?>
