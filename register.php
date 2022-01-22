@@ -37,10 +37,10 @@ if (isset($userLoggedIn)) {
 			 </div>
 		 </div>
 		 <div class="row justify-content-md-center">
- 			<div class="col-lg-2">
+ 			<div class="col-md-2">
 		 		<img class="loginLogo" src="../TH/img/logo.png" />
 			</div>
-			<div class="col-md-auto text-center">
+			<div class="col-md-3 text-center">
  			<form action="register.php" method="POST">
 				 <div class="form-floating">
 				 <input class="form-control" type="text" id="floatingInput" name="username" placeholder="Username" value="<?php
@@ -68,8 +68,8 @@ if (!empty($errors) && isset($errors['email'][0])) {
  				<input class="form-control" type="password" id="rpassword" name="rpassword" placeholder="Repeat Password">
 				 <label for="floatingInput">Repeat Password</label>
 			</div>
- 				<div class="row">
-					 <div class="col-sm">
+ 				<div class="row justify-content-center">
+					 <div class="col-md-auto">
 					 <div class="logSignUp">
                 <p style="font-size: 16px">Pick a team, soldier!</p>
               </div>
@@ -82,7 +82,7 @@ if (!empty($errors) && isset($errors['email'][0])) {
  				</div>
 				 <br>
 				 <div class="row">
-					 <div class="col-sm">
+					 <div class="col-md-4">
 					<div style="display:<?php if (empty($errors)) {$style = "none";} else { $style = "block";}
 echo $style;?>" class="alert alert-warning align-items-center" role="alert">
   <?php
@@ -121,7 +121,7 @@ if (isset($errors['username']) && $errors['username'][0] == true) {
  				</div>
  			</form>
 			</div>
-			<div class="col-md-auto">
+			<div class="col-md-2">
  			<img style="width:300px" src="../TH/img/soldierRegister.png" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1500" />
 			</div>
 			 </div>
