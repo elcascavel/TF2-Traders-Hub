@@ -33,14 +33,14 @@ if (!isset($userLoggedIn)) {
 			<div class="headerParentProfile">
 				<a class="headerLogo" href="index.php"></a>
 				<div class="headerNavItems">
-					<a class="navLink" href="index.php">
+					<a class="navLink" href="trade.php">
 						Trade
 					</a>
-					<a class="navLink" href="index.php">
+					<a class="navLink" href="buy.php">
 						Buy
 					</a>
-					<a class="navLink" href="index.php">
-						Sell
+					<a class="navLink" href="contact.php">
+						Contact
 					</a>
 				</div>
 			</div>
@@ -109,7 +109,9 @@ if (!empty($errors)) { # Equal to "if ( !empty($errors) && $errors['username'][0
 		</div>
 		</div>
 		</div>
-
+		<?php
+include "footer.php";
+?>
 		<?php
 if (isset($_POST['cancelAccount'])) {
     header("Location: profile.php");
