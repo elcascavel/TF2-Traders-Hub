@@ -2,7 +2,11 @@
 include "includes/header.php";
 
 if (!isset($userLoggedIn)) {
-    header("Location: index.php");
+    header("Location:index.php");
+}
+
+if (!in_array('trade.php', explode('/',$_SERVER['HTTP_REFERER']))) {
+	header("Location:trade.php");
 }
 
 ?>

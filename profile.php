@@ -177,7 +177,7 @@ if (mysqli_num_rows($result) == 0) {
 ?>
 
 <div class="row">
-        <h2 class="text-white"; class="mt-5">Trade Ratings</h2>
+        <h2 class="text-white"; class="mt-5">User Ratings</h2>
         <?php
 $table = "";
 $rating_query = "SELECT * FROM rating WHERE id_users='{$userLoggedInID}'";
