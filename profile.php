@@ -99,7 +99,7 @@ echo "<h5 class='mb-1'>$userLoggedIn <span class='badge badge-pill' style='backg
                                                 echo "This user has not traded yet.";
                                             }
                                             else {
-                                                echo "Average Rating: ". $rating_total . "★";
+                                                echo "Average Rating: ". number_format($rating_total, 2) . "★";
                                             }
                                              ?>
                                         </div>
