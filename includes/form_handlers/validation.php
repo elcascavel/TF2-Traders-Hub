@@ -120,7 +120,7 @@ function validateItemDescription($item_description, $minItemDesc, $maxItemDesc)
 
 function validateItemPrice($item_price)
 {
-    $exp = "(^[0-9.]+$|" . '^$)';
+    $exp = "/\d+(\.\d{1,2})?/";
 
     if (!preg_match($exp, $item_price)) {
         return false;

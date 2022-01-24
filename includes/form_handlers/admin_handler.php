@@ -26,6 +26,8 @@ $toastMessage = "";
 $errors = array('item_name' => array(false, "Invalid item name: it must have between $minItemName and $maxItemName characters."),
     'item_description' => array(false, "Invalid item description: it must have between $minItemDesc and $maxItemDesc characters."),
     'item_price' => array(false, "Invalid price tag. Make sure it's not empty."),
+    'admin_error' => array(false, "Could not update admin status. Make sure you're not trying to update your own account."),
+    'delete_user' => array(false, "Something went wrong attempting to delete this user. Make sure you're not trying to delete yourself."),
 );
 
 $flag = false;
@@ -41,13 +43,23 @@ if (isset($_POST['id'])) {
         if (updateAdminStatus($db, $userLoggedInID, $user_id)) {
             header("Location: admin.php");
         } else {
-            $alertType = "alert-danger";
+            $errors['admin_error'][0] = true;
+            $flag = true;
+            if ($flag == true) {
+                $toastClass = "fade show";
+                return ($errors);
+            }
         }
     } else if (isset($_POST['deleteUser'])) {
         if (deleteUser($db, $userLoggedInID, $user_id)) {
             header("Location: admin.php");
         } else {
-            $alertType = "alert-danger";
+            $errors['delete_user'][0] = true;
+            $flag = true;
+            if ($flag == true) {
+                $toastClass = "fade show";
+                return ($errors);
+            }
         }
     }
 }
@@ -55,17 +67,41 @@ if (isset($_POST['id'])) {
 if (isset($_POST["addItem_button"])) {
     require_once "validation.php";
     require_once "config/config.php";
+
     $itemName = strip_tags($_POST['item-name']);
 
     if (!validateItemName($itemName, $minItemName, $maxItemName)) {
         $errors['item_name'][0] = true;
         $flag = true;
-    } else {
-        $itemDesc = strip_tags($_POST['item-description']);
-        $itemRarity = strip_tags($_POST['item-rarity']);
-        $itemPrice = strip_tags($_POST['item-price']);
+    }
 
+    $itemDesc = strip_tags($_POST['item-description']);
+
+    if (!validateItemDescription($itemDesc, $minItemDesc, $maxItemDesc)) {
+        $errors['item_description'][0] = true;
+        $flag = true;
+    }
+
+    $itemRarity = strip_tags($_POST['item-rarity']);
+
+    $itemPrice = strip_tags($_POST['item-price']);
+
+    if (!validateItemPrice($itemPrice)) {
+        $errors['item_price'][0] = true;
+        $flag = true;
+    }
+
+    if ($flag == true) {
+        $toastClass = "fade show";
+        return ($errors);
+    }
+    
+    else {
         if (!addItem($db, $itemName, $itemDesc, $itemRarity, $itemPrice)) {
+            if ($flag == true) {
+                $toastClass = "fade show";
+                return ($errors);
+            }
         } else {
             header("Location: admin.php");
         }
@@ -102,7 +138,7 @@ if (isset($_POST['item_id'])) {
         }
 
         if ($flag == true) {
-            $toastClass = "show";
+            $toastClass = "fade show";
             return ($errors);
         }
 

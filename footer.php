@@ -8,8 +8,7 @@
     </div>
     <div class="row justify-content-center mb-4">
         <div class="col-md-auto text-muted">
-            Team Fortress is a trademark of Valve Corporation, TF2 Trader's Hub is a fan creation and is not affiliated
-            with Valve or Steam.
+            Team Fortress is a trademark of Valve Corporation, TF2 Trader's Hub is a fan creation and is not affiliated with Valve or Steam.
         </div>
     </div>
 </div>

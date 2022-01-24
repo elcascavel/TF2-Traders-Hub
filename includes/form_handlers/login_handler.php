@@ -1,11 +1,16 @@
 <?php
 
 $errors = array();
-$message = "";
+
+$toastClass = "hide";
+$toastMessage = "";
 
 if (isset($_POST['login_button'])) {
     require_once "config/config.php";
     require_once 'config/configDb.php';
+
+    $errors = array('username' => array(false, "Invalid username / password. This username may already exist. Make sure your caps lock is off.")
+    );
 
     $db = connectDB();
 
@@ -54,7 +59,9 @@ if (isset($_POST['login_button'])) {
         header('Location:index.php');
         exit();
     } else {
-        $message = 'The username or password was incorrect.<br>Please try again (make sure your caps lock is off).';
+        $errors['username'][0] = true;
+        $toastClass = "fade show";
+        return $errors;
         $result = closeDb($db);
     }
 } else if (is_string($errors)) {

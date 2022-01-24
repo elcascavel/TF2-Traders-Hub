@@ -7,7 +7,9 @@ $rpassword = "";
 $team = "";
 $date = "";
 $errors = array();
-$message = "";
+
+$toastClass = "hide";
+$toastMessage = "";
 
 $db = connectDB();
 
@@ -21,6 +23,7 @@ if (isset($_POST['register_button'])) {
         'rpassword' => array(false, "Passwords mismatch."),
         'email' => array(false, 'Invalid email.'),
         'team' => array(false, 'Please select a team.'),
+        'existingRecord' => array(false, 'Username or e-mail already in use!'),
     );
     $flag = false;
     $existingRecord = false;
@@ -68,7 +71,7 @@ if (isset($_POST['register_button'])) {
 
     //deal with the validation results
     if ($flag == true) {
-        //there are fields with invalid contents: return the errors array
+        $toastClass = "fade show";
         return ($errors);
     }
 
@@ -102,6 +105,14 @@ if (isset($_POST['register_button'])) {
 
             header("Location: login.php");
             exit();
+        }
+    }
+    else {
+        $errors['existingRecord'][0] = true;
+        $flag = true;
+        if ($flag == true) {
+            $toastClass = "fade show";
+            return ($errors);
         }
     }
 }
@@ -139,8 +150,6 @@ function checkField($database, $field, $field2, $table, $column1, $column2)
     }
 
     if (mysqli_num_rows($result) != 0) {
-        global $message;
-        $message = "<a class='errorMessage'>Username or email is already in our records!</a><br><br>";
         $result = closeDb($database);
         return true;
     } else {

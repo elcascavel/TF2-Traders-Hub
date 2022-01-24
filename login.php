@@ -47,21 +47,15 @@ if (isset($userLoggedIn)) {
             <div class="form-floating">
             <input class="form-control" type="text" name="log_username" placeholder="Username" id="floatingInput" value="<?php
 
-if (!empty($errors) && !isset($errors['username'][0])) { #this is done to keep the value inputted by the user if this field is valid but others are not
-echo $_POST['username'];
+if (!empty($errors) && isset($errors['username'][0])) { #this is done to keep the value inputted by the user if this field is valid but others are not
+echo $_POST['log_username'];
 }
-?>"><br>
+?>">
   <label for="floatingInput">Username</label>
 </div>
-              <div class="form-floating">
+              <div class="form-floating mt-4">
               <input class="form-control" type="password" id="floatingInput" name="log_password" placeholder="Password"><br>
               <label for="floatingInput">Password</label>
-              </div>
-              <div style="display:<?php if ($message == null) {$style = "none";} else { $style = "block";}
-echo $style;?>" class="alert alert-warning align-items-center" role="alert">
-              <?php if (isset($message)) {
-    echo $message;
-}?>
               </div>
               <input class="btn btn-success" name="login_button" type="submit" value="Login">
               <div class="logSignUp">
@@ -73,6 +67,26 @@ echo $style;?>" class="alert alert-warning align-items-center" role="alert">
             <img style="width:300px" src="../TH/img/demomanLogin.webp" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1500" />
             </div>
       </div>
+      <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div id="liveToast" class="toast bg-danger text-white border-0 <?php echo $toastClass ?>" role="alert" aria-live="assertive" aria-atomic="true">
+<div class="d-flex">
+    <div class="toast-body">
+      <?php
+      if (!empty($errors)) {
+            if (isset($errors['username']) && $errors['username'][0] == true)
+            {
+                echo "<p>" . $errors['username'][1] . "</p>";
+            }
+        }
+    else {
+        echo $toastMessage;
+    }
+      ?>
+    </div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+  </div>
+</div>
       <?php
 include "footer.php";
 ?>

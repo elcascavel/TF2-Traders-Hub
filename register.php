@@ -80,42 +80,7 @@ if (!empty($errors) && isset($errors['email'][0])) {
 				</select>
 				</div>
  				</div>
-				 <br>
-				 <div class="row">
-					 <div class="col-md-4">
-					<div style="display:<?php if (empty($errors)) {$style = "none";} else { $style = "block";}
-echo $style;?>" class="alert alert-warning align-items-center" role="alert">
-  <?php
-
-if (isset($message)) {
-    echo $message;
-}
-if (!empty($errors)) { # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
-if (isset($errors['username']) && $errors['username'][0] == true) {
-    echo $errors['username'][1] . '<br>';
-}
-
-    if (isset($errors['email']) && $errors['email'][0] == true) {
-        echo $errors['email'][1] . '<br>';
-    }
-
-    if (isset($errors['password']) && $errors['password'][0] == true) {
-        echo $errors['password'][1] . '<br>';
-    }
-
-    if (isset($errors['rpassword']) && $errors['rpassword'][0] == true) {
-        echo $errors['rpassword'][1] . '<br>';
-    }
-
-    if (isset($errors['team']) && $errors['team'][0] == true) {
-        echo $errors['team'][1] . '<br>';
-    }
-}
-?>
-</div>
-					 </div>
-				 </div>
- 				<input class="btn btn-success" type="submit" name="register_button" value="Register">
+ 				<input class="btn btn-success mt-2" type="submit" name="register_button" value="Register">
  				<div class="logSignUp">
  					Do you have an account? <a class="loginLink" href="login.php">Login</a>
  				</div>
@@ -125,6 +90,46 @@ if (isset($errors['username']) && $errors['username'][0] == true) {
  			<img style="width:300px" src="../TH/img/soldierRegister.png" data-aos="fade-left" data-aos-delay="200" data-aos-duration="1500" />
 			</div>
 			 </div>
+			 <div class="position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+  <div id="liveToast" class="toast bg-danger text-white border-0 <?php echo $toastClass ?>" role="alert" aria-live="assertive" aria-atomic="true">
+<div class="d-flex">
+    <div class="toast-body">
+      <?php
+      if (!empty($errors)) { # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
+            if (isset($errors['username']) && $errors['username'][0] == true)
+            {
+                echo "<p>" . $errors['username'][1] . "</p>";
+            }
+
+            if (isset($errors['password']) && $errors['password'][0] == true) {
+                echo "<p>" . $errors['password'][1] . "</p>";
+            }
+
+            if (isset($errors['rpassword']) && $errors['rpassword'][0] == true) {
+                echo "<p>" . $errors['rpassword'][1] . "</p>";
+            }
+
+            if (isset($errors['email']) && $errors['email'][0] == true) {
+                echo "<p>" . $errors['email'][1] . "</p>";
+            }
+
+            if (isset($errors['team']) && $errors['team'][0] == true) {
+                echo "<p>" . $errors['team'][1] . "</p>";
+            }
+
+			if (isset($errors['existingRecord']) && $errors['existingRecord'][0] == true) {
+                echo "<p>" . $errors['existingRecord'][1] . "</p>";
+            }
+        }
+    else {
+        echo $toastMessage;
+    }
+      ?>
+    </div>
+    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+  </div>
+  </div>
+</div>
 			 <?php
 include "footer.php";
 ?>

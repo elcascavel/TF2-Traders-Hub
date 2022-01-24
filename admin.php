@@ -245,15 +245,23 @@ if ($userIsAdmin == 0) {
       if (!empty($errors)) { # Equal to "if ( !empty($errors) && $errors['username'][0] == true ){" #presents an error message if this field has invalid content
             if (isset($errors['item_name']) && $errors['item_name'][0] == true)
             {
-                echo $errors['item_name'][1] . '<br><br>';
+                echo "<p>" . $errors['item_name'][1] . "</p>";
             }
 
             if (isset($errors['item_description']) && $errors['item_description'][0] == true) {
-                echo $errors['item_description'][1] . '<br><br>';
+                echo "<p>" . $errors['item_description'][1] . "</p>";
             }
 
             if (isset($errors['item_price']) && $errors['item_price'][0] == true) {
-                echo $errors['item_price'][1];
+                echo "<p>" . $errors['item_price'][1] . "</p>";
+            }
+
+            if (isset($errors['admin_error']) && $errors['admin_error'][0] == true) {
+                echo "<p>" . $errors['admin_error'][1] . "</p>";
+            }
+
+            if (isset($errors['delete_user']) && $errors['delete_user'][0] == true) {
+                echo "<p>" . $errors['delete_user'][1] . "</p>";
             }
         }
     else {
