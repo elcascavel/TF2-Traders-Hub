@@ -151,7 +151,7 @@ if ($userIsAdmin == 0) {
              <td>" . $item['id'] . "</td>
              <td><img class='adminPanelAvatar' src=" . $item['item_image'] . "><b><p style='color:$itemRarity; display:inline'>" . $item['product'] . "</p></b></td>
              <td>€" . $item['price'] . "</td>
-             <td><form action='admin.php' id='editItem_form' method='post'><input type='hidden' name='item_id' value=" . $item['id'] . "><button data-bs-toggle='modal' type='button' data-bs-target='#editItemModal".$item['id']."' class='btn btn-primary btn-sm'>Edit item</button> <button type='submit' name='deleteItem_button' class='btn btn-danger btn-sm'>Delete item</button></td>
+             <td><form action='admin.php' id='editItem_form' method='post'><input type='hidden' name='item_id' value=" . $item['id'] . "><button data-bs-toggle='modal' type='button' data-bs-target='#editItemModal".$item['id']."' class='btn btn-primary btn-sm'>Edit item</button> <button data-bs-toggle='modal' type='button' data-bs-target='#changeImageModal".$item['id']."' class='btn btn-primary btn-sm'>Change Image</button> <button type='submit' name='deleteItem_button' class='btn btn-danger btn-sm'>Delete item</button></td>
              </tr>
              ". "<div class='modal fade' id='editItemModal".$item['id']."'tabindex='-1' aria-labelledby='editItemModalLabel' aria-hidden='true'>
              <div class='modal-dialog'>
@@ -161,17 +161,6 @@ if ($userIsAdmin == 0) {
                          <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
                      </div>
                      <div class='modal-body'>
-                     <form method='POST' action='upload.php' enctype='multipart/form-data'>
-                     <div class='row justify-content-center'>
-                     <div class='col-md-6'><input class='form-control form-control-sm' id='formFileSm' type='file' name='itemPicture'></div>
-                     <input type='hidden' name='product_id' value=" . $item['id'] . ">
-                     </div>
-                     <div class='row justify-content-center mb-2'>
-                     <div class='col-md-4'>
-                     <input class='btn btn-primary btn-sm mt-2' type='submit' value='Change Item Image'>
-                     </div>
-                     </div>
-                     </form>
                              <div class='mb-3'>
                                  <label for='item-name' class='col-form-label'>Item Name</label>
                                  <input type='text' class='form-control' id='item-name' name='item-name' value='".htmlspecialchars($item['product'], ENT_QUOTES)."'>
@@ -195,12 +184,34 @@ if ($userIsAdmin == 0) {
                      </div>
                      <div class='modal-footer'>
                          <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
-                         <input name='updateItem_button' type='submit' class='btn btn-primary' value='Save changes'>
+                         <input name='updateItem_button' type='submit' class='btn btn-primary' form ='editItem_form' value='Save changes'>
                          </form>
                      </div>
                  </div>
              </div>
-         </div>";
+         </div>
+         <div class='modal fade' id='changeImageModal".$item['id']."' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='true'>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <h5 class='modal-title'>Change your item's image!</h5>
+        <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
+      </div>
+      <div class='modal-body'>
+      <form method='POST' action='upload.php' id='change_image' enctype='multipart/form-data'>
+      <div class='row justify-content-center'>
+      <div class='col-md-6'><input class='form-control form-control-sm' id='formFileSm' type='file' name='itemPicture'></div>
+      <input type='hidden' name='product_id' value=" . $item['id'] . ">
+      </div>
+      <div class='row justify-content-center mb-2'>
+      <div class='col-md-4'>
+      <input class='btn btn-primary btn-sm mt-2' type='submit' name='editItem_form' value='Change Item Image'>
+      </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>";
             }
             echo $table . "</table>";
             ?>   
